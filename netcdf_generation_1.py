@@ -50,7 +50,7 @@ path_entry_ini='/bdd/ERA5/NETCDF/GLOBAL_025/1xmonthly/'
 
 #-------------------------------------------------------------------------------------------------------  
 
-list_variables=['u','v','q','msl','z','sst','t','mtpr']
+list_variables=['u','v','q','msl','z','sst','t','mtpr','w']
 
 lat_limits_global=[-70,50]
 lon_limits_global=[-155,-5]
@@ -69,22 +69,22 @@ for i in range(len(list_variables)):
 
     var_sp=list_variables[i]
 
-    if var_sp=='u' or var_sp=='v':
+    if var_sp=='u' or var_sp=='v' or var_sp=='w':
         path_entry=path_entry_ini+'AN_PL/'
         gridsize_x, gridsize_y=netcdf_creation_original_ERA5(path_entry,var_sp,lat_limits_full,lon_limits_full,\
-                                                        initial_time,final_time,p_level_interest_lower,p_level_interest_upper,\
+                                                        p_level_interest_lower,p_level_interest_upper,\
                                                             'ERA5','Yes',path_save)
         
     elif var_sp=='q' or var_sp=='t' or var_sp=='z':
         path_entry=path_entry_ini+'AN_PL/'
         gridsize_x, gridsize_y=netcdf_creation_original_ERA5(path_entry,var_sp,lat_limits_global,lon_limits_global,\
-                                                        initial_time,final_time,p_level_interest_lower,p_level_interest_upper,\
+                                                        p_level_interest_lower,p_level_interest_upper,\
                                                             'ERA5','Yes',path_save)
             
     elif var_sp=='msl' or var_sp=='mtpr' or var_sp=='sst':
         path_entry=path_entry_ini+'AN_SL/'
         gridsize_x, gridsize_y=netcdf_creation_original_ERA5(path_entry,var_sp,lat_limits_global,lon_limits_global,\
-                                                        initial_time,final_time,p_level_interest_lower,p_level_interest_upper,\
+                                                        p_level_interest_lower,p_level_interest_upper,\
                                                             'ERA5','No',path_save)
     
     else:
