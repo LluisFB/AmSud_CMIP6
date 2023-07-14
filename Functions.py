@@ -459,7 +459,7 @@ def td_plots(fig,season_str,ref_table,models_table,characteristic,number_models,
             sample_models.append(new_row)
 
     #Creating the plot
-    list_markers=['o','P','X','D','v','<','s','H']
+    list_markers=['o','P','X','D']
     n_repeat=math.ceil(number_models/len(list_markers))
     list_markers_repeated=list_markers*n_repeat
     markers=list_markers_repeated[0:number_models]
@@ -484,13 +484,13 @@ def td_plots(fig,season_str,ref_table,models_table,characteristic,number_models,
     # container (used for layout)
     dia._ax.set_title(title_label,fontsize=title_size,loc='left', pad=20)
 
-    nrows = 14
+    nrows = 8
     ncols = int(np.ceil(len(dia.samplePoints) / float(nrows)))
 
 
     fig.legend(dia.samplePoints,
                [ p.get_label() for p in dia.samplePoints ],
-               numpoints=1, prop=dict(size='medium'),bbox_to_anchor=(1.11, 0.85) \
+               numpoints=1, prop=dict(size='medium'),bbox_to_anchor=(1.03, 0.85) \
                ,ncol=ncols,loc='right')
 
     #fig.tight_layout()
@@ -538,7 +538,7 @@ def NaNs_interp(array, dims, interp_type):
 
     return noNaN_arr
 
-def plotMap(axs,var_data,lonPlot,latPlot,colorMap,limits,title_label,extent, projection,title_font2,scatter_status,points_scatter,land_cov,scale_fc):
+def plotMap(axs,var_data,lonPlot,latPlot,colorMap,limits,title_label,extent, projection,title_font2,scatter_status,points_scatter,land_cov):
     """
     This function creates the maps of wind circulation for seasons and months of
     the year
@@ -553,7 +553,7 @@ def plotMap(axs,var_data,lonPlot,latPlot,colorMap,limits,title_label,extent, pro
         axs.add_feature(cfeature.LAND, zorder=100, edgecolor='k')
     cs=axs.contourf(lonPlot, latPlot,var_data,limits,cmap=colorMap,extend='both')
     if scatter_status=='yes':
-        sc=axs.scatter(lonPlot,latPlot,points_scatter/scale_fc,transform=projection,zorder=2, c='grey')
+        sc=axs.scatter(lonPlot,latPlot,points_scatter/3,transform=projection,zorder=2, c='grey')
     # regrid_shape=40,scale=500,scale_units='width', linewidths=widths
     gl=axs.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,)
     gl.xlabels_top = False
@@ -677,12 +677,9 @@ def wind_field_calc(path_entry,var_sp1,var_sp2,model_name,lat_d,lon_d,time_0,tim
 
 def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,time_1,level_lower,level_upper,type_data,level_status,path_save,model_name):
 
-    if var_name=='tos':
-        var_data=xr.open_mfdataset(path_entry_files+'tos_cmip6_'+model_name+'_historical*.nc')
-    else:
-        path_files=path_entry_files+'historical/r1i1p1f1/'+ft+'/'+var_name+'/gn/latest/'
-        var_data=xr.open_mfdataset(path_files+var_name+'_'+ft+'_'+model_name+'_historical_*.nc')
+    path_files=path_entry_files+'historical/r1i1p1f1/'+ft+'/'+var_name+'/gn/latest/'
 
+    var_data=xr.open_mfdataset(path_files+var_name+'_'+ft+'_'+model_name+'_historical_*.nc')
     var_field=var_data[var_name]
     #obtaining the domain bnds
     lat_bnd,lon_bnd,lat_slice,lon_slice=lat_lon_bds(lon_d,lat_d,var_field)
@@ -758,7 +755,7 @@ def netcdf_creation_original_ERA5(path_entry_files,var_name,lat_d,lon_d,level_lo
 
     for b in range(len(range_years)):
 
-        var_data_year=xr.open_mfdataset(path_entry_files+str(range_years[b])+'/'+var_name+'.'+str(range_years[b])+'.apme5.GLOBAL_025.nc')
+        var_data_year=xr.open_dataset(path_entry_files+str(range_years[b])+'/'+var_name+'.'+str(range_years[b])+'.apme5.GLOBAL_025.nc')
         var_data=var_data_year[var_name]
         file_con.append(var_data)
 
@@ -860,10 +857,7 @@ def variables_availability(path_models,var_str,domain):
     return models_list
     
 def cdo_remapbill(path_entry_files,model_name,path_save_files):
-
-    path_files=path_entry_files+'historical/r1i1p1f1/tos/Omon/gn/latest/'
-
-    remapbill_info=xr.open_mfdataset(path_files+'tos_Omon_'+model_name+'_historical_*.nc')
+    remapbill_info=xr.open_mfdataset(path_entry_files+'tos_Omon_'+model_name+'_historical_*.nc')
     m_sst_grid_var=remapbill_info['tos']
 
     m_grid_lat=m_sst_grid_var[m_sst_grid_var.dims[1]]
@@ -874,7 +868,7 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
     ysize=np.array(m_grid_lat).shape[0]
 
     #Generating the list of the files 
-    list_path=os.listdir(path_files)
+    list_path=os.listdir(path_entry_files)
 
     files_var=[]
 
@@ -891,7 +885,7 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
             oras_i=files_var[ñ]
             oras_out='tos_cmip6_'+model_name+'_historical_'+str(ñ)+'.nc'
 
-            cdo_remap='cdo -remapbil,r'+str(xsize)+'x'+str(ysize)+' '+path_files+oras_i+' '+path_save_files+oras_out
+            cdo_remap='cdo -remapbil,r'+str(xsize)+'x'+str(ysize)+' '+path_entry_files+oras_i+' '+path_save_files+oras_out
 
             os.system(cdo_remap) 
     else:
@@ -899,7 +893,7 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
         oras_i=files_var[0]
         oras_out='tos_cmip6_'+model_name+'_historical.nc'
 
-        cdo_remap='cdo -remapbil,r'+str(xsize)+'x'+str(ysize)+' '+path_files+oras_i+' '+path_save_files+oras_out
+        cdo_remap='cdo -remapbil,r'+str(xsize)+'x'+str(ysize)+' '+path_entry_files+oras_i+' '+path_save_files+oras_out
 
         os.system(cdo_remap)    
 
@@ -1309,110 +1303,6 @@ def plot_series_int_loc(title_plot,index_strength_ref,index_strength_m,index_lat
         axs.set_xticklabels(labels,fontsize=ticks_font)
         axs.set_ylabel(y_label_plot,fontsize=label_font)
         if k!=0 and k!=1:
-            axs.set_xlabel('Month',fontsize=label_font)
-
-    fig.legend( bbox_to_anchor=(0.92, 0.9), loc='upper left', fontsize=str(legend_font))
-
-    fig.savefig(path_save_plots+save_str+'.png', \
-    format = 'png', bbox_inches='tight')
-    plt.close()
-
-def plot_series_int_loc_combined(title_plot,index_strength_ref_sash,index_strength_m_sash,index_latitude_ref_sash,index_longitude_ref_sash,index_latitude_m_sash,index_longitude_m_sash,\
-                               index_strength_ref_spsh,index_strength_m_spsh,index_latitude_ref_spsh,index_longitude_ref_spsh,index_latitude_m_spsh,index_longitude_m_spsh,\
-                               index_strength_ref_nash,index_strength_m_nash,index_latitude_ref_nash,index_longitude_ref_nash,index_latitude_m_nash,index_longitude_m_nash,\
-                               title_subplot_0_sash,title_subplot_1_sash,title_subplot_2_sash,title_subplot_0_spsh,title_subplot_1_spsh,title_subplot_2_spsh,\
-                               title_subplot_0_nash,title_subplot_1_nash,title_subplot_2_nash,list_models,save_str,units_index, path_save_plots,nrow,ncol,fzx,fzy,title_font1,title_font2,\
-                                  label_font, ticks_font, legend_font):
-    labels=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
-    row=nrow
-    column=ncol
-    fig=plt.figure(figsize=(fzx,fzy))
-    fig.suptitle(title_plot,fontsize=title_font1,fontweight='bold')
-
-    for k in range(nrow*ncol):
-        axs = fig.add_subplot(row, column, k+1)
-        if k==0:
-            reference_data=index_strength_ref_sash
-            models_data=index_strength_m_sash
-            y_label_plot=units_index
-            title_subplot=title_subplot_0_sash
-            labels_ref_plot='Reference [ERA5]'
-        
-        elif k==1:
-            reference_data=index_strength_ref_spsh
-            models_data=index_strength_m_spsh
-            y_label_plot=units_index
-            title_subplot=title_subplot_0_spsh
-            labels_ref_plot=None
-        elif k==2:
-            reference_data=index_strength_ref_nash
-            models_data=index_strength_m_nash
-            y_label_plot=units_index
-            title_subplot=title_subplot_0_nash
-            labels_ref_plot=None
-
-        elif k==3:
-            reference_data=index_latitude_ref_sash
-            models_data=index_latitude_m_sash
-            y_label_plot='Latitude [°S]'
-            title_subplot=title_subplot_1_sash
-            labels_ref_plot=None
-
-        elif k==4:
-            reference_data=index_latitude_ref_spsh
-            models_data=index_latitude_m_spsh
-            y_label_plot='Latitude [°S]'
-            title_subplot=title_subplot_1_spsh
-            labels_ref_plot=None
-
-        elif k==5:
-            reference_data=index_latitude_ref_nash
-            models_data=index_latitude_m_nash
-            y_label_plot='Latitude °N'
-            title_subplot=title_subplot_1_nash
-            labels_ref_plot=None
-
-        elif k==6:
-            reference_data=index_longitude_ref_sash
-            models_data=index_longitude_m_sash
-            y_label_plot='Longitude [°W]'
-            title_subplot=title_subplot_2_sash
-            labels_ref_plot=None
-        
-        elif k==7:
-            reference_data=index_longitude_ref_spsh
-            models_data=index_longitude_m_spsh
-            y_label_plot='Longitude [°W]'
-            title_subplot=title_subplot_2_spsh
-            labels_ref_plot=None
-        else:
-            reference_data=index_longitude_ref_nash
-            models_data=index_longitude_m_nash
-            y_label_plot='Longitude [°W]'
-            title_subplot=title_subplot_2_nash
-            labels_ref_plot=None
-        
-
-        axs.set_title(title_subplot,fontsize=title_font2,loc='left')
-        axs.spines['top'].set_visible(False)
-        axs.spines['right'].set_visible(False)
-
-        axs.plot(reference_data, color = 'k', linewidth=2.2,label=labels_ref_plot)
-        #iterating in the models to obtain the serie
-        colors=iter(cm.rainbow(np.linspace(0,1,len(list_models))))
-
-        for m in range(len(list_models)):
-            if k==0:
-                labels_plots=list_models[m]
-            else:
-                labels_plots=None
-            c=next(colors)
-
-            axs.plot(models_data[m] ,color =c ,linewidth=1.5,label=labels_plots)
-        axs.set_xticks(np.arange(0,12,1))
-        axs.set_xticklabels(labels,fontsize=ticks_font)
-        axs.set_ylabel(y_label_plot,fontsize=label_font)
-        if k==6 or k==7 or k==8:
             axs.set_xlabel('Month',fontsize=label_font)
 
     fig.legend( bbox_to_anchor=(0.92, 0.9), loc='upper left', fontsize=str(legend_font))
@@ -2315,18 +2205,18 @@ def labels_str(labels_input,boundary):
         labels_x_plot=[]
         absolute=np.abs(labels_input)
         for t in range(len(labels_input)):
-            new=str(absolute[t]).replace('.0','')+'°W'
+            new=str(absolute[t])+'°W'
             labels_x_plot.append(new)
     else:
         labels_x_plot=[]
         for t in range(len(labels_input)):
             if labels_input[t]<0.0:
                 abs_coor=np.round(np.abs(labels_input[t]),0)
-                new=str(abs_coor).replace('.0','')+'°S'
+                new=str(abs_coor)+'°S'
             elif labels_input[t]>0.0:
-                new=str(np.round(labels_input[t],0)).replace('.0','')+'°N'
+                new=str(np.round(labels_input[t],0))+'°N'
             else:
-                new=str(np.round(labels_input[t],0)).replace('.0','')
+                new=str(np.round(labels_input[t],0))
             labels_x_plot.append(new)
 
     return labels_x_plot
