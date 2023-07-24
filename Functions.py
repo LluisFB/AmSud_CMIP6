@@ -753,9 +753,14 @@ def netcdf_creation_original_ERA5(path_entry_files,var_name,lat_d,lon_d,level_lo
 
     file_con=[]
 
+    if level_status=='No':
+        nm='asme5'
+    else:
+        nm='apme5'
+
     for b in range(len(range_years)):
 
-        var_data_year=xr.open_dataset(path_entry_files+str(range_years[b])+'/'+var_name+'.'+str(range_years[b])+'.apme5.GLOBAL_025.nc')
+        var_data_year=xr.open_dataset(path_entry_files+str(range_years[b])+'/'+var_name+'.'+str(range_years[b])+'.'+nm+'.GLOBAL_025.nc')
         var_data=var_data_year[var_name]
         file_con.append(var_data)
 
