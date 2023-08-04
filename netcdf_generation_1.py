@@ -50,7 +50,7 @@ path_entry_ini='/bdd/ERA5/NETCDF/GLOBAL_025/1xmonthly/'
 
 #-------------------------------------------------------------------------------------------------------  
 
-list_variables=['u','v','q','msl','z','sst','t','mtpr','w']
+list_variables=['u','v','q','msl','geopt','sst','t','mtpr','w']
 
 lat_limits_global=[-70,50]
 lon_limits_global=[-155,-5]
@@ -75,7 +75,7 @@ for i in range(len(list_variables)):
                                                         p_level_interest_lower,p_level_interest_upper,\
                                                             'ERA5','Yes',path_save)
         
-    elif var_sp=='q' or var_sp=='t' or var_sp=='z':
+    elif var_sp=='q' or var_sp=='t' or var_sp=='geopt':
         path_entry=path_entry_ini+'AN_PL/'
         gridsize_x, gridsize_y=netcdf_creation_original_ERA5(path_entry,var_sp,lat_limits_global,lon_limits_global,\
                                                         p_level_interest_lower,p_level_interest_upper,\

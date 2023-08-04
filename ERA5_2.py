@@ -221,7 +221,7 @@ for i in range(len(list_calculation)):
 
         try:
             
-            var_array_r=Bolivian_High(path_save,'z','ERA5', 'reference',lon_limits_bol,lat_limits_bol, 20000,20000)[:,0]
+            var_array_r=Bolivian_High(path_save,'geopt','ERA5', 'reference',lon_limits_bol,lat_limits_bol, 20000,20000)[:,0]
 
             var_array_r=(var_array_r/9.8)/1000
 
@@ -510,7 +510,7 @@ for i in range(len(list_calculation)):
         try:
 
             MSE_ref,Lat_ref,Lon_ref,dx_ref,\
-            dy_ref=MSE_calc(path_save, 'v', 'q', 't','z', 'ERA5',lat_limits,lon_limits,None, None,\
+            dy_ref=MSE_calc(path_save, 'v', 'q', 't','geopt', 'ERA5',lat_limits,lon_limits,None, None,\
             p_level_interest_lower,p_level_interest_upper,'ERA5')
 
             #-----------------------------------------------------------------------------
