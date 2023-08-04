@@ -40,8 +40,10 @@ sns.set_context('notebook', font_scale=1.5)
 
 #Path save is the path to save all the files from the calculations
 #CHANGE path save
-path_save='/home/iccorreasa/Documentos/Paper_CMIP6_models/PLOTS_paper/PAPER_FINAL/npz/' #CHANGE
-
+# Modified by PHWeill 2023/07/15
+#path_save='/home/iccorreasa/Documentos/Paper_CMIP6_models/PLOTS_paper/PAPER_FINAL/npz/' #CHANGE
+path_save='/scratchx/lfita/'
+# End Modif
 
 #-------------------------------------------------------------------------------------------------------
 #1. ERA5
@@ -82,7 +84,10 @@ for i in range(len(list_variables)):
                                                             'ERA5','Yes',path_save)
             
     elif var_sp=='msl' or var_sp=='mtpr' or var_sp=='sst':
-        path_entry=path_entry_ini+'AN_SL/'
+# Modified by PHWeill 2023/07/15
+#        path_entry=path_entry_ini+'AN_SL/'
+        path_entry=path_entry_ini+'AN_SF/'
+# End Modif
         gridsize_x, gridsize_y=netcdf_creation_original_ERA5(path_entry,var_sp,lat_limits_global,lon_limits_global,\
                                                         p_level_interest_lower,p_level_interest_upper,\
                                                             'ERA5','No',path_save)
