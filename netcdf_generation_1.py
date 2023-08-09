@@ -101,6 +101,8 @@ print('The generation of the netCDF from ERA5 is ready')
 
 #-----------------------------------------------------------------------------------------------------
 #2. MODELS
+# ls /bdd/CMIP6/CMIP/*/*/amip/r1i1p1f1/Amon/
+
 path_entry_m='/bdd/CMIP6/CMIP/'
 Ensemble='r1i1p1f1'
 
