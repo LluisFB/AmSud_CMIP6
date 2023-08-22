@@ -847,14 +847,19 @@ def variables_availability(path_models,var_str,domain):
         list_ver=os.listdir(path_mod)
 
         for g in range(len(list_ver)):
-            mod_ver=list_ver[g]
-            path_ver=path_mod+mod_ver+'/historical/r1i1p1f1/'+domain+'/'
 
-            list_var=os.listdir(path_ver)
+            try:
+                mod_ver=list_ver[g]
+                path_ver=path_mod+mod_ver+'/historical/r1i1p1f1/'+domain+'/'
 
-            #Checking if the varable is in the list
-            if var_str in list_var:
-                models_name.append(mod_ver)
+                list_var=os.listdir(path_ver)
+
+                #Checking if the varable is in the list
+                if var_str in list_var:
+                    models_name.append(mod_ver)
+
+            except:
+                print('Path not found')
     #---------------------------------------------------------
     #---------------------------------------------------------
     models_list=list(set(models_name))
