@@ -176,19 +176,24 @@ for i in range(len(list_variables)):
                 try:
 
                     if var_sp=='ua' or var_sp=='va':
-                        gridsize_x, gridsize_y=netcdf_creation_original(path_entry,var_sp,'Amon',lat_limits_full,lon_limits_full,\
+                        gridsize_x, gridsize_y, path_check=netcdf_creation_original(path_entry,var_sp,'Amon',lat_limits_full,lon_limits_full,\
                                                                         initial_time,final_time,p_level_interest_lower,p_level_interest_upper,\
                                                                             'model','Yes',path_save,models_ava[n])
+                        print(path_check)
                     
                     elif var_sp=='hus' or var_sp=='ta' or var_sp=='zg':
-                        gridsize_x, gridsize_y=netcdf_creation_original(path_entry,var_sp,'Amon',lat_limits_global,lon_limits_global,\
+                        gridsize_x, gridsize_y, path_check=netcdf_creation_original(path_entry,var_sp,'Amon',lat_limits_global,lon_limits_global,\
                                                                         initial_time,final_time,p_level_interest_lower,p_level_interest_upper,\
                                                                             'model','Yes',path_save,models_ava[n])
+                        
+                        print(path_check)
                             
                     elif var_sp=='psl' or var_sp=='pr':
-                        gridsize_x, gridsize_y=netcdf_creation_original(path_entry,var_sp,'Amon',lat_limits_global,lon_limits_global,\
+                        gridsize_x, gridsize_y, path_check=netcdf_creation_original(path_entry,var_sp,'Amon',lat_limits_global,lon_limits_global,\
                                                                         initial_time,final_time,p_level_interest_lower,p_level_interest_upper,\
                                                                             'model','No',path_save,models_ava[n])
+                        
+                        print(path_check)
                         if var_sp=='psl':
                             dt_row={'Model':models_ava[n], 'Longitude':gridsize_x, 'Latitude':gridsize_y}
 
@@ -201,9 +206,11 @@ for i in range(len(list_variables)):
 
                     elif var_sp=='tos':
                         cdo_remapbill(path_entry,models_ava[n],path_save)
-                        gridsize_x, gridsize_y=netcdf_creation_original(path_save,var_sp,'Omon',lat_limits_global,lon_limits_global,\
+                        gridsize_x, gridsize_y, path_check=netcdf_creation_original(path_save,var_sp,'Omon',lat_limits_global,lon_limits_global,\
                                                                         initial_time,final_time,p_level_interest_lower,p_level_interest_upper,\
                                                                             'model','No',path_save,models_ava[n])
+                        print(path_check)
+                        
                         dt_row={'Model':models_ava[n], 'Longitude':gridsize_x, 'Latitude':gridsize_y}
 
                         #Reading the dataframe to save the gridsize 

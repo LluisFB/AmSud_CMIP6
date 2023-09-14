@@ -679,6 +679,8 @@ def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,tim
 
     path_files=path_entry_files+'historical/r1i1p1f1/'+ft+'/'+var_name+'/gn/latest/'
 
+    path_to_print=path_files+var_name+'_'+ft+'_'+model_name+'_historical_*.nc'
+
     var_data=xr.open_mfdataset(path_files+var_name+'_'+ft+'_'+model_name+'_historical_*.nc')
     var_field=var_data[var_name]
     #obtaining the domain bnds
@@ -745,7 +747,7 @@ def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,tim
     dx_data=np.round(abs(Lon_list[1])-abs(Lon_list[0]),2)
     dy_data=np.round(abs(Lat_list[-1:][0])-  abs(Lat_list[-2:][0]),2)
 
-    return  dx_data, dy_data
+    return  dx_data, dy_data, path_to_print
 
 def netcdf_creation_original_ERA5(path_entry_files,var_name,lat_d,lon_d,level_lower,level_upper,type_data,level_status,path_save):
 
