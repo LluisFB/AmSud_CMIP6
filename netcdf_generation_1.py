@@ -172,6 +172,11 @@ for i in range(len(list_variables)):
             if models_ava[n] in list_mod_v:
 
                 path_entry=path_folder_sp+models_ava[n]+'/'
+                ftt = 'Amon'
+
+                path_filest=path_entry+'historical/r1i1p1f1/'+ftt+'/'+var_sp+'/*/latest/'
+
+                path_to_printt=path_filest+var_sp+'_'+ftt+'_'+models_ava[n]+'_historical_*.nc'
 
                 try:
 
@@ -222,7 +227,10 @@ for i in range(len(list_variables)):
                         
                 except:
                     print('Error: ',var_sp,models_ava[n])
-            
+
+                # Processed par variable - GCM
+                break
+
             else:
                 pass
 
