@@ -677,12 +677,27 @@ def wind_field_calc(path_entry,var_sp1,var_sp2,model_name,lat_d,lon_d,time_0,tim
 
 def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,time_1,level_lower,level_upper,type_data,level_status,path_save,model_name):
 
-    path_files=path_entry_files+'historical/r1i1p1f1/'+ft+'/'+var_name+'/gn/latest/'
+    path_files_old=path_entry_files+'historical/r1i1p1f1/'+ft+'/'+var_name+'/'
+
+    grid_list=os.listdir(path_files_old)
+
+    if len(grid_list)>1:
+        if 'gn' in grid_list:
+            grid_type='gn'
+    else:
+        grid_type=grid_list[0]
+
+    path_files=path_files_old+grid_type+'/latest/'
 
     path_to_print=path_files+var_name+'_'+ft+'_'+model_name+'_historical_*.nc'
 
     var_data=xr.open_mfdataset(path_files+var_name+'_'+ft+'_'+model_name+'_historical_*.nc')
     var_field=var_data[var_name]
+
+    print('========================================================')
+    print('The data was read successfully')
+    print('========================================================')
+
     #obtaining the domain bnds
     lat_bnd,lon_bnd,lat_slice,lon_slice=lat_lon_bds(lon_d,lat_d,var_field)
     #Checking the time bands
@@ -692,6 +707,10 @@ def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,tim
     #delimiting the spatial domain
     var_delimited=time_lat_lon_positions(t_0_new,t_1_new,lat_bnd,\
     lon_bnd,lat_slice,var_field,type_data,level_status)
+
+    print('========================================================')
+    print('var delimited done succesfully')
+    print('========================================================')
 
     #-----------------------------------------------------------------------------------
     #-----------------------------------------------------------------------------------
@@ -716,6 +735,10 @@ def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,tim
             var_delimited=var_delimited.reindex(lat=list(reversed(var_delimited.lat)))
         else:
             pass
+
+    print('========================================================')
+    print('Changes in level and latitude order done succesfully')
+    print('========================================================')
     
     #----------------------------------------------------------------------------------
 
@@ -729,13 +752,21 @@ def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,tim
     #grouping by season
     var_seasonal=var_levels.groupby('time.season').mean('time')
 
+    print('========================================================')
+    print('Seasonal mean done succesfully')
+    print('========================================================')
+
     #--------------------------------------------------------------------------------------
     #1. Saving the netcdf of the climatology of the variable 
     var_levels.to_netcdf(path_save+model_name+'_'+var_name+'_original_mon_clim_LT.nc')
     #2. Saving the netcdf of the seasonal mean of the variable
     var_seasonal.to_netcdf(path_save+model_name+'_'+var_name+'_original_seasonal_mean.nc')
 
-     #defining Lat and Lon lists
+    print('========================================================')
+    print('Files (seasonal and long-term) saved succesfully')
+    print('========================================================')
+
+    #defining Lat and Lon lists
     if lat_slice=='lat':
         Lat_list=list(np.array(var_delimited.lat))
         Lon_list=list(np.array(var_delimited.lon))
@@ -746,6 +777,10 @@ def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,tim
     #defining the grid size
     dx_data=np.round(abs(Lon_list[1])-abs(Lon_list[0]),2)
     dy_data=np.round(abs(Lat_list[-1:][0])-  abs(Lat_list[-2:][0]),2)
+
+    print('========================================================')
+    print('Lat and Lon list and grid size defined succesfully')
+    print('========================================================')
 
     return  dx_data, dy_data, path_to_print
 
