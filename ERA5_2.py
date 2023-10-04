@@ -42,7 +42,7 @@ sns.set_context('notebook', font_scale=1.5)
 
 #------------------------------------------------------------------------------------------
 #Path_save is the path of the folder that contains all the files
-path_save='/home/iccorreasa/Documentos/Paper_CMIP6_models/PLOTS_paper/PAPER_FINAL/npz/' #CHANGE
+path_save='/scratchx/lfita/' #CHANGE
 
 #-------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
