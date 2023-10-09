@@ -599,11 +599,19 @@ def var_field_calc(path_entry,var_sp,model_name,lat_d,lon_d,time_0,time_1,level_
 
     var_field=var_data[var_sp]
 
+    print('##############################')
+    print("var_field_calc: read file OK")
+    print('##############################')
+
     #obtaining the domain bnds
     lat_bnd,lon_bnd,lat_slice,lon_slice=lat_lon_bds(lon_d,lat_d,var_field)
     #delimiting the spatial domain
     var_delimited=time_lat_lon_positions(time_0,time_1,lat_bnd,\
     lon_bnd,lat_slice,var_field,type_data,level_status)
+
+    print('##############################')
+    print("var_field_calc: var delimited OK")
+    print('##############################')
 
 
     if level_status=='No':
@@ -615,6 +623,9 @@ def var_field_calc(path_entry,var_sp,model_name,lat_d,lon_d,time_0,time_1,level_
 
     #converting into array
     var_array=np.array(var_levels)
+    print('##############################')
+    print("var_field_calc: var_array OK")
+    print('##############################')
 
     #defining Lat and Lon lists
     if lat_slice=='lat':
@@ -640,6 +651,10 @@ def wind_field_calc(path_entry,var_sp1,var_sp2,model_name,lat_d,lon_d,time_0,tim
 
     v_field=var_data2[var_sp2]
 
+    print('##############################')
+    print("wind_field_calc: read file OK")
+    print('##############################')
+
     #obtaining the domain bnds
     lat_bnd,lon_bnd,lat_slice,lon_slice=lat_lon_bds(lon_d,lat_d,u_field)
     #delimiting the spatial domain
@@ -654,11 +669,19 @@ def wind_field_calc(path_entry,var_sp1,var_sp2,model_name,lat_d,lon_d,time_0,tim
     u_levels=u_delimited[:,int(ini_level):int(fin_level+1),:,:]
     v_levels=v_delimited[:,int(ini_level):int(fin_level+1),:,:]
 
+    print('##############################')
+    print("wind_field_calc: var_levels OK")
+    print('##############################')
+
     #converting into array
     u_array=np.array(u_levels)[:,0,:,:]
     v_array=np.array(v_levels)[:,0,:,:]
 
     mag_arr=np.sqrt(u_array**2+v_array**2)
+
+    print('##############################')
+    print("wind_field_calc: mag arr OK")
+    print('##############################')
 
     #defining Lat and Lon lists
     if lat_slice=='lat':
@@ -1517,6 +1540,10 @@ def hadley_cell_calc(div_compo,lon_arr,lat_arr,level_arr,lat_bnds_had,lon_bnds_h
     lon_hadley=lon_arr[lon_idx_h]
     lat_hadley=lat_arr[lat_idx_h]
 
+    print('##############################')
+    print("hadley_cell_calc: lat_lon idx h OK")
+    print('##############################')
+
     hadley_stream=np.empty((4,lat_hadley.shape[0],level_arr.shape[0]))
     std_h=np.empty((4))
 
@@ -1529,6 +1556,10 @@ def hadley_cell_calc(div_compo,lon_arr,lat_arr,level_arr,lat_bnds_had,lon_bnds_h
         div_input=div_lat
 
         had_cell_season=TropD_Calculate_StreamFunction_hadley(div_input, lat_hadley, level_arr)
+
+        print('##############################')
+        print("hadley_cell_calc: TropD_Calculate_StreamFunction_hadley OK")
+        print('##############################')
 
         hadley_stream[m,:,:]=had_cell_season
 
@@ -1558,6 +1589,10 @@ def walker_cell_calc(div_compo,lon_arr,lat_arr,level_arr,lat_bnds_wal,lon_bnds_w
 
         wal_cell_season=TropD_Calculate_StreamFunction_walker(div_input, lon_walker, level_arr)
 
+        print('##############################')
+        print("hadley_cell_calc: TropD_Calculate_StreamFunction_walker OK")
+        print('##############################')
+
         walker_stream[m,:,:]=wal_cell_season
 
         #Estimating the reference standar deviation
@@ -1575,6 +1610,10 @@ def regional_cells(path_entry,var_sp1,var_sp2,model_name,lat_h,lon_h,lat_w,lon_w
     var_data2=xr.open_mfdataset(path_entry+model_name+'_'+var_sp2+'_original_seasonal_mean.nc')
 
     v_field=var_data2[var_sp2]
+
+    print('##############################')
+    print("regional_cells: read files OK")
+    print('##############################')
 
     #obtaining the domain bnds
     lat_slice,lon_slice=lat_lon_bds(lon_h,lat_h,u_field)[2:4]
@@ -1608,6 +1647,10 @@ def regional_cells(path_entry,var_sp1,var_sp2,model_name,lat_h,lon_h,lat_w,lon_w
             u_field=u_field.reindex(latitude=list(reversed(u_field.latitude)))
         else:
             pass
+    
+    print('##############################')
+    print("regional_cells: reindex OK")
+    print('##############################')
 
     lat_bnd_h,lon_bnd_h=lat_lon_bds(lon_h,lat_h,u_field)[0:2]
     lat_bnd_w,lon_bnd_w=lat_lon_bds(lon_w,lat_w,u_field)[0:2]
@@ -1616,6 +1659,10 @@ def regional_cells(path_entry,var_sp1,var_sp2,model_name,lat_h,lon_h,lat_w,lon_w
     ini_level,fin_level=levels_limit(u_field,level_lower,level_upper)
     u_levels=u_field[:,int(ini_level):int(fin_level+1),:,:]
     v_levels=v_field[:,int(ini_level):int(fin_level+1),:,:]
+
+    print('##############################')
+    print("regional_cells: levels OK")
+    print('##############################')
 
     #obtaining the list of the pressure levels and the latitudes
     if lat_slice=='latitude':
@@ -1673,6 +1720,10 @@ def regional_cells(path_entry,var_sp1,var_sp2,model_name,lat_h,lon_h,lat_w,lon_w
 
         uchi[s,:,:,:]=uchi_season
         vchi[s,:,:,:]=vchi_season
+
+    print('##############################')
+    print("regional_cells: div component OK")
+    print('##############################')
     
     #-----------------------------------------------------------------------------------------
     ############################################################################
@@ -1689,6 +1740,10 @@ def regional_cells(path_entry,var_sp1,var_sp2,model_name,lat_h,lon_h,lat_w,lon_w
     #obtainig the grid size of the model 
     dx_h=np.round(abs(lat_had[0])-abs(lat_had[1]),2)
     dx_w=np.round(abs(lon_wal[1])-abs(lon_wal[0]),2)
+
+    print('##############################')
+    print("regional_cells: hadley_stream-walker_stream OK")
+    print('##############################')
 
 
     return hadley_stream, std_h, lat_had,  walker_stream,std_w,lon_wal, p_level, dx_h, dx_w
@@ -1845,6 +1900,10 @@ def VIMF_calc(path_entry, var_sp1, var_sp2, var_sp3, model_name,lat_d,lon_d,time
 
     q_field=var_data3[var_sp3]
 
+    print('#########################')
+    print('VIMF_calc: read files OK')
+    print('#########################')
+
     #obtaining the domain bnds
     lat_bnd,lon_bnd,lat_slice,lon_slice=lat_lon_bds(lon_d,lat_d,u_field)
     lat_bnd_q,lon_bnd_q=lat_lon_bds(lon_d,lat_d,q_field)[0:2]
@@ -1858,11 +1917,18 @@ def VIMF_calc(path_entry, var_sp1, var_sp2, var_sp3, model_name,lat_d,lon_d,time
     q_delimited=time_lat_lon_positions(time_0,time_1,lat_bnd_q,\
     lon_bnd_q,lat_slice,q_field,'ERA5','Yes')
 
+    print('#########################')
+    print('VIMF_calc: var_delimited OK')
+    print('#########################')
+
     #Comparing the delimited fields of all variables 
     q_delimited_1,lon_var_new=domain_comparison(lat_slice,v_delimited,q_delimited, lon_bnd_q,time_0,time_1,lat_bnd_q,q_field,'ERA5','longitude')
     q_delimited_f,lat_var_new=domain_comparison(lat_slice,v_delimited,q_delimited_1, lon_var_new,time_0,time_1,lat_bnd_q,q_field,'ERA5','latitude')
 
-    
+    print('#########################')
+    print('VIMF_calc: domain_comparison OK')
+    print('#########################')
+
     #selecting the pressure level
     ini_level,fin_level=levels_limit(u_delimited,level_lower,level_upper)
     u_levels=u_delimited[:,int(ini_level):int(fin_level+1),:,:]
@@ -1878,6 +1944,10 @@ def VIMF_calc(path_entry, var_sp1, var_sp2, var_sp3, model_name,lat_d,lon_d,time
     u_array=NaNs_levels(u_array_t,'3D', 'cubic')
     v_array=NaNs_levels(v_array_t,'3D', 'cubic')
     q_array=NaNs_levels(q_array_t,'3D', 'cubic')
+
+    print('#########################')
+    print('VIMF_calc: NaNs_levels OK')
+    print('#########################')
 
     #defining Lat and Lon lists
     if lat_slice=='lat':
@@ -1925,6 +1995,10 @@ def VIMF_calc(path_entry, var_sp1, var_sp2, var_sp3, model_name,lat_d,lon_d,time
     qu_integral=np.nansum(qu_column,axis=1)/9.8
     qv_integral=np.nansum(qv_column,axis=1)/9.8
 
+    print('#########################')
+    print('VIMF_calc: integrals OK')
+    print('#########################')
+
     #defining the grid size
     dx_data=np.round(abs(Lon_list[1])-abs(Lon_list[0]),2)
     dy_data=np.round(abs(Lat_list[-1:][0])-  abs(Lat_list[-2:][0]),2)
@@ -1951,6 +2025,10 @@ def MSE_calc(path_entry, var_sp1, var_sp2, var_sp3, var_sp4, model_name,lat_d,lo
 
     z_field=var_data4[var_sp4]
 
+    print('#########################')
+    print('MSE_calc: read files OK')
+    print('#########################')
+
     #obtaining the domain bnds
     lat_bnd,lon_bnd,lat_slice,lon_slice=lat_lon_bds(lon_d,lat_d,v_field)
     lat_bnd_q,lon_bnd_q=lat_lon_bds(lon_d,lat_d,q_field)[0:2]
@@ -1970,6 +2048,10 @@ def MSE_calc(path_entry, var_sp1, var_sp2, var_sp3, var_sp4, model_name,lat_d,lo
     z_delimited=time_lat_lon_positions(time_0,time_1,lat_bnd_q,\
     lon_bnd_q,lat_slice,z_field,'ERA5','Yes')
 
+    print('#########################')
+    print('MSE_calc: var_delimited OK')
+    print('#########################')
+
     #Comparing the delimited fields of all variables 
     q_delimited_1, lon_q_new=domain_comparison(lat_slice,v_delimited,q_delimited, lon_bnd_q,time_0,time_1,lat_bnd_q,q_field,'ERA5','longitude')
     t_delimited_1, lon_t_new=domain_comparison(lat_slice,v_delimited,t_delimited, lon_bnd_t,time_0,time_1,lat_bnd_t,t_field,'ERA5','longitude')
@@ -1978,6 +2060,10 @@ def MSE_calc(path_entry, var_sp1, var_sp2, var_sp3, var_sp4, model_name,lat_d,lo
     q_delimited_f, lat_q_new=domain_comparison(lat_slice,v_delimited,q_delimited_1, lon_q_new,time_0,time_1,lat_bnd_q,q_field,'ERA5','latitude')
     t_delimited_f, lat_t_new=domain_comparison(lat_slice,v_delimited,t_delimited_1, lon_t_new,time_0,time_1,lat_bnd_t,t_field,'ERA5','latitude')
     z_delimited_f, lat_z_new=domain_comparison(lat_slice,v_delimited,z_delimited_1, lon_z_new,time_0,time_1,lat_bnd_z,z_field,'ERA5','latitude')
+
+    print('#########################')
+    print('MSE_calc: rdomain_comparison OK')
+    print('#########################')
 
     #selecting the pressure level
     ini_level,fin_level=levels_limit(v_delimited,level_lower,level_upper)
@@ -2001,6 +2087,10 @@ def MSE_calc(path_entry, var_sp1, var_sp2, var_sp3, var_sp4, model_name,lat_d,lo
     q_array=NaNs_levels(q_array_t,'3D', 'cubic')
     t_array=NaNs_levels(t_array_t,'3D', 'cubic')
     z_array=NaNs_levels(z_array_t,'3D', 'cubic')
+
+    print('#########################')
+    print('MSE_calc: NaNs_levels OK')
+    print('#########################')
 
     #defining Lat and Lon lists
     if lat_slice=='lat':
@@ -2062,6 +2152,10 @@ def MSE_calc(path_entry, var_sp1, var_sp2, var_sp3, var_sp4, model_name,lat_d,lo
     # adding up in the pressure levels
     MSE_integral=np.nansum(MSE_column,axis=1)
 
+    print('#########################')
+    print('MSE_calc: MSE_integral OK')
+    print('#########################')
+
     #defining the grid size
     dx_data=np.round(abs(Lon_list[1])-abs(Lon_list[0]),2)
     dy_data=np.round(abs(Lat_list[-1:][0])-  abs(Lat_list[-2:][0]),2)
@@ -2079,6 +2173,10 @@ def boundaries_fluxes(path_entry, var_sp1, var_sp2, model_name,lat_d,lon_d,time_
 
     q_field=var_data2[var_sp2]
 
+    print('#########################')
+    print('boundaries_fluxes: read files OK')
+    print('#########################')
+
     lat_bnd,lon_bnd,lat_slice,lon_slice=lat_lon_bds(lon_d,lat_d,wind_field)
     lat_bnd_q,lon_bnd_q=lat_lon_bds(lon_d,lat_d,q_field)[0:2]
     #delimiting the spatial domain
@@ -2086,6 +2184,10 @@ def boundaries_fluxes(path_entry, var_sp1, var_sp2, model_name,lat_d,lon_d,time_
     lon_bnd,lat_slice,wind_field,'ERA5','Yes')
     q_delimited=time_lat_lon_positions(time_0,time_1,lat_bnd_q,\
     lon_bnd_q,lat_slice,q_field,'ERA5','Yes')
+
+    print('#########################')
+    print('boundaries_fluxes: var_delimited OK')
+    print('#########################')
 
     #Applying the function to compare the length of the dimensions
 
@@ -2115,6 +2217,10 @@ def boundaries_fluxes(path_entry, var_sp1, var_sp2, model_name,lat_d,lon_d,time_
                 q_delimited_f, lon_q_new=domain_comparison(lat_slice,wind_delimited,q_delimited, lon_bnd_q,time_0,time_1,lat_bnd_q,q_field,'ERA5','longitude')
             else:
                 q_delimited_f, lat_q_new=domain_comparison(lat_slice,wind_delimited,q_delimited, lon_bnd_q,time_0,time_1,lat_bnd_q,q_field,'ERA5','latitude')
+    
+    print('#########################')
+    print('boundaries_fluxes: domain comparison OK')
+    print('#########################')
 
     #selecting the pressure level
     ini_level,fin_level=levels_limit(wind_delimited,level_lower,level_upper)
@@ -2128,6 +2234,10 @@ def boundaries_fluxes(path_entry, var_sp1, var_sp2, model_name,lat_d,lon_d,time_
     #Evaluating the missing values in the pressure levels
     wind_array=NaNs_levels(wind_array_t,'3D', 'cubic')
     q_array=NaNs_levels(q_array_t,'3D', 'cubic')
+
+    print('#########################')
+    print('boundaries_fluxes: NaNs levels OK')
+    print('#########################')
 
     #defining Lat and Lon lists
     if lat_slice=='lat':
