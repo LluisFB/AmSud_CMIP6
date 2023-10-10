@@ -927,8 +927,29 @@ def variables_availability(path_models,var_str,domain):
     return models_list
     
 def cdo_remapbill(path_entry_files,model_name,path_save_files):
-    remapbill_info=xr.open_mfdataset(path_entry_files+'tos_Omon_'+model_name+'_historical_*.nc')
+
+    path_files_old=path_entry_files+'historical/r1i1p1f1/Omon/tos/'
+
+    grid_list=os.listdir(path_files_old)
+
+    if len(grid_list)>1:
+        if 'gn' in grid_list:
+            grid_type='gn'
+    else:
+        grid_type=grid_list[0]
+    
+    path_files=path_files_old+grid_type+'/latest/'
+
+    print('###################################################')
+    print(path_files)
+    print('###################################################')
+
+    remapbill_info=xr.open_mfdataset(path_files+'tos_Omon_'+model_name+'_historical_*.nc')
     m_sst_grid_var=remapbill_info['tos']
+
+    print('###################################################')
+    print('cdo_remapbill: read files OK')
+    print('###################################################')
 
     m_grid_lat=m_sst_grid_var[m_sst_grid_var.dims[1]]
     m_grid_lon=m_sst_grid_var[m_sst_grid_var.dims[2]]
@@ -936,6 +957,10 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
 
     xsize=np.array(m_grid_lon).shape[0]
     ysize=np.array(m_grid_lat).shape[0]
+
+    print('###################################################')
+    print('cdo_remapbill: xsize,ysize OK')
+    print('###################################################')
 
     #Generating the list of the files 
     list_path=os.listdir(path_entry_files)
@@ -947,6 +972,10 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
             files_var.append(list_path[ñ])
     
     files_var=sorted(files_var)
+
+    print('###################################################')
+    print('cdo_remapbill: files var OK')
+    print('###################################################')
     
     #remaping
 
@@ -958,6 +987,11 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
             cdo_remap='cdo -remapbil,r'+str(xsize)+'x'+str(ysize)+' '+path_entry_files+oras_i+' '+path_save_files+oras_out
 
             os.system(cdo_remap) 
+
+        print('###################################################')
+        print('cdo_remapbill: remapbill os some files OK')
+        print('###################################################') 
+
     else:
         #oras_i='tos_Omon_'+model_name+'_historical_r1i1p1f1_gn_185001-201412.nc'
         oras_i=files_var[0]
@@ -965,7 +999,11 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
 
         cdo_remap='cdo -remapbil,r'+str(xsize)+'x'+str(ysize)+' '+path_entry_files+oras_i+' '+path_save_files+oras_out
 
-        os.system(cdo_remap)    
+        os.system(cdo_remap)   
+
+        print('###################################################')
+        print('cdo_remapbill: remapbill os one file OK')
+        print('###################################################') 
 
 def subtropical_jet(path_entry,var_sp,model_name, type_dataset,lon_limits,lat_limits, pressure_0,pressure_1):
 
