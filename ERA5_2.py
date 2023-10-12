@@ -42,12 +42,12 @@ sns.set_context('notebook', font_scale=1.5)
 
 #------------------------------------------------------------------------------------------
 #Path_save is the path of the folder that contains all the files
-path_save='/scratchx/lfita/' #CHANGE
-
+#path_save='/home/iccorreasa/Documentos/Paper_CMIP6_models/PLOTS_paper/PAPER_FINAL/npz/' #CHANGE
+path_save='/scratchx/lfita/'
 #-------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------
-ref_std_DataFrame=pd.DataFrame(columns=['Characteristic','std_DJF', 'std_JJA', 'std_MAM', 'std_SON'])
-ref_std_DataFrame.to_csv(path_save+'reference_std_original.csv')
+#ref_std_DataFrame=pd.DataFrame(columns=['Characteristic','std_DJF', 'std_JJA', 'std_MAM', 'std_SON'])
+#ref_std_DataFrame.to_csv(path_save+'reference_std_original.csv')
 #------------------------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------------------
 #Performing the calculations and obtaining the standard deviation of the fields of ERA5
@@ -91,8 +91,11 @@ Lat_common_b=np.arange(lat_limits_B[0],lat_limits_B[1], dy_common)
 Lon_common_b=np.arange(lon_limits_B[0],lon_limits_B[1], dx_common)
 
 
+#list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation','Regional_cells',\
+#                  'SST','Wind_indices','Bolivian_high','VIMF','qu_qv','MSE','tu_tv']
+
 list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation','Regional_cells',\
-                  'SST','Wind_indices','Bolivian_high','VIMF','qu_qv','MSE','tu_tv']
+                  'SST','VIMF','qu_qv','MSE','tu_tv']
 
 for i in range(len(list_calculation)):
 
@@ -153,6 +156,10 @@ for i in range(len(list_calculation)):
 
             nash_strength_r, nash_lat_r,nash_lon_r=subtropicalHighs(path_save,'msl','ERA5', 'reference',\
                                                                     NASH_domains_lon,NASH_domains_lat)
+            
+            print('####################################')
+            print('Subtropical_highs: indices OK')
+            print('####################################')
 
             #Seasonal
             southAtlantic_strength_r_seasonal, southAtlantic_lat_r_seasonal,\
@@ -164,11 +171,19 @@ for i in range(len(list_calculation)):
             nash_strength_r_seasonal, nash_lat_r_seasonal,\
                 nash_lon_r_seasonal=subtropicalHighs_core_Seasonal(path_save,'msl','ERA5', 'reference',NASH_domains_lon,NASH_domains_lat)
             
+            print('####################################')
+            print('Subtropical_highs: indices core OK')
+            print('####################################')
+            
             #Seasonal fields 
 
             psl_array,Lat_list_psl,Lon_list_psl,dx_data_psl, dy_data_psl=var_field_calc(path_save,'msl','ERA5',\
                                                                                     fields_domains_lat,fields_domains_lon,None,None,\
                                                                                     None,None,'ERA5','No')
+            
+            print('####################################')
+            print('Subtropical_highs: var_array OK')
+            print('####################################')
             
             psl_array=psl_array/100
 
@@ -178,6 +193,10 @@ for i in range(len(list_calculation)):
                 var_array_r=NaNs_interp(psl_array, '3D', 'cubic')
             else:
                 var_array_r=psl_array
+            
+            print('####################################')
+            print('subtropical_highs: NaNs_interp OK')
+            print('####################################')
 
             np.savez_compressed(path_save+'southAtlantic_high_strength_ERA5.npz',southAtlantic_strength_r)
             np.savez_compressed(path_save+'southAtlantic_high_latitude_ERA5.npz',southAtlantic_lat_r)
@@ -210,6 +229,10 @@ for i in range(len(list_calculation)):
             np.savez_compressed(path_save+'ERA5_slp_fields_Lon.npz',Lon_list_psl)
 
             std_ref(var_array_r, path_save, 'SLP')
+
+            print('####################################')
+            print('Subtropical_Highs: std_ref OK')
+            print('####################################')
         
         except:
             print('Error ERA5 Subtropical Highs')
@@ -240,6 +263,10 @@ for i in range(len(list_calculation)):
                                                                                     lat_limits_pr,lon_limits_pr,None,None,\
                                                                                     None,None,'ERA5','No')
             
+            print('####################################')
+            print('Precipitation: var_array OK')
+            print('####################################')
+            
             pr_array=pr_array*86400
 
             var_sum=np.sum(pr_array)
@@ -249,6 +276,10 @@ for i in range(len(list_calculation)):
             else:
                 var_array_r=pr_array
             
+            print('####################################')
+            print('Precipitation: var_array NaNs OK')
+            print('####################################')
+            
             #-----------------------------------------------------------------------------------------------------------------------
             #Saving the spatial fields 
             np.savez_compressed(path_save+'ERA5_mtpr_fields.npz',var_array_r)
@@ -256,6 +287,10 @@ for i in range(len(list_calculation)):
             np.savez_compressed(path_save+'ERA5_mtpr_fields_Lon.npz',Lon_list_pr)
 
             std_ref(var_array_r, path_save, 'PPT')
+
+            print('####################################')
+            print('Precipitation: std_ref OK')
+            print('####################################')
         
         except:
             print('Error ERA5 Precipitation')
@@ -298,6 +333,10 @@ for i in range(len(list_calculation)):
                                                     lat_limits_w200,lon_limits_w200,None,None,\
                                                     p_level_interest,p_level_interest,'ERA5')
             
+            print('####################################')
+            print('wind_200: var_array OK')
+            print('####################################')
+            
             ############################################################################
             #Evaluating if there are any NaNs values in the matrices
             u_sum=np.sum(ua200_array)
@@ -312,6 +351,10 @@ for i in range(len(list_calculation)):
                 u_array_r=ua200_array
                 v_array_r=va200_array
                 mag_array_r=mag200_array
+            
+            print('####################################')
+            print('wind_200: var_array NaNs OK')
+            print('####################################')
 
             #-----------------------------------------------------------------------------------------------------------------------
             #Saving the spatial fields 
@@ -322,6 +365,10 @@ for i in range(len(list_calculation)):
             np.savez_compressed(path_save+'ERA5_W200_fields_Lon.npz',Lon_list_w200)
 
             std_ref(mag_array_r, path_save, 'W200')
+
+            print('####################################')
+            print('wind_200: std_ref OK')
+            print('####################################')
         
         except:
             print('Error ERA5 wind_200')
@@ -340,6 +387,10 @@ for i in range(len(list_calculation)):
                                                     lat_limits_w850,lon_limits_w850,None,None,\
                                                     p_level_interest,p_level_interest,'ERA5')
             
+            print('####################################')
+            print('wind_850: var_array OK')
+            print('####################################')
+            
             ############################################################################
             #Evaluating if there are any NaNs values in the matrices
             u_sum=np.sum(ua850_array)
@@ -354,6 +405,10 @@ for i in range(len(list_calculation)):
                 u_array_r=ua850_array
                 v_array_r=va850_array
                 mag_array_r=mag850_array
+            
+            print('####################################')
+            print('wind_850: var_array NaNs OK')
+            print('####################################')
 
             #-----------------------------------------------------------------------------------------------------------------------
             #Saving the spatial fields 
@@ -364,6 +419,10 @@ for i in range(len(list_calculation)):
             np.savez_compressed(path_save+'ERA5_W850_fields_Lon.npz',Lon_list_w850)
 
             std_ref(mag_array_r, path_save, 'W850')
+
+            print('####################################')
+            print('wind_850: std_ref OK')
+            print('####################################')
         
         except:
             print('Error ERA5 wind_850')
@@ -386,6 +445,10 @@ for i in range(len(list_calculation)):
                     'u','v','ERA5',lat_limits_h,lon_limits_h,lat_limits_w,lon_limits_w,None,None,p_level_interest_bottom,p_level_interest_top,\
                         'reference')
             
+            print('####################################')
+            print('Regional_cells: var_array OK')
+            print('####################################')
+            
             #-----------------------------------------------------------------------------------------------------------------------
             #Saving the spatial fields 
             np.savez_compressed(path_save+'ERA5_HadCell_fields.npz',hadley_stream_r)
@@ -396,6 +459,10 @@ for i in range(len(list_calculation)):
 
             std_ref(hadley_stream_r, path_save, 'HadCell')
             std_ref(walker_stream_r, path_save, 'WalCell')
+
+            print('####################################')
+            print('regional_cells: std_ref OK')
+            print('####################################')
         
         except:
             print('Error ERA5 Regional Cells')
@@ -429,9 +496,19 @@ for i in range(len(list_calculation)):
             dy_ref=VIMF_calc(path_save, 'u', 'v', 'q', 'ERA5',lat_limits,lon_limits,None, None,\
             p_level_interest_lower,p_level_interest_upper,'ERA5')
 
+
+            print('####################################')
+            print('VIMF: var_array OK')
+            print('####################################')
+
+
             #-----------------------------------------------------------------------------
             #Interpolating to the common grid size 
             VIMF_ref_interpolated=interpolation_fields(VIMF_ref,Lat_ref,Lon_ref,Lat_common_b,Lon_common_b,dx_common,dy_common)
+
+            print('####################################')
+            print('VIMF: interpolation OK')
+            print('####################################')
 
             ############################################################################
             #Obtaining the series of each boundary
@@ -467,6 +544,10 @@ for i in range(len(list_calculation)):
             VIMF_ref_e=VIMF_ref_interpolated[:,lat_loc_m_e[0][0]:lat_loc_m_e[0][-1]+1,\
             lon_loc_m_e[0][0]:lon_loc_m_e[0][-1]+1]
             VIMF_ref_eastern=np.nanmean(VIMF_ref_e,axis=2)
+
+            print('####################################')
+            print('VIMF: VIMF boundaries OK')
+            print('####################################')
 
 
             ############################################################################
@@ -513,9 +594,17 @@ for i in range(len(list_calculation)):
             dy_ref=MSE_calc(path_save, 'v', 'q', 't','geopt', 'ERA5',lat_limits,lon_limits,None, None,\
             p_level_interest_lower,p_level_interest_upper,'ERA5')
 
+            print('####################################')
+            print('MSE: var_array OK')
+            print('####################################')
+
             #-----------------------------------------------------------------------------
             #Interpolating to the common grid size 
             MSE_ref_interpolated=interpolation_fields(MSE_ref,Lat_ref,Lon_ref,Lat_common_b,Lon_common_b,dx_common,dy_common)
+
+            print('####################################')
+            print('MSE: interpolation OK')
+            print('####################################')
 
             ############################################################################
             #Obtaining the series of each boundary
@@ -551,6 +640,10 @@ for i in range(len(list_calculation)):
             MSE_ref_e=MSE_ref_interpolated[:,lat_loc_m_e[0][0]:lat_loc_m_e[0][-1]+1,\
             lon_loc_m_e[0][0]:lon_loc_m_e[0][-1]+1]
             MSE_ref_eastern=np.nanmean(MSE_ref_e,axis=2)
+
+            print('####################################')
+            print('MSE: MSE boundaries OK')
+            print('####################################')
 
             ############################################################################
             ############################################################################
@@ -605,6 +698,10 @@ for i in range(len(list_calculation)):
             qu_r_eastern,Lat_r_east,Lon_r_east=boundaries_fluxes(path_save, 'u', 'q',  'ERA5',\
             east_boundaries_lat,east_boundaries_lon,None, None,p_level_interest_lower,\
             p_level_interest_upper,'reference')[0:3]
+
+            print('####################################')
+            print('qu_qv:var_arr OK')
+            print('####################################')
             
             ############################################################################
             ############################################################################
@@ -619,6 +716,10 @@ for i in range(len(list_calculation)):
             qv_r_southern_av, indices_southern, text_southern=NaNs_land(qv_r_southern_av)
             qu_r_western_av, indices_western, text_western=NaNs_land(qu_r_western_av)
             qu_r_eastern_av, indices_eastern, text_eastern=NaNs_land(qu_r_eastern_av)
+
+            print('####################################')
+            print('qu_qv:NaN land OK')
+            print('####################################')
 
             #Saving the information
             np.savez_compressed(path_save+'ERA5_qu_qv_north.npz',qv_r_northern_av)
@@ -695,6 +796,10 @@ for i in range(len(list_calculation)):
             tu_r_eastern,Lat_r_east,Lon_r_east=boundaries_fluxes(path_save, 'u', 't',  'ERA5',\
             east_boundaries_lat,east_boundaries_lon,None, None,p_level_interest_lower,\
             p_level_interest_upper,'reference')[0:3]
+
+            print('####################################')
+            print('tu_tv:var_arr OK')
+            print('####################################')
             
             ############################################################################
             ############################################################################
@@ -709,6 +814,10 @@ for i in range(len(list_calculation)):
             tv_r_southern_av, indices_southern, text_southern=NaNs_land(tv_r_southern_av)
             tu_r_western_av, indices_western, text_western=NaNs_land(tu_r_western_av)
             tu_r_eastern_av, indices_eastern, text_eastern=NaNs_land(tu_r_eastern_av)
+
+            print('####################################')
+            print('tu_tv:NaN land OK')
+            print('####################################')
 
             #Saving the information
             np.savez_compressed(path_save+'ERA5_tu_tv_north.npz',tv_r_northern_av)

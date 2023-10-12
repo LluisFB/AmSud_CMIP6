@@ -48,6 +48,7 @@ path_save='/scratchx/lfita/'
 #-------------------------------------------------------------------------------------------------------
 #1. ERA5
 
+"""
 path_entry_ini='/bdd/ERA5/NETCDF/GLOBAL_025/1xmonthly/'
 
 #-------------------------------------------------------------------------------------------------------  
@@ -98,14 +99,14 @@ for i in range(len(list_variables)):
         
 print('The generation of the netCDF from ERA5 is ready')
 
-
+"""
 #-----------------------------------------------------------------------------------------------------
 #2. MODELS
 # ls /bdd/CMIP6/CMIP/*/*/amip/r1i1p1f1/Amon/
 
 path_entry_m='/bdd/CMIP6/CMIP/'
 Ensemble='r1i1p1f1'
-
+"""
 list_variables=['ua','va','hus','psl','zg','tos','ta','pr']
 
 dict_models={}
@@ -123,11 +124,12 @@ for i in range(len(list_variables)):
 
 with open(path_save+'Models_var_availability.pkl', 'wb') as fp:
     pickle.dump(dict_models, fp)
-
+"""
 #------------------------------------------------------------------------------------------------
 #Create the netcdf with the original gridsize of each model and extracting the grid size of each 
 #model 
-list_variables=['ua','va','hus','psl','zg','tos','ta','pr']
+#list_variables=['ua','va','hus','psl','zg','tos','ta','pr']
+list_variables=['tos']
 
 with open(path_save+'Models_var_availability.pkl', 'rb') as fp:
     dict_models = pickle.load(fp)
@@ -144,9 +146,9 @@ final_time='20141201'
 p_level_interest_upper=10000.0
 p_level_interest_lower=100000.0
 
-gridsize_df=pd.DataFrame(columns=['Model','Longitude','Latitude'])
+#gridsize_df=pd.DataFrame(columns=['Model','Longitude','Latitude'])
 gridsize_df_tos=pd.DataFrame(columns=['Model','Longitude','Latitude'])
-gridsize_df.to_csv(path_save+'CMIP6_models_GridSize_lat_lon_Amon.csv')
+#gridsize_df.to_csv(path_save+'CMIP6_models_GridSize_lat_lon_Amon.csv')
 gridsize_df_tos.to_csv(path_save+'CMIP6_models_GridSize_lat_lon_Omon.csv')
 
 path_entry_m='/bdd/CMIP6/CMIP/'
@@ -172,11 +174,6 @@ for i in range(len(list_variables)):
             if models_ava[n] in list_mod_v:
 
                 path_entry=path_folder_sp+models_ava[n]+'/'
-                ftt = 'Amon'
-
-                path_filest=path_entry+'historical/r1i1p1f1/'+ftt+'/'+var_sp+'/*/latest/'
-
-                path_to_printt=path_filest+var_sp+'_'+ftt+'_'+models_ava[n]+'_historical_*.nc'
 
                 try:
 
@@ -216,21 +213,18 @@ for i in range(len(list_variables)):
                                                                             'model','No',path_save,models_ava[n])
                         print(path_check)
                         
-                        dt_row={'Model':models_ava[n], 'Longitude':gridsize_x, 'Latitude':gridsize_y}
+                        dt_row=pd.DataFrame({'Model':[models_ava[n]], 'Longitude':[gridsize_x], 'Latitude':[gridsize_y]})
 
                         #Reading the dataframe to save the gridsize 
                         grid_omon=pd.read_csv(path_save+'CMIP6_models_GridSize_lat_lon_Omon.csv', index_col=[0])
 
-                        grid_omon=grid_omon.append(dt_row,ignore_index=True)
+                        grid_omon = pd.concat([grid_omon, dt_row], ignore_index=True)
 
                         grid_omon.to_csv(path_save+'CMIP6_models_GridSize_lat_lon_Omon.csv')
                         
                 except:
                     print('Error: ',var_sp,models_ava[n])
-
-                # Processed par variable - GCM
-                break
-
+            
             else:
                 pass
 

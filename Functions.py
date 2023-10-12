@@ -700,21 +700,26 @@ def wind_field_calc(path_entry,var_sp1,var_sp2,model_name,lat_d,lon_d,time_0,tim
 
 def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,time_1,level_lower,level_upper,type_data,level_status,path_save,model_name):
 
-    path_files_old=path_entry_files+'historical/r1i1p1f1/'+ft+'/'+var_name+'/'
-
-    grid_list=os.listdir(path_files_old)
-
-    if len(grid_list)>1:
-        if 'gn' in grid_list:
-            grid_type='gn'
+    if var_name=='tos':
+        var_data=xr.open_mfdataset(path_entry_files+'tos_cmip6_'+model_name+'_historical*.nc')
     else:
-        grid_type=grid_list[0]
 
-    path_files=path_files_old+grid_type+'/latest/'
+        path_files_old=path_entry_files+'historical/r1i1p1f1/'+ft+'/'+var_name+'/'
 
-    path_to_print=path_files+var_name+'_'+ft+'_'+model_name+'_historical_*.nc'
+        grid_list=os.listdir(path_files_old)
 
-    var_data=xr.open_mfdataset(path_files+var_name+'_'+ft+'_'+model_name+'_historical_*.nc')
+        if len(grid_list)>1:
+            if 'gn' in grid_list:
+                grid_type='gn'
+        else:
+            grid_type=grid_list[0]
+        
+        path_files=path_files_old+grid_type+'/latest/'
+        
+        path_to_print=path_files+var_name+'_'+ft+'_'+model_name+'_historical_*.nc'
+
+        var_data=xr.open_mfdataset(path_files+var_name+'_'+ft+'_'+model_name+'_historical_*.nc')
+        
     var_field=var_data[var_name]
 
     print('========================================================')
@@ -984,7 +989,11 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
             oras_i=files_var[ñ]
             oras_out='tos_cmip6_'+model_name+'_historical_'+str(ñ)+'.nc'
 
-            cdo_remap='cdo -remapbil,r'+str(xsize)+'x'+str(ysize)+' '+path_entry_files+oras_i+' '+path_save_files+oras_out
+            cdo_remap='cdo -remapbil,r'+str(xsize)+'x'+str(ysize)+' '+path_files+oras_i+' '+path_save_files+oras_out
+
+            print('###################################################')
+            print(cdo_remap)
+            print('###################################################') 
 
             os.system(cdo_remap) 
 
@@ -997,7 +1006,11 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
         oras_i=files_var[0]
         oras_out='tos_cmip6_'+model_name+'_historical.nc'
 
-        cdo_remap='cdo -remapbil,r'+str(xsize)+'x'+str(ysize)+' '+path_entry_files+oras_i+' '+path_save_files+oras_out
+        cdo_remap='cdo -remapbil,r'+str(xsize)+'x'+str(ysize)+' '+path_files+oras_i+' '+path_save_files+oras_out
+
+        print('###################################################')
+        print(cdo_remap)
+        print('###################################################') 
 
         os.system(cdo_remap)   
 
@@ -1916,6 +1929,10 @@ def NaNs_levels(var_array,dims, interp_type):
         if np.isnan(np.sum(var_array[:,i,:,:]))==True:
             var_noNaN=NaNs_interp(var_array[:,i,:,:], dims, interp_type)
 
+            print('#####################################')
+            print('NaNs_levels: var noNaN OK')
+            print('#################################')
+
         else:
             var_noNaN=var_array[:,i,:,:]
 
@@ -2330,6 +2347,10 @@ def NaNs_land(var_array):
 
         text_r='Matrix with NaNs'
 
+        print('################################')
+        print('NaNs_lanc: ffil OK')
+        print('################################')
+
     else:
         inds=None
 
@@ -2346,6 +2367,10 @@ def interpolation_boundaries(matrix_ori, p_level_ini,p_level_fin, sp_ini,sp_fin,
 
     matrix_interpolated=data_interpolation(matrix_ori,'3D',\
     sp_ini,p_level_ini,sp_interpolation,press_interpolation)
+
+    print('############################################')
+    print('interpolation_boundaries: matrix interpolated OK')
+    print('############################################')
 
     return matrix_interpolated
 
