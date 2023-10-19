@@ -2476,20 +2476,33 @@ def std_ref(array, path_save_df, str_feature):
     for m in range(4):
         std_ref_season=np.nanstd(array[m])
         std_ref[m]=std_ref_season
+    
+    print('---------------------------------')
+    print('std_ref: std_ref calculation OK')
 
     print ('  ' +fname + ": new_row_reference:")
     print ('    ' + fname + " feature '" + str_feature + "' std dev.:", std_ref)
 
-    new_row_reference={'Characteristic': str_feature,\
-    'std_DJF':std_ref[0], 'std_JJA':std_ref[1], 'std_MAM':std_ref[2], 'std_SON':std_ref[3]}
+    new_row_reference=pd.DataFrame({'Characteristic': [str_feature],                 \
+      'std_DJF':[std_ref[0]], 'std_JJA':[std_ref[1]], 'std_MAM':[std_ref[2]],        \
+      'std_SON':[std_ref[3]]})
+
+    print('---------------------------------')
+    print('std_ref: new_row OK')
 
     print ('  ' +fname + ": reading csv '" + path_save_df+'reference_std_original.csv' + "'")
     reference_std_DT=pd.read_csv(path_save_df+'reference_std_original.csv',\
     index_col=[0])
-    print ('  ' +fname + ": type", type(reference_std_DT), "operating csv ...")
-    reference_std_DT=reference_std_DT.append(new_row_reference, ignore_index=True)
-    print ('  ' +fname + ":  writting in csv '" + path_save_df+'reference_std_original.csv' + "'")
+    print('---------------------------------')
+    print('std_ref: dataframe read OK')
+
+    reference_std_DT = pd.concat([reference_std_DT, new_row_reference], ignore_index=True)
+    print('---------------------------------')
+    print('std_ref: row appended OK')
+
     reference_std_DT.to_csv(path_save_df+'reference_std_original.csv')
+    print('---------------------------------')
+    print('std_ref: dataframe saved OK')
 
 def agreement_sign(list_models,path_entry_npz,file_name,len_lats, len_lons):
 
