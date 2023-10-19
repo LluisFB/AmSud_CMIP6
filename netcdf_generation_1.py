@@ -208,19 +208,27 @@ for i in range(len(list_variables)):
 
                     elif var_sp=='tos':
                         cdo_remapbill(path_entry,models_ava[n],path_save)
+
+                        print ("Lluis yendo a 'netcdf_creation_original'")
                         gridsize_x, gridsize_y, path_check=netcdf_creation_original(path_save,var_sp,'Omon',lat_limits_global,lon_limits_global,\
                                                                         initial_time,final_time,p_level_interest_lower,p_level_interest_upper,\
                                                                             'model','No',path_save,models_ava[n])
-                        print(path_check)
+                        print("  Lluis despues de 'netcdf_creation_original'")
+                        print("  Lluis despues de 'netcdf_creation_original' path_check", path_check)
                         
+                        print ("Lluis 'dt_row'", models_ava[n])
                         dt_row=pd.DataFrame({'Model':[models_ava[n]], 'Longitude':[gridsize_x], 'Latitude':[gridsize_y]})
 
                         #Reading the dataframe to save the gridsize 
+                        print ("Lluis 'grid_omon' de 'read_csv'")
                         grid_omon=pd.read_csv(path_save+'CMIP6_models_GridSize_lat_lon_Omon.csv', index_col=[0])
 
+                        print ("Lluis 'grid_omon' de 'concat'")
                         grid_omon = pd.concat([grid_omon, dt_row], ignore_index=True)
 
+                        print ("Lluis 'grid_omon' de 'to_csv'")
                         grid_omon.to_csv(path_save+'CMIP6_models_GridSize_lat_lon_Omon.csv')
+                        print ("Lluis fin 'tos'")
                         
                 except:
                     print('Error: ',var_sp,models_ava[n])
