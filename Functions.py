@@ -643,16 +643,23 @@ def var_field_calc(path_entry,var_sp,model_name,lat_d,lon_d,time_0,time_1,level_
 
 def wind_field_calc(path_entry,var_sp1,var_sp2,model_name,lat_d,lon_d,time_0,time_1,level_lower,level_upper,type_data):
 
+    fname = 'wind_field_calc'
+
+    print ('  ' + fname + ": path_entry:", path_entry, 'model_name', model_name,  \
+      'var_sp1', var_sp1, 'var_sp2', var_sp2)
+    print ('    ' + fname + ": '" + path_entry+model_name+'_'+var_sp1+'_original_seasonal_mean.nc'+ "'")
+
     var_data1=xr.open_mfdataset(path_entry+model_name+'_'+var_sp1+'_original_seasonal_mean.nc')
 
     u_field=var_data1[var_sp1]
+    print ('    ' + fname + ": '" + path_entry+model_name+'_'+var_sp2+'_original_seasonal_mean.nc'+ "'")
 
     var_data2=xr.open_mfdataset(path_entry+model_name+'_'+var_sp2+'_original_seasonal_mean.nc')
 
     v_field=var_data2[var_sp2]
 
     print('##############################')
-    print("wind_field_calc: read file OK")
+    print("  " + fname + " wind_field_calc: read file OK")
     print('##############################')
 
     #obtaining the domain bnds
@@ -670,7 +677,7 @@ def wind_field_calc(path_entry,var_sp1,var_sp2,model_name,lat_d,lon_d,time_0,tim
     v_levels=v_delimited[:,int(ini_level):int(fin_level+1),:,:]
 
     print('##############################')
-    print("wind_field_calc: var_levels OK")
+    print("  " + fname + " wind_field_calc: var_levels OK")
     print('##############################')
 
     #converting into array
@@ -680,7 +687,7 @@ def wind_field_calc(path_entry,var_sp1,var_sp2,model_name,lat_d,lon_d,time_0,tim
     mag_arr=np.sqrt(u_array**2+v_array**2)
 
     print('##############################')
-    print("wind_field_calc: mag arr OK")
+    print("  " + fname + " wind_field_calc: mag arr OK")
     print('##############################')
 
     #defining Lat and Lon lists
@@ -700,8 +707,11 @@ def wind_field_calc(path_entry,var_sp1,var_sp2,model_name,lat_d,lon_d,time_0,tim
 
 def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,time_1,level_lower,level_upper,type_data,level_status,path_save,model_name):
 
+    fname = 'netcdf_creation_original'
+
     if var_name=='tos':
         var_data=xr.open_mfdataset(path_entry_files+'tos_cmip6_'+model_name+'_historical*.nc')
+        path_to_print=path_entry_files+'tos_cmip6__'+model_name+'_historical_*.nc'
     else:
 
         path_files_old=path_entry_files+'historical/r1i1p1f1/'+ft+'/'+var_name+'/'
@@ -723,7 +733,7 @@ def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,tim
     var_field=var_data[var_name]
 
     print('========================================================')
-    print('The data was read successfully')
+    print('  ' + fname + ': The data was read successfully')
     print('========================================================')
 
     #obtaining the domain bnds
@@ -737,7 +747,7 @@ def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,tim
     lon_bnd,lat_slice,var_field,type_data,level_status)
 
     print('========================================================')
-    print('var delimited done succesfully')
+    print('  ' + fname + ': var delimited done succesfully')
     print('========================================================')
 
     #-----------------------------------------------------------------------------------
@@ -765,7 +775,7 @@ def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,tim
             pass
 
     print('========================================================')
-    print('Changes in level and latitude order done succesfully')
+    print('  ' + fname + ': Changes in level and latitude order done succesfully')
     print('========================================================')
     
     #----------------------------------------------------------------------------------
@@ -781,7 +791,7 @@ def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,tim
     var_seasonal=var_levels.groupby('time.season').mean('time')
 
     print('========================================================')
-    print('Seasonal mean done succesfully')
+    print('  ' + fname + ': Seasonal mean done succesfully')
     print('========================================================')
 
     #--------------------------------------------------------------------------------------
@@ -791,7 +801,7 @@ def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,tim
     var_seasonal.to_netcdf(path_save+model_name+'_'+var_name+'_original_seasonal_mean.nc')
 
     print('========================================================')
-    print('Files (seasonal and long-term) saved succesfully')
+    print('  ' + fname + ': Files (seasonal and long-term) saved succesfully')
     print('========================================================')
 
     #defining Lat and Lon lists
@@ -806,9 +816,13 @@ def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,tim
     dx_data=np.round(abs(Lon_list[1])-abs(Lon_list[0]),2)
     dy_data=np.round(abs(Lat_list[-1:][0])-  abs(Lat_list[-2:][0]),2)
 
+    print ("  " + fname + ": salida dx, dy, path", dx_data, dy_data, path_to_print)
+
     print('========================================================')
-    print('Lat and Lon list and grid size defined succesfully')
+    print('   ' + fname + ': Lat and Lon list and grid size defined succesfully')
     print('========================================================')
+
+    print ("  " + fname + ": salida dx, dy, path 2", dx_data, dy_data, path_to_print)
 
     return  dx_data, dy_data, path_to_print
 
@@ -933,6 +947,8 @@ def variables_availability(path_models,var_str,domain):
     
 def cdo_remapbill(path_entry_files,model_name,path_save_files):
 
+    fname = 'cdo_remapbill'
+
     path_files_old=path_entry_files+'historical/r1i1p1f1/Omon/tos/'
 
     grid_list=os.listdir(path_files_old)
@@ -951,9 +967,14 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
 
     remapbill_info=xr.open_mfdataset(path_files+'tos_Omon_'+model_name+'_historical_*.nc')
     m_sst_grid_var=remapbill_info['tos']
+    infiles = path_files+'tos_Omon_'+model_name+'_historical_*.nc'
+    print ('  ' + fname + ": first looking files at '" + infiles + "'")
+    print ('    files _______')
+    for n in range(len(grid_list)):
+        print (grid_list[n])
 
     print('###################################################')
-    print('cdo_remapbill: read files OK')
+    print('  ' + fname + ': read files OK')
     print('###################################################')
 
     m_grid_lat=m_sst_grid_var[m_sst_grid_var.dims[1]]
@@ -964,41 +985,48 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
     ysize=np.array(m_grid_lat).shape[0]
 
     print('###################################################')
-    print('cdo_remapbill: xsize,ysize OK')
+    print('  ' + fname + ': xsize,ysize OK')
     print('###################################################')
 
     #Generating the list of the files 
-    list_path=os.listdir(path_entry_files)
+    list_path=os.listdir(path_files)
+    print ('  ' + fname + ': found ', len(list_path), ' files in ', path_files)
+    print ('    files _______')
+    for n in range(len(list_path)):
+        print (list_path[n], ':', 'tos_Omon_'+model_name in list_path[n])
+
 
     files_var=[]
 
-    for ñ in range(len(list_path)):
-        if 'tos_Omon_'+model_name in list_path[ñ]:
-            files_var.append(list_path[ñ])
+    for n in range(len(list_path)):
+        if 'tos_Omon_'+model_name in list_path[n]:
+            files_var.append(list_path[n])
     
     files_var=sorted(files_var)
 
     print('###################################################')
-    print('cdo_remapbill: files var OK')
+    print('  ' + fname + ': files var OK')
     print('###################################################')
     
     #remaping
 
+    print ('  ' + fname + ': remaping ', len(files_var), ' from ', model_name)
+
     if len(files_var)>1:
-        for ñ in range(len(files_var)):
-            oras_i=files_var[ñ]
-            oras_out='tos_cmip6_'+model_name+'_historical_'+str(ñ)+'.nc'
+        for n in range(len(files_var)):
+            oras_i=files_var[n]
+            oras_out='tos_cmip6_'+model_name+'_historical_'+str(n)+'.nc'
 
             cdo_remap='cdo -remapbil,r'+str(xsize)+'x'+str(ysize)+' '+path_files+oras_i+' '+path_save_files+oras_out
 
             print('###################################################')
-            print(cdo_remap)
+            print('  ' + fname + ': cdo_remap: ', cdo_remap)
             print('###################################################') 
 
             os.system(cdo_remap) 
 
         print('###################################################')
-        print('cdo_remapbill: remapbill os some files OK')
+        print('cdo_remapbill: remapbill tos some files OK')
         print('###################################################') 
 
     else:
@@ -1009,13 +1037,13 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
         cdo_remap='cdo -remapbil,r'+str(xsize)+'x'+str(ysize)+' '+path_files+oras_i+' '+path_save_files+oras_out
 
         print('###################################################')
-        print(cdo_remap)
+        print('  ' + fname + ': cdo_remap: ', cdo_remap)
         print('###################################################') 
 
         os.system(cdo_remap)   
 
         print('###################################################')
-        print('cdo_remapbill: remapbill os one file OK')
+        print('cdo_remapbill: remapbill tos one file OK')
         print('###################################################') 
 
 def subtropical_jet(path_entry,var_sp,model_name, type_dataset,lon_limits,lat_limits, pressure_0,pressure_1):
@@ -2442,17 +2470,25 @@ def labels_str(labels_input,boundary):
     return labels_x_plot
 
 def std_ref(array, path_save_df, str_feature):
+
+    fname = 'std_ref'
     std_ref=np.empty((4))
     for m in range(4):
         std_ref_season=np.nanstd(array[m])
         std_ref[m]=std_ref_season
 
+    print ('  ' +fname + ": new_row_reference:")
+    print ('    ' + fname + " feature '" + str_feature + "' std dev.:", std_ref)
+
     new_row_reference={'Characteristic': str_feature,\
     'std_DJF':std_ref[0], 'std_JJA':std_ref[1], 'std_MAM':std_ref[2], 'std_SON':std_ref[3]}
 
+    print ('  ' +fname + ": reading csv '" + path_save_df+'reference_std_original.csv' + "'")
     reference_std_DT=pd.read_csv(path_save_df+'reference_std_original.csv',\
     index_col=[0])
+    print ('  ' +fname + ": type", type(reference_std_DT), "operating csv ...")
     reference_std_DT=reference_std_DT.append(new_row_reference, ignore_index=True)
+    print ('  ' +fname + ":  writting in csv '" + path_save_df+'reference_std_original.csv' + "'")
     reference_std_DT.to_csv(path_save_df+'reference_std_original.csv')
 
 def agreement_sign(list_models,path_entry_npz,file_name,len_lats, len_lons):

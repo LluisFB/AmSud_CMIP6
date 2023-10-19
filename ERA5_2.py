@@ -412,6 +412,10 @@ for i in range(len(list_calculation)):
 
             #-----------------------------------------------------------------------------------------------------------------------
             #Saving the spatial fields 
+            print ("wind_850: saving files '" + path_save+'ERA5_u850_fields.npz' +   \
+              "' array:", u_array_r.shape)
+            print ('    v_array', v_array_r.shape, 'mag', mag_array_r.shape, 'lat',  \
+              len(Lat_list_w850), 'Lon', len(Lon_list_w850))
             np.savez_compressed(path_save+'ERA5_u850_fields.npz',u_array_r)
             np.savez_compressed(path_save+'ERA5_v850_fields.npz',v_array_r)
             np.savez_compressed(path_save+'ERA5_W850_fields.npz',mag_array_r)
