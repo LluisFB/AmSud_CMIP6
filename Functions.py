@@ -595,12 +595,19 @@ def plotMap_vector(axs,wind_data,u_data,v_data,lonPlot,latPlot,colorMap,limits,t
 
 def var_field_calc(path_entry,var_sp,model_name,lat_d,lon_d,time_0,time_1,level_lower,level_upper,type_data,level_status):
 
+    fname = 'var_field_calc'
+
+    print ("  " + fname + ": open dataset: '" + path_entry+model_name+'_'+var_sp +   \
+      '_original_seasonal_mean.nc' + "'")
+
     var_data=xr.open_mfdataset(path_entry+model_name+'_'+var_sp+'_original_seasonal_mean.nc')
+
+    print ("   " + fname + ": var_sp", var_sp)
 
     var_field=var_data[var_sp]
 
     print('##############################')
-    print("var_field_calc: read file OK")
+    print("  " + fname + ": read file OK")
     print('##############################')
 
     #obtaining the domain bnds
@@ -610,7 +617,7 @@ def var_field_calc(path_entry,var_sp,model_name,lat_d,lon_d,time_0,time_1,level_
     lon_bnd,lat_slice,var_field,type_data,level_status)
 
     print('##############################')
-    print("var_field_calc: var delimited OK")
+    print("  " + fname + ": var delimited OK")
     print('##############################')
 
 
@@ -624,7 +631,7 @@ def var_field_calc(path_entry,var_sp,model_name,lat_d,lon_d,time_0,time_1,level_
     #converting into array
     var_array=np.array(var_levels)
     print('##############################')
-    print("var_field_calc: var_array OK")
+    print("  " + fname + ": var_array OK")
     print('##############################')
 
     #defining Lat and Lon lists
@@ -828,12 +835,15 @@ def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,tim
 
 def netcdf_creation_original_ERA5(path_entry_files,var_name,lat_d,lon_d,level_lower,level_upper,type_data,level_status,path_save):
 
+    fname = 'netcdf_creation_original_ERA5'
+
     range_years=np.arange(1979,2015,1)
 
     file_con=[]
 
     if level_status=='No':
         nm='asme5'
+        if var_name == 'tp': nm='fsme5'
     else:
         nm='apme5'
 
@@ -848,7 +858,6 @@ def netcdf_creation_original_ERA5(path_entry_files,var_name,lat_d,lon_d,level_lo
     #obtaining the domain bnds
     lat_bnd,lon_bnd,lat_slice,lon_slice=lat_lon_bds(lon_d,lat_d,var_field)
 
-    
     #delimiting the spatial domain
     if lat_slice=='lat':
         var_delimited=var_field.sel(lat=slice(*lat_bnd),lon=slice(*lon_bnd))
@@ -892,6 +901,9 @@ def netcdf_creation_original_ERA5(path_entry_files,var_name,lat_d,lon_d,level_lo
     var_seasonal=var_levels.groupby('time.season').mean('time')
 
     #--------------------------------------------------------------------------------------
+    print ('  ' + fname + ": var_name '" + var_name + "'")
+    print ("    clim: '" + path_save+'ERA5_'+var_name+'_original_mon_clim_LT.nc' + "'")
+    print ("    seas: '" + path_save+'ERA5_'+var_name+'_original_seasonal_mean.nc' + "'")
     #1. Saving the netcdf of the climatology of the variable 
     var_levels.to_netcdf(path_save+'ERA5_'+var_name+'_original_mon_clim_LT.nc')
     #2. Saving the netcdf of the seasonal mean of the variable
@@ -2092,21 +2104,40 @@ def VIMF_calc(path_entry, var_sp1, var_sp2, var_sp3, model_name,lat_d,lon_d,time
 
 def MSE_calc(path_entry, var_sp1, var_sp2, var_sp3, var_sp4, model_name,lat_d,lon_d,time_0,time_1,level_lower,level_upper,type_data):
     
+    fname = 'MSE_calc'
+
+    print ('  ' + fname + ": reading '" + path_entry+model_name+'_'+var_sp1 +         \
+      '_original_seasonal_mean.nc' + "'")
+    print ('  ' + fname + ": reading '" + path_entry+model_name+'_'+var_sp2 +         \
+      '_original_seasonal_mean.nc' + "'")
+    print ('  ' + fname + ": reading '" + path_entry+model_name+'_'+var_sp3 +         \
+      '_original_seasonal_mean.nc' + "'")
+    print ('  ' + fname + ": reading '" + path_entry+model_name+'_'+var_sp4 +         \
+      '_original_seasonal_mean.nc' + "'")
+
     var_data1=xr.open_mfdataset(path_entry+model_name+'_'+var_sp1+'_original_seasonal_mean.nc')
 
+    print ('   ' + fname + ": getting '" + var_sp1 + "' type", type(var_data1))
     v_field=var_data1[var_sp1]
+    print ('   ' + fname + ": shape", v_field.shape)
 
     var_data2=xr.open_mfdataset(path_entry+model_name+'_'+var_sp2+'_original_seasonal_mean.nc')
 
+    print ('   ' + fname + ": getting '" + var_sp2 + "'")
     q_field=var_data2[var_sp2]
+    print ('   ' + fname + ": shape", q_field.shape)
 
     var_data3=xr.open_mfdataset(path_entry+model_name+'_'+var_sp3+'_original_seasonal_mean.nc')
 
+    print ('   ' + fname + ": getting '" + var_sp3 + "'")
     t_field=var_data3[var_sp3]
+    print ('   ' + fname + ": shape", t_field.shape)
 
     var_data4=xr.open_mfdataset(path_entry+model_name+'_'+var_sp4+'_original_seasonal_mean.nc')
 
+    print ('   ' + fname + ": getting '" + var_sp4 + "'")
     z_field=var_data4[var_sp4]
+    print ('   ' + fname + ": shape", z_field.shape)
 
     print('#########################')
     print('MSE_calc: read files OK')
@@ -2247,14 +2278,24 @@ def MSE_calc(path_entry, var_sp1, var_sp2, var_sp3, var_sp4, model_name,lat_d,lo
     return MSE_integral,Lat_list,Lon_list,dx_data, dy_data
 
 def boundaries_fluxes(path_entry, var_sp1, var_sp2, model_name,lat_d,lon_d,time_0,time_1,level_lower,level_upper,type_data):
+    fname = 'boundaries_fluxes'
+
+    print ('  ' + fname + ": reading '" + path_entry+model_name+'_'+var_sp1 +         \
+      '_original_seasonal_mean.nc' + "'")
+    print ('  ' + fname + ": reading '" + path_entry+model_name+'_'+var_sp2 +         \
+      '_original_seasonal_mean.nc' + "'")
 
     var_data1=xr.open_mfdataset(path_entry+model_name+'_'+var_sp1+'_original_seasonal_mean.nc')
 
+    print ('   ' + fname + ": getting '" + var_sp1 + "' type", type(var_data1))
     wind_field=var_data1[var_sp1]
+    print ('   ' + fname + ": shape", wind_field.shape)
 
     var_data2=xr.open_mfdataset(path_entry+model_name+'_'+var_sp2+'_original_seasonal_mean.nc')
 
+    print ('   ' + fname + ": getting '" + var_sp2)
     q_field=var_data2[var_sp2]
+    print ('   ' + fname + ": shape", q_field.shape)
 
     print('#########################')
     print('boundaries_fluxes: read files OK')

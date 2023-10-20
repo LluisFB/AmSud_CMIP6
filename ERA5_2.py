@@ -96,6 +96,8 @@ Lon_common_b=np.arange(lon_limits_B[0],lon_limits_B[1], dx_common)
 
 list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation','Regional_cells',\
                   'SST','VIMF','qu_qv','MSE','tu_tv']
+# Lacking ....
+list_calculation = ['tu_tv']
 
 for i in range(len(list_calculation)):
 
@@ -259,7 +261,9 @@ for i in range(len(list_calculation)):
 
         try:
 
-            pr_array,Lat_list_pr,Lon_list_pr,dx_data_pr, dy_data_pr=var_field_calc(path_save,'mtpr','ERA5',\
+            print ("  Lluis getting in 'var_field_calc' ...")
+
+            pr_array,Lat_list_pr,Lon_list_pr,dx_data_pr, dy_data_pr=var_field_calc(path_save,'tp','ERA5',\
                                                                                     lat_limits_pr,lon_limits_pr,None,None,\
                                                                                     None,None,'ERA5','No')
             
@@ -282,9 +286,9 @@ for i in range(len(list_calculation)):
             
             #-----------------------------------------------------------------------------------------------------------------------
             #Saving the spatial fields 
-            np.savez_compressed(path_save+'ERA5_mtpr_fields.npz',var_array_r)
-            np.savez_compressed(path_save+'ERA5_mtpr_fields_Lat.npz',Lat_list_pr)
-            np.savez_compressed(path_save+'ERA5_mtpr_fields_Lon.npz',Lon_list_pr)
+            np.savez_compressed(path_save+'ERA5_tp_fields.npz',var_array_r)
+            np.savez_compressed(path_save+'ERA5_tp_fields_Lat.npz',Lat_list_pr)
+            np.savez_compressed(path_save+'ERA5_tp_fields_Lon.npz',Lon_list_pr)
 
             std_ref(var_array_r, path_save, 'PPT')
 
@@ -302,7 +306,7 @@ for i in range(len(list_calculation)):
 
         try:
 
-            tos_array,Lat_list_tos,Lon_list_tos,dx_data_tos, dy_data_tos=var_field_calc(path_save,'sst','ERA5',\
+            tos_array,Lat_list_tos,Lon_list_tos,dx_data_tos, dy_data_tos=var_field_calc(path_save,'sstk','ERA5',\
                                                                                     lat_limits_tos,lon_limits_tos,None,None,\
                                                                                     None,None,'ERA5','No')
             
@@ -594,8 +598,13 @@ for i in range(len(list_calculation)):
 
         try:
 
+            print ("  going into 'MSE_calc'")
+            print ('    1', path_save, 'v', 'q', 'ta','geopt', 'ERA5')
+            print ('    2', lat_limits,lon_limits,None, None)
+            print ('    3', p_level_interest_lower,p_level_interest_upper,'ERA5')
+
             MSE_ref,Lat_ref,Lon_ref,dx_ref,\
-            dy_ref=MSE_calc(path_save, 'v', 'q', 't','geopt', 'ERA5',lat_limits,lon_limits,None, None,\
+            dy_ref=MSE_calc(path_save, 'v', 'q', 'ta','geopt', 'ERA5',lat_limits,lon_limits,None, None,\
             p_level_interest_lower,p_level_interest_upper,'ERA5')
 
             print('####################################')
@@ -780,24 +789,28 @@ for i in range(len(list_calculation)):
 
         try:
 
+            print ("  going into 'boundaries_fluxes'")
+            print ('    1', path_save, 'v', 'ta',  'ERA5')
+            print ('    2', north_boundaries_lat,north_boundaries_lon, None, None)
+            print ('    3',p_level_interest_lower, p_level_interest_upper,'reference')
 
             tv_r_northern,Lat_r_north,Lon_r_north,dx_r, \
-            dy_r,levels_r=boundaries_fluxes(path_save, 'v', 't',  'ERA5',\
+            dy_r,levels_r=boundaries_fluxes(path_save, 'v', 'ta',  'ERA5',\
             north_boundaries_lat,north_boundaries_lon, None, None,p_level_interest_lower,\
             p_level_interest_upper,'reference')
 
             #Southern boundary
-            tv_r_southern,Lat_r_south,Lon_r_south=boundaries_fluxes(path_save, 'v', 't',  'ERA5',\
+            tv_r_southern,Lat_r_south,Lon_r_south=boundaries_fluxes(path_save, 'v', 'ta',  'ERA5',\
             south_boundaries_lat,south_boundaries_lon,None, None,p_level_interest_lower,\
             p_level_interest_upper,'reference')[0:3]
 
             #Western boundary
-            tu_r_western,Lat_r_west,Lon_r_west=boundaries_fluxes(path_save, 'u', 't',  'ERA5',\
+            tu_r_western,Lat_r_west,Lon_r_west=boundaries_fluxes(path_save, 'u', 'ta',  'ERA5',\
             west_boundaries_lat,west_boundaries_lon,None, None,p_level_interest_lower,\
             p_level_interest_upper,'reference')[0:3]
             
             #Eastern boundary
-            tu_r_eastern,Lat_r_east,Lon_r_east=boundaries_fluxes(path_save, 'u', 't',  'ERA5',\
+            tu_r_eastern,Lat_r_east,Lon_r_east=boundaries_fluxes(path_save, 'u', 'ta',  'ERA5',\
             east_boundaries_lat,east_boundaries_lon,None, None,p_level_interest_lower,\
             p_level_interest_upper,'reference')[0:3]
 

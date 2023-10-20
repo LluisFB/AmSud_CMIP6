@@ -48,13 +48,13 @@ path_save='/scratchx/lfita/'
 #-------------------------------------------------------------------------------------------------------
 #1. ERA5
 
-"""
 path_entry_ini='/bdd/ERA5/NETCDF/GLOBAL_025/1xmonthly/'
 
 #-------------------------------------------------------------------------------------------------------  
 
 #list_variables=['u','v','q','msl','geopt','sstk','ta','t2m', 'mtpr','w']
-list_variables=['u','v','q','msl','geopt','sstk','ta','t2m', 'w']
+#list_variables=['u','v','q','msl','geopt','sstk','ta','t2m', 'w']
+list_variables=['sstk']
 
 lat_limits_global=[-70,50]
 lon_limits_global=[-155,-5]
@@ -72,6 +72,8 @@ p_level_interest_lower=100000.0
 for i in range(len(list_variables)):
 
     var_sp=list_variables[i]
+
+    print (var_sp + " ...")
 
     if var_sp=='u' or var_sp=='v' or var_sp=='w':
         path_entry=path_entry_ini+'AN_PL/'
@@ -93,13 +95,18 @@ for i in range(len(list_variables)):
         gridsize_x, gridsize_y=netcdf_creation_original_ERA5(path_entry,var_sp,lat_limits_global,lon_limits_global,\
                                                         p_level_interest_lower,p_level_interest_upper,\
                                                             'ERA5','No',path_save)
-    
+    elif var_sp=='tp':
+        path_entry=path_entry_ini+'FC_SF/'
+        gridsize_x, gridsize_y=netcdf_creation_original_ERA5(path_entry,var_sp,lat_limits_global,lon_limits_global,\
+                                                        p_level_interest_lower,p_level_interest_upper,\
+                                                            'ERA5','No',path_save)
+        #tp.1979.fsme5.GLOBAL_025.nc 
     else:
         print('Status Variable: Not found')
         
 print('The generation of the netCDF from ERA5 is ready')
 
-"""
+quit()
 #-----------------------------------------------------------------------------------------------------
 #2. MODELS
 # ls /bdd/CMIP6/CMIP/*/*/amip/r1i1p1f1/Amon/
