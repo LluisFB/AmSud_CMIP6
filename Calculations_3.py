@@ -763,6 +763,9 @@ for i in range(len(list_calculation)):
                 v_sum=np.sum(va850_array)
                 mag_sum=np.sum(mag850_array)
 
+                print ('  ' + list_calculation[i] + ': ' + models[p] +               \
+                  ' checking for NaNs')
+
                 if np.isnan(u_sum)==True or np.isnan(v_sum)==True or np.isnan(mag_sum)==True:
                     u_array_model=NaNs_interp(ua850_array, '3D', 'cubic')
                     v_array_model=NaNs_interp(va850_array, '3D', 'cubic')
@@ -771,43 +774,67 @@ for i in range(len(list_calculation)):
                     u_array_model=ua850_array
                     v_array_model=va850_array
                     mag_array_model=mag850_array
+
+                print ('  ' + list_calculation[i] + ': ' + models[p] +               \
+                  ' NaNs re-interpolated')
                 
                 #-----------------------------------------------------------------------------------------------------------------------            
                 #ERA5 interpolation to the model's gridsize 
                 era5_field_interp=interpolation_fields(var_array_ref,lat_refe,lon_refe,Lat_list_w850,Lon_list_w850,dx_data_w850, dy_data_w850)
+                print ('  ' + list_calculation[i] + ': ERA5 interpolated to ' +      \
+                  models[p])
                 #calculating the metrics
                 corr_m_o,std_m=taylor_diagram_metrics_def(era5_field_interp,mag_array_model)
+                print ('  ' + list_calculation[i] + ': ERA5 - ' + models[p] + 'metrics')
                 #Calculating the bias
                 bias_model= mag_array_model - era5_field_interp
                 #Model's interpolation to a common gridsize
+                print ('  ' + list_calculation[i] + ': ERA5 - ' + models[p] +        \
+                  ' common grid _______')
                 model_field_interp=interpolation_fields(mag_array_model,Lat_list_w850,Lon_list_w850,Lat_common,Lon_common,dx_common, dy_common)
+                print ('   mag_array_model ')
                 model_ua_field_interp=interpolation_fields(u_array_model,Lat_list_w850,Lon_list_w850,Lat_common,Lon_common,dx_common, dy_common)
+                print ('   u_array_model ')
                 model_va_field_interp=interpolation_fields(v_array_model,Lat_list_w850,Lon_list_w850,Lat_common,Lon_common,dx_common, dy_common)
+                print ('   v_array_model ')
                 model_bias_field_interp=interpolation_fields(bias_model,Lat_list_w850,Lon_list_w850,Lat_common,Lon_common,dx_common, dy_common)
+                print ('   bias_model ')
 
                 #-----------------------------------------------------------------------------------------------------------------------
                 #Saving the npz 
+                print ('  Saving outputs')
                 models_wind850_calc=np.load(path_save+'wind850_fields_models_N.npz',allow_pickle=True)['arr_0']
+                print ("    load: '" + path_save+"wind850_fields_models_N.npz'")
 
                 models_wind850_calc=np.append(models_wind850_calc,models[p])
 
                 np.savez_compressed(path_save+models[p]+'_mag850_MMM_meanFields.npz',model_field_interp)
+                print ("    saved: '" + path_save+models[p]+"_mag850_MMM_meanFields.npz'")
                 np.savez_compressed(path_save+models[p]+'_ua850_MMM_meanFields.npz',model_ua_field_interp)
+                print ("    saved: '" + path_save+models[p]+"_ua850_MMM_meanFields.npz'")
                 np.savez_compressed(path_save+models[p]+'_va850_MMM_meanFields.npz',model_va_field_interp)
+                print ("    saved: '" + path_save+models[p]+"_va850_MMM_meanFields.npz'")
                 np.savez_compressed(path_save+models[p]+'_mag850_MMM_biasFields.npz',model_bias_field_interp)
+                print ("    saved: '" + path_save+models[p]+"_mag850_MMM_meanFields.npz'")
                 np.savez_compressed(path_save+'wind850_fields_models_N.npz',models_wind850_calc)
+                print ("    saved: '" + path_save+"wind850_fields_models_N.npz'")
 
                 #Saving the performance metrics 
+                print ('  saving performance metrics ...')
                 taylor_diagram_metrics_DT=pd.read_csv(path_save+'taylorDiagram_metrics_wind850.csv', index_col=[0])
+                print ("    read: '" + path_save+"taylorDiagram_metrics_wind850.csv'")
 
                 newRow_metrics={'Model':models[p],'corr_DJF': corr_m_o[0],\
                 'corr_JJA': corr_m_o[1],'corr_MAM': corr_m_o[2],'corr_SON': corr_m_o[3],\
                 'std_DJF':std_m[0],'std_JJA':std_m[1],'std_MAM':std_m[2],'std_SON':std_m[3]}
+                print ("    filling taylor")
 
                 taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics,\
                 ignore_index=True)
+                print ("    writting taylor into csv")
 
                 taylor_diagram_metrics_DT.to_csv(path_save+'taylorDiagram_metrics_wind850.csv')
+                print ("    written taylor into csv")
             
             except:
                 print('Error W850 ',models[p])
