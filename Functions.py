@@ -2612,11 +2612,12 @@ def series_metrics(series_ref,series_models,list_models,feature,path_save_df):
         RMSE = math.sqrt(MSE)
 
         #Appending the dataframe 
-        dt_row={'Model':model_nm, 'Corr':corr_coef, 'RMSE':RMSE}
+        dt_row=pd.DataFrame({'Model':[model_nm], 'Corr':[corr_coef], 'RMSE':[RMSE]})
 
         series_metrics_r=pd.read_csv(path_save_df+feature+'_series_metrics_corr_rmse.csv', index_col=[0])
 
-        series_metrics_r=series_metrics_r.append(dt_row,ignore_index=True)
+        #series_metrics_r=series_metrics_r.append(dt_row,ignore_index=True)
+        series_metrics_r=pd.concat([series_metrics_r, dt_row], ignore_index=True)
 
         series_metrics_r.to_csv(path_save_df+feature+'_series_metrics_corr_rmse.csv')
 
@@ -2639,11 +2640,12 @@ def series_metrics_bound(series_ref,series_models,list_models,feature,path_save_
             RMSE = math.sqrt(MSE)
 
             #Appending the dataframe 
-            dt_row={'Model':model_nm, 'Season':season_lb[y], 'Corr':corr_coef, 'RMSE':RMSE}
+            dt_row=pd.DataFrame({'Model':[model_nm], 'Season':[season_lb[y]], 'Corr':[corr_coef], 'RMSE':[RMSE]})
 
             series_metrics_r=pd.read_csv(path_save_df+feature+'_series_metrics_corr_rmse.csv', index_col=[0])
 
-            series_metrics_r=series_metrics_r.append(dt_row,ignore_index=True)
+            #series_metrics_r=series_metrics_r.append(dt_row,ignore_index=True)
+            series_metrics_r=pd.concat([series_metrics_r, dt_row], ignore_index=True)
 
             series_metrics_r.to_csv(path_save_df+feature+'_series_metrics_corr_rmse.csv')
 

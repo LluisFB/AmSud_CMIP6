@@ -342,12 +342,13 @@ for i in range(len(list_calculation)):
                 #Saving the performance metrics 
                 taylor_diagram_metrics_DT=pd.read_csv(path_save+'taylorDiagram_metrics_psl.csv', index_col=[0])
 
-                newRow_metrics={'Model':models[p],'corr_DJF': corr_m_o[0],\
-                'corr_JJA': corr_m_o[1],'corr_MAM': corr_m_o[2],'corr_SON': corr_m_o[3],\
-                'std_DJF':std_m[0],'std_JJA':std_m[1],'std_MAM':std_m[2],'std_SON':std_m[3]}
+                newRow_metrics=pd.DataFrame({'Model':[models[p]],'corr_DJF': [corr_m_o[0]],\
+                'corr_JJA': [corr_m_o[1]],'corr_MAM': [corr_m_o[2]],'corr_SON': [corr_m_o[3]],\
+                'std_DJF':[std_m[0]],'std_JJA':[std_m[1]],'std_MAM':[std_m[2]],'std_SON':[std_m[3]]})
 
-                taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics,\
-                ignore_index=True)
+                #taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics,\
+                #ignore_index=True)
+                taylor_diagram_metrics_DT = pd.concat([taylor_diagram_metrics_DT, newRow_metrics], ignore_index=True)
 
                 taylor_diagram_metrics_DT.to_csv(path_save+'taylorDiagram_metrics_psl.csv')
 
@@ -540,12 +541,14 @@ for i in range(len(list_calculation)):
                 #Saving the performance metrics 
                 taylor_diagram_metrics_DT=pd.read_csv(path_save+'taylorDiagram_metrics_pr.csv', index_col=[0])
 
-                newRow_metrics={'Model':models[p],'corr_DJF': corr_m_o[0],\
-                'corr_JJA': corr_m_o[1],'corr_MAM': corr_m_o[2],'corr_SON': corr_m_o[3],\
-                'std_DJF':std_m[0],'std_JJA':std_m[1],'std_MAM':std_m[2],'std_SON':std_m[3]}
+                newRow_metrics=pd.DataFrame({'Model':[models[p]],'corr_DJF': [corr_m_o[0]],\
+                'corr_JJA': [corr_m_o[1]],'corr_MAM': [corr_m_o[2]],'corr_SON': [corr_m_o[3]],\
+                'std_DJF':[std_m[0]],'std_JJA':[std_m[1]],'std_MAM':[std_m[2]],'std_SON':[std_m[3]]})
 
-                taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics,\
-                ignore_index=True)
+                #taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics,\
+                #ignore_index=True)
+                taylor_diagram_metrics_DT = pd.concat([taylor_diagram_metrics_DT, newRow_metrics], ignore_index=True)
+
 
                 taylor_diagram_metrics_DT.to_csv(path_save+'taylorDiagram_metrics_pr.csv')
             
@@ -617,12 +620,13 @@ for i in range(len(list_calculation)):
                 #Saving the performance metrics 
                 taylor_diagram_metrics_DT=pd.read_csv(path_save+'taylorDiagram_metrics_tos.csv', index_col=[0])
 
-                newRow_metrics={'Model':models[p],'corr_DJF': corr_m_o[0],\
-                'corr_JJA': corr_m_o[1],'corr_MAM': corr_m_o[2],'corr_SON': corr_m_o[3],\
-                'std_DJF':std_m[0],'std_JJA':std_m[1],'std_MAM':std_m[2],'std_SON':std_m[3]}
+                newRow_metrics=pd.DataFrame({'Model':[models[p]],'corr_DJF': [corr_m_o[0]],\
+                'corr_JJA': [corr_m_o[1]],'corr_MAM': [corr_m_o[2]],'corr_SON': [corr_m_o[3]],\
+                'std_DJF':[std_m[0]],'std_JJA':[std_m[1]],'std_MAM':[std_m[2]],'std_SON':[std_m[3]]})
 
-                taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics,\
-                ignore_index=True)
+                #taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics,\
+                #ignore_index=True)
+                taylor_diagram_metrics_DT = pd.concat([taylor_diagram_metrics_DT, newRow_metrics], ignore_index=True)
 
                 taylor_diagram_metrics_DT.to_csv(path_save+'taylorDiagram_metrics_tos.csv')
             
@@ -709,12 +713,13 @@ for i in range(len(list_calculation)):
                 #Saving the performance metrics 
                 taylor_diagram_metrics_DT=pd.read_csv(path_save+'taylorDiagram_metrics_wind200.csv', index_col=[0])
 
-                newRow_metrics={'Model':models[p],'corr_DJF': corr_m_o[0],\
-                'corr_JJA': corr_m_o[1],'corr_MAM': corr_m_o[2],'corr_SON': corr_m_o[3],\
-                'std_DJF':std_m[0],'std_JJA':std_m[1],'std_MAM':std_m[2],'std_SON':std_m[3]}
+                newRow_metrics=pd.DataFrame({'Model':[models[p]],'corr_DJF': [corr_m_o[0]],\
+                'corr_JJA': [corr_m_o[1]],'corr_MAM': [corr_m_o[2]],'corr_SON': [corr_m_o[3]],\
+                'std_DJF':[std_m[0]],'std_JJA':[std_m[1]],'std_MAM':[std_m[2]],'std_SON':[std_m[3]]})
 
-                taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics,\
-                ignore_index=True)
+                #taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics,\
+                #ignore_index=True)
+                taylor_diagram_metrics_DT = pd.concat([taylor_diagram_metrics_DT, newRow_metrics], ignore_index=True)
 
                 taylor_diagram_metrics_DT.to_csv(path_save+'taylorDiagram_metrics_wind200.csv')
             
@@ -824,13 +829,14 @@ for i in range(len(list_calculation)):
                 taylor_diagram_metrics_DT=pd.read_csv(path_save+'taylorDiagram_metrics_wind850.csv', index_col=[0])
                 print ("    read: '" + path_save+"taylorDiagram_metrics_wind850.csv'")
 
-                newRow_metrics={'Model':models[p],'corr_DJF': corr_m_o[0],\
-                'corr_JJA': corr_m_o[1],'corr_MAM': corr_m_o[2],'corr_SON': corr_m_o[3],\
-                'std_DJF':std_m[0],'std_JJA':std_m[1],'std_MAM':std_m[2],'std_SON':std_m[3]}
+                newRow_metrics=pd.DataFrame({'Model':[models[p]],'corr_DJF': [corr_m_o[0]],\
+                'corr_JJA': [corr_m_o[1]],'corr_MAM': [corr_m_o[2]],'corr_SON': [corr_m_o[3]],\
+                'std_DJF':[std_m[0]],'std_JJA':[std_m[1]],'std_MAM':[std_m[2]],'std_SON':[std_m[3]]})
                 print ("    filling taylor")
 
-                taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics,\
-                ignore_index=True)
+                #taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics,\
+                #ignore_index=True)
+                taylor_diagram_metrics_DT = pd.concat([taylor_diagram_metrics_DT, newRow_metrics], ignore_index=True)
                 print ("    writting taylor into csv")
 
                 taylor_diagram_metrics_DT.to_csv(path_save+'taylorDiagram_metrics_wind850.csv')
@@ -925,24 +931,22 @@ for i in range(len(list_calculation)):
                 #hadley
                 taylor_diagram_metrics_DT_H=pd.read_csv(path_save+'taylorDiagram_metrics_hadleycell.csv', index_col=[0])
 
-                newRow_metrics_H={'Model':models[p],'corr_DJF': corr_m_h[0],\
-                'corr_JJA': corr_m_h[1],'corr_MAM': corr_m_h[2],'corr_SON': corr_m_h[3],\
-                'std_DJF':std_m_h[0],'std_JJA':std_m_h[1],'std_MAM':std_m_h[2],'std_SON':std_m_h[3]}
+                newRow_metrics_H=pd.DataFrame({'Model':[models[p]],'corr_DJF': [corr_m_h[0]],\
+                'corr_JJA': [corr_m_h[1]],'corr_MAM': [corr_m_h[2]],'corr_SON': [corr_m_h[3]],\
+                'std_DJF':[std_m_h[0]],'std_JJA':[std_m_h[1]],'std_MAM':[std_m_h[2]],'std_SON':[std_m_h[3]]})
 
-                taylor_diagram_metrics_DT_H=taylor_diagram_metrics_DT_H.append(newRow_metrics_H,\
-                ignore_index=True)
+                taylor_diagram_metrics_DT_H = pd.concat([taylor_diagram_metrics_DT_H, newRow_metrics_H], ignore_index=True)
 
                 taylor_diagram_metrics_DT_H.to_csv(path_save+'taylorDiagram_metrics_hadleycell.csv')
 
                 #walker
                 taylor_diagram_metrics_DT_W=pd.read_csv(path_save+'taylorDiagram_metrics_walkercell.csv', index_col=[0])
 
-                newRow_metrics_W={'Model':models[p],'corr_DJF': corr_m_w[0],\
-                'corr_JJA': corr_m_w[1],'corr_MAM': corr_m_w[2],'corr_SON': corr_m_w[3],\
-                'std_DJF':std_m_w[0],'std_JJA':std_m_w[1],'std_MAM':std_m_w[2],'std_SON':std_m_w[3]}
+                newRow_metrics_W=pd.DataFrame({'Model':[models[p]],'corr_DJF': [corr_m_w[0]],\
+                'corr_JJA': [corr_m_w[1]],'corr_MAM': [corr_m_w[2]],'corr_SON': [corr_m_w[3]],\
+                'std_DJF':[std_m_w[0]],'std_JJA':[std_m_w[1]],'std_MAM':[std_m_w[2]],'std_SON':[std_m_w[3]]})
 
-                taylor_diagram_metrics_DT_W=taylor_diagram_metrics_DT_W.append(newRow_metrics_W,\
-                ignore_index=True)
+                taylor_diagram_metrics_DT_W = pd.concat([taylor_diagram_metrics_DT_W, newRow_metrics_W], ignore_index=True)
 
                 taylor_diagram_metrics_DT_W.to_csv(path_save+'taylorDiagram_metrics_walkercell.csv')
 
@@ -1384,33 +1388,29 @@ for i in range(len(list_calculation)):
                 #1. Metrics
                 taylor_diagram_metrics_DT=pd.read_csv(path_save+'taylorDiagram_metrics_qu_qv.csv', index_col=[0])
 
-                newRow_metrics_north_m={'Model':models[p],'Boundary':'north','corr_DJF': corr_m_o_north[0],\
-                'corr_JJA': corr_m_o_north[1],'corr_MAM': corr_m_o_north[2],'corr_SON': corr_m_o_north[3],\
-                'std_DJF':std_m_north[0],'std_JJA':std_m_north[1],'std_MAM':std_m_north[2],'std_SON':std_m_north[3]}
+                newRow_metrics_north_m=pd.DataFrame({'Model':[models[p]],'Boundary':['north'],'corr_DJF': [corr_m_o_north[0]],\
+                'corr_JJA': [corr_m_o_north[1]],'corr_MAM': [corr_m_o_north[2]],'corr_SON': [corr_m_o_north[3]],\
+                'std_DJF':[std_m_north[0]],'std_JJA':[std_m_north[1]],'std_MAM':[std_m_north[2]],'std_SON':[std_m_north[3]]})
 
-                newRow_metrics_south_m={'Model':models[p],'Boundary':'south','corr_DJF': corr_m_o_south[0],\
-                'corr_JJA': corr_m_o_south[1],'corr_MAM': corr_m_o_south[2],'corr_SON': corr_m_o_south[3],\
-                'std_DJF':std_m_south[0],'std_JJA':std_m_south[1],'std_MAM':std_m_south[2],'std_SON':std_m_south[3]}
+                newRow_metrics_south_m=pd.DataFrame({'Model':[models[p]],'Boundary':['south'],'corr_DJF': [corr_m_o_south[0]],\
+                'corr_JJA': [corr_m_o_south[1]],'corr_MAM': [corr_m_o_south[2]],'corr_SON': [corr_m_o_south[3]],\
+                'std_DJF':[std_m_south[0]],'std_JJA':[std_m_south[1]],'std_MAM':[std_m_south[2]],'std_SON':[std_m_south[3]]})
 
-                newRow_metrics_east_m={'Model':models[p],'Boundary':'east','corr_DJF': corr_m_o_east[0],\
-                'corr_JJA': corr_m_o_east[1],'corr_MAM': corr_m_o_east[2],'corr_SON': corr_m_o_east[3],\
-                'std_DJF':std_m_east[0],'std_JJA':std_m_east[1],'std_MAM':std_m_east[2],'std_SON':std_m_east[3]}
+                newRow_metrics_east_m=pd.DataFrame({'Model':[models[p]],'Boundary':['east'],'corr_DJF': [corr_m_o_east[0]],\
+                'corr_JJA': [corr_m_o_east[1]],'corr_MAM': [corr_m_o_east[2]],'corr_SON': [corr_m_o_east[3]],\
+                'std_DJF':[std_m_east[0]],'std_JJA':[std_m_east[1]],'std_MAM':[std_m_east[2]],'std_SON':[std_m_east[3]]})
 
-                newRow_metrics_west_m={'Model':models[p],'Boundary':'west','corr_DJF': corr_m_o_west[0],\
-                'corr_JJA': corr_m_o_west[1],'corr_MAM': corr_m_o_west[2],'corr_SON': corr_m_o_west[3],\
-                'std_DJF':std_m_west[0],'std_JJA':std_m_west[1],'std_MAM':std_m_west[2],'std_SON':std_m_west[3]}
+                newRow_metrics_west_m=pd.DataFrame({'Model':[models[p]],'Boundary':['west'],'corr_DJF': [corr_m_o_west[0]],\
+                'corr_JJA': [corr_m_o_west[1]],'corr_MAM': [corr_m_o_west[2]],'corr_SON': [corr_m_o_west[3]],\
+                'std_DJF':[std_m_west[0]],'std_JJA':[std_m_west[1]],'std_MAM':[std_m_west[2]],'std_SON':[std_m_west[3]]})
 
-                taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics_north_m,\
-                ignore_index=True)
+                taylor_diagram_metrics_DT = pd.concat([taylor_diagram_metrics_DT, newRow_metrics_north_m], ignore_index=True)
 
-                taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics_south_m,\
-                ignore_index=True)
+                taylor_diagram_metrics_DT = pd.concat([taylor_diagram_metrics_DT, newRow_metrics_south_m], ignore_index=True)
 
-                taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics_east_m,\
-                ignore_index=True)
+                taylor_diagram_metrics_DT = pd.concat([taylor_diagram_metrics_DT, newRow_metrics_east_m], ignore_index=True)
 
-                taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics_west_m,\
-                ignore_index=True)
+                taylor_diagram_metrics_DT = pd.concat([taylor_diagram_metrics_DT, newRow_metrics_west_m], ignore_index=True)
 
                 taylor_diagram_metrics_DT.to_csv(path_save+'taylorDiagram_metrics_qu_qv.csv')
 
@@ -1595,33 +1595,29 @@ for i in range(len(list_calculation)):
                 #1. Metrics
                 taylor_diagram_metrics_DT=pd.read_csv(path_save+'taylorDiagram_metrics_tu_tv.csv', index_col=[0])
 
-                newRow_metrics_north_m={'Model':models[p],'Boundary':'north','corr_DJF': corr_m_o_north[0],\
-                'corr_JJA': corr_m_o_north[1],'corr_MAM': corr_m_o_north[2],'corr_SON': corr_m_o_north[3],\
-                'std_DJF':std_m_north[0],'std_JJA':std_m_north[1],'std_MAM':std_m_north[2],'std_SON':std_m_north[3]}
+                newRow_metrics_north_m=pd.DataFrame({'Model':[models[p]],'Boundary':['north'],'corr_DJF': [corr_m_o_north[0]],\
+                'corr_JJA': [corr_m_o_north[1]],'corr_MAM': [corr_m_o_north[2]],'corr_SON': [corr_m_o_north[3]],\
+                'std_DJF':[std_m_north[0]],'std_JJA':[std_m_north[1]],'std_MAM':[std_m_north[2]],'std_SON':[std_m_north[3]]})
 
-                newRow_metrics_south_m={'Model':models[p],'Boundary':'south','corr_DJF': corr_m_o_south[0],\
-                'corr_JJA': corr_m_o_south[1],'corr_MAM': corr_m_o_south[2],'corr_SON': corr_m_o_south[3],\
-                'std_DJF':std_m_south[0],'std_JJA':std_m_south[1],'std_MAM':std_m_south[2],'std_SON':std_m_south[3]}
+                newRow_metrics_south_m=pd.DataFrame({'Model':[models[p]],'Boundary':['south'],'corr_DJF': [corr_m_o_south[0]],\
+                'corr_JJA': [corr_m_o_south[1]],'corr_MAM': [corr_m_o_south[2]],'corr_SON': [corr_m_o_south[3]],\
+                'std_DJF':[std_m_south[0]],'std_JJA':[std_m_south[1]],'std_MAM':[std_m_south[2]],'std_SON':[std_m_south[3]]})
 
-                newRow_metrics_east_m={'Model':models[p],'Boundary':'east','corr_DJF': corr_m_o_east[0],\
-                'corr_JJA': corr_m_o_east[1],'corr_MAM': corr_m_o_east[2],'corr_SON': corr_m_o_east[3],\
-                'std_DJF':std_m_east[0],'std_JJA':std_m_east[1],'std_MAM':std_m_east[2],'std_SON':std_m_east[3]}
+                newRow_metrics_east_m=pd.DataFrame({'Model':[models[p]],'Boundary':['east'],'corr_DJF': [corr_m_o_east[0]],\
+                'corr_JJA': [corr_m_o_east[1]],'corr_MAM': [corr_m_o_east[2]],'corr_SON': [corr_m_o_east[3]],\
+                'std_DJF':[std_m_east[0]],'std_JJA':[std_m_east[1]],'std_MAM':[std_m_east[2]],'std_SON':[std_m_east[3]]})
 
-                newRow_metrics_west_m={'Model':models[p],'Boundary':'west','corr_DJF': corr_m_o_west[0],\
-                'corr_JJA': corr_m_o_west[1],'corr_MAM': corr_m_o_west[2],'corr_SON': corr_m_o_west[3],\
-                'std_DJF':std_m_west[0],'std_JJA':std_m_west[1],'std_MAM':std_m_west[2],'std_SON':std_m_west[3]}
+                newRow_metrics_west_m=pd.DataFrame({'Model':[models[p]],'Boundary':['west'],'corr_DJF': [corr_m_o_west[0]],\
+                'corr_JJA': [corr_m_o_west[1]],'corr_MAM': [corr_m_o_west[2]],'corr_SON': [corr_m_o_west[3]],\
+                'std_DJF':[std_m_west[0]],'std_JJA':[std_m_west[1]],'std_MAM':[std_m_west[2]],'std_SON':[std_m_west[3]]})
 
-                taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics_north_m,\
-                ignore_index=True)
+                taylor_diagram_metrics_DT = pd.concat([taylor_diagram_metrics_DT, newRow_metrics_north_m], ignore_index=True)
 
-                taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics_south_m,\
-                ignore_index=True)
+                taylor_diagram_metrics_DT = pd.concat([taylor_diagram_metrics_DT, newRow_metrics_south_m], ignore_index=True)
 
-                taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics_east_m,\
-                ignore_index=True)
+                taylor_diagram_metrics_DT = pd.concat([taylor_diagram_metrics_DT, newRow_metrics_east_m], ignore_index=True)
 
-                taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics_west_m,\
-                ignore_index=True)
+                taylor_diagram_metrics_DT = pd.concat([taylor_diagram_metrics_DT, newRow_metrics_west_m], ignore_index=True)
 
                 taylor_diagram_metrics_DT.to_csv(path_save+'taylorDiagram_metrics_tu_tv.csv')
 
