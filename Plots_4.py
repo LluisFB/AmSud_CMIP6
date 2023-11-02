@@ -45,8 +45,8 @@ sns.set_context('notebook', font_scale=1.5)
 
 #path_entry='/home/iccorreasa/Documentos/Paper_CMIP6_models/PLOTS_paper/PAPER_FINAL/npz/' #CHANGE
 #path_save='/home/iccorreasa/Documentos/Paper_CMIP6_models/PLOTS_paper/PAPER_FINAL/plots/' #CHANGE
-path_entry='/scratchx/lfita'
-path_save='/scratchx/lfita'
+path_entry='/scratchx/lfita/'
+path_save='/scratchx/lfita/'
 
 #-------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------
