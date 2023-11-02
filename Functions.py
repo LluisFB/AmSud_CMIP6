@@ -317,7 +317,7 @@ def seasonal_ensamble(list_models,path_entry_npz,file_name,len_lats, len_lons):
             var_ensamble[p]=var_model_season[i]
 
         #averaging the models
-        var_mean=np.mean(var_ensamble,axis=0)
+        var_mean=np.nanmean(var_ensamble,axis=0)
 
         #saving in the initial arrays +
         var_seasonal_ensamble[i]=var_mean
@@ -484,13 +484,13 @@ def td_plots(fig,season_str,ref_table,models_table,characteristic,number_models,
     # container (used for layout)
     dia._ax.set_title(title_label,fontsize=title_size,loc='left', pad=20)
 
-    nrows = 8
+    nrows = 16
     ncols = int(np.ceil(len(dia.samplePoints) / float(nrows)))
 
 
     fig.legend(dia.samplePoints,
                [ p.get_label() for p in dia.samplePoints ],
-               numpoints=1, prop=dict(size='medium'),bbox_to_anchor=(1.03, 0.85) \
+               numpoints=1, prop=dict(size='medium'),bbox_to_anchor=(1.11, 0.85) \
                ,ncol=ncols,loc='right')
 
     #fig.tight_layout()
@@ -1466,12 +1466,122 @@ def plot_series_int_loc(title_plot,index_strength_ref,index_strength_m,index_lat
         if k!=0 and k!=1:
             axs.set_xlabel('Month',fontsize=label_font)
 
-    fig.legend( bbox_to_anchor=(0.92, 0.9), loc='upper left', fontsize=str(legend_font))
+    nrows = 20
+    ncols = int(np.ceil(len(list_models) / float(nrows)))
+
+    fig.legend( bbox_to_anchor=(0.92, 0.9), ncol=ncols, loc='upper left', fontsize=str(legend_font))
 
     fig.savefig(path_save_plots+save_str+'.png', \
     format = 'png', bbox_inches='tight')
     plt.close()
 
+def plot_series_int_loc_combined(title_plot,index_strength_ref_sash,index_strength_m_sash,index_latitude_ref_sash,index_longitude_ref_sash,index_latitude_m_sash,index_longitude_m_sash,\
+                               index_strength_ref_spsh,index_strength_m_spsh,index_latitude_ref_spsh,index_longitude_ref_spsh,index_latitude_m_spsh,index_longitude_m_spsh,\
+                               index_strength_ref_nash,index_strength_m_nash,index_latitude_ref_nash,index_longitude_ref_nash,index_latitude_m_nash,index_longitude_m_nash,\
+                               title_subplot_0_sash,title_subplot_1_sash,title_subplot_2_sash,title_subplot_0_spsh,title_subplot_1_spsh,title_subplot_2_spsh,\
+                               title_subplot_0_nash,title_subplot_1_nash,title_subplot_2_nash,list_models,save_str,units_index, path_save_plots,nrow,ncol,fzx,fzy,title_font1,title_font2,\
+                                  label_font, ticks_font, legend_font):
+    labels=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    row=nrow
+    column=ncol
+    fig=plt.figure(figsize=(fzx,fzy))
+    fig.suptitle(title_plot,fontsize=title_font1,fontweight='bold')
+
+    for k in range(nrow*ncol):
+        axs = fig.add_subplot(row, column, k+1)
+        if k==0:
+            reference_data=index_strength_ref_sash
+            models_data=index_strength_m_sash
+            y_label_plot=units_index
+            title_subplot=title_subplot_0_sash
+            labels_ref_plot='Reference [ERA5]'
+        
+        elif k==1:
+            reference_data=index_strength_ref_spsh
+            models_data=index_strength_m_spsh
+            y_label_plot=units_index
+            title_subplot=title_subplot_0_spsh
+            labels_ref_plot=None
+        elif k==2:
+            reference_data=index_strength_ref_nash
+            models_data=index_strength_m_nash
+            y_label_plot=units_index
+            title_subplot=title_subplot_0_nash
+            labels_ref_plot=None
+
+        elif k==3:
+            reference_data=index_latitude_ref_sash
+            models_data=index_latitude_m_sash
+            y_label_plot='Latitude [°S]'
+            title_subplot=title_subplot_1_sash
+            labels_ref_plot=None
+
+        elif k==4:
+            reference_data=index_latitude_ref_spsh
+            models_data=index_latitude_m_spsh
+            y_label_plot='Latitude [°S]'
+            title_subplot=title_subplot_1_spsh
+            labels_ref_plot=None
+
+        elif k==5:
+            reference_data=index_latitude_ref_nash
+            models_data=index_latitude_m_nash
+            y_label_plot='Latitude °N'
+            title_subplot=title_subplot_1_nash
+            labels_ref_plot=None
+
+        elif k==6:
+            reference_data=index_longitude_ref_sash
+            models_data=index_longitude_m_sash
+            y_label_plot='Longitude [°W]'
+            title_subplot=title_subplot_2_sash
+            labels_ref_plot=None
+        
+        elif k==7:
+            reference_data=index_longitude_ref_spsh
+            models_data=index_longitude_m_spsh
+            y_label_plot='Longitude [°W]'
+            title_subplot=title_subplot_2_spsh
+            labels_ref_plot=None
+        else:
+            reference_data=index_longitude_ref_nash
+            models_data=index_longitude_m_nash
+            y_label_plot='Longitude [°W]'
+            title_subplot=title_subplot_2_nash
+            labels_ref_plot=None
+        
+
+        axs.set_title(title_subplot,fontsize=title_font2,loc='left')
+        axs.spines['top'].set_visible(False)
+        axs.spines['right'].set_visible(False)
+
+        axs.plot(reference_data, color = 'k', linewidth=2.2,label=labels_ref_plot)
+        #iterating in the models to obtain the serie
+        colors=iter(cm.rainbow(np.linspace(0,1,len(list_models))))
+
+        for m in range(len(list_models)):
+            if k==0:
+                labels_plots=list_models[m]
+            else:
+                labels_plots=None
+            c=next(colors)
+
+            axs.plot(models_data[m] ,color =c ,linewidth=1.5,label=labels_plots)
+        axs.set_xticks(np.arange(0,12,1))
+        axs.set_xticklabels(labels,fontsize=ticks_font)
+        axs.set_ylabel(y_label_plot,fontsize=label_font)
+        if k==6 or k==7 or k==8:
+            axs.set_xlabel('Month',fontsize=label_font)
+    
+    nrows = 20
+    ncols = int(np.ceil(len(list_models) / float(nrows)))
+
+    fig.legend( bbox_to_anchor=(0.92, 0.9), ncol=ncols,loc='upper left', fontsize=str(legend_font))
+
+    fig.savefig(path_save_plots+save_str+'.png', \
+    format = 'png', bbox_inches='tight')
+    plt.close()
+    
 def wind_indices(title_plot,index_strength_ref,index_strength_m,index_latitude_ref,index_latitude_m,title_subplot_0,title_subplot_1,y_ticks_0,y_ticks_1,list_models,save_str, path_save_plots,nrow,ncol,fzx,fzy,title_font1,title_font2, label_font, ticks_font, legend_font):
     labels=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug',\
     'Sep','Oct','Nov','Dec']
@@ -1523,8 +1633,11 @@ def wind_indices(title_plot,index_strength_ref,index_strength_m,index_latitude_r
 
         if k==1:
             axs.set_xlabel('Month',fontsize=label_font)
+    
+    nrows = 20
+    ncols = int(np.ceil(len(list_models) / float(nrows)))
 
-    fig.legend( bbox_to_anchor=(0.92, 0.9), loc='upper left', fontsize=str(legend_font))
+    fig.legend( bbox_to_anchor=(0.92, 0.9), ncol=ncols,loc='upper left', fontsize=str(legend_font))
 
     fig.savefig(path_save_plots+save_str+'.png', \
     format = 'png', bbox_inches='tight')
@@ -1548,7 +1661,9 @@ def plot_one_plot(models_n,index_name,path_save_plots,Index_model,wind_ref_arr_i
     plt.yticks(fontsize=ticks_font)
     plt.ylim(ylim_low,ylim_up)
     #plt.legend(fontsize=12)
-    plt.legend( bbox_to_anchor=(1.05, 1.1), loc='upper left', fontsize=str(legend_font))
+    nrows = 20
+    ncols = int(np.ceil(len(models_n) / float(nrows)))
+    plt.legend( bbox_to_anchor=(1.05, 1.1), ncol=ncols,loc='upper left', fontsize=str(legend_font))
     fig.savefig(path_save_plots+index_name+'.png', format = 'png',\
     bbox_inches='tight')
     plt.close()
@@ -2649,6 +2764,26 @@ def series_metrics_bound(series_ref,series_models,list_models,feature,path_save_
 
             series_metrics_r.to_csv(path_save_df+feature+'_series_metrics_corr_rmse.csv')
 
+def filter_series_plots(seriesm,listm,range_lower,range_upper):
+    new_modelS=[]
+    new_modelL=[]
+
+    for g in range(len(listm)):
+        val_min=np.min(seriesm[g,:])
+        val_max=np.max(seriesm[g,:])
+
+        if (val_min<range_lower) or (val_max>range_upper):
+            pass
+        else:
+            new_modelL.append(listm[g])
+            new_modelS.append(seriesm[g])
+    
+    #------------------------------------------------------------
+    #Converting into array 
+    new_listm=np.array(new_modelL)
+    new_seriesm=np.array(new_modelS)
+
+    return new_listm, new_seriesm
 
 
     

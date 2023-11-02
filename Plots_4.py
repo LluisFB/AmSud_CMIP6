@@ -129,6 +129,50 @@ Lon_common_fl=np.arange(south_boundaries_lon[0],south_boundaries_lon[1],dx_commo
 Lat_common_fl=np.arange(west_boundaries_lat[0],west_boundaries_lat[1],dy_common)
 
 #-------------------------------------------------------------------------------------------------------------
+#Stating the limits for the plots of the indices 
+nash_str_limit_lower=1000
+nash_str_limit_upper=1050
+
+nash_lat_limit_lower=15
+nash_lat_limit_upper=45
+
+nash_lon_limit_lower=360-55
+nash_lon_limit_upper=360-5
+
+spsh_str_limit_lower=1000
+spsh_str_limit_upper=1050
+
+spsh_lat_limit_lower=-45
+spsh_lat_limit_upper=-15
+
+spsh_lon_limit_lower=360-120
+spsh_lon_limit_upper=360-70
+
+sash_str_limit_lower=1000
+sash_str_limit_upper=1050
+
+sash_lat_limit_lower=-45
+sash_lat_limit_upper=-15
+
+sash_lon_limit_lower=360-25
+sash_lon_limit_upper=360-1
+
+westerlies_str_limit_lower=0
+westerlies_str_limit_upper=30
+
+westerlies_lat_limit_lower=-70
+westerlies_lat_limit_upper=-25
+
+subjet_str_limit_lower=15
+subjet_str_limit_upper=55
+
+subjet_lat_limit_lower=-50
+subjet_lat_limit_upper=-15
+
+trade_str_lower=-4
+trade_str_upper=15
+
+#-------------------------------------------------------------------------------------------------------------
 
 list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation','Regional_cells',\
                   'SST','Wind_indices','Bolivian_high','VIMF','qu_qv','MSE','tu_tv']
@@ -164,6 +208,20 @@ for i in range(len(list_calculation)):
             nash_lon_ref=np.load(path_entry+'northAtlantic_high_longitude_ERA5.npz',allow_pickle=True)['arr_0']
             nash_latitude_models=np.load(path_entry+'northAtlantic_high_latitude_models.npz',allow_pickle=True)['arr_0']
             nash_longitude_models=np.load(path_entry+'northAtlantic_high_longitude_models.npz',allow_pickle=True)['arr_0']
+
+            #------------------------------------------------------------------------------------------------------
+            #Performing the data quality of the series of the models 
+            models, southAtlantic_strength_models=filter_series_plots(southAtlantic_strength_models,models,sash_str_limit_lower,sash_str_limit_upper)
+            models, southPacific_strength_models=filter_series_plots(southPacific_strength_models,models,spsh_str_limit_lower,spsh_str_limit_upper)
+            models, nash_strength_models=filter_series_plots(nash_strength_models,models,nash_str_limit_lower,nash_str_limit_upper)
+
+            models, southAtlantic_latitude_models=filter_series_plots(southAtlantic_latitude_models,models,sash_lat_limit_lower,sash_lat_limit_upper)
+            models, southPacific_latitude_models=filter_series_plots(southPacific_latitude_models,models,spsh_lat_limit_lower,spsh_lat_limit_upper)
+            models, nash_latitude_models=filter_series_plots(nash_latitude_models,models,nash_lat_limit_lower,nash_lat_limit_upper)
+
+            models, southAtlantic_longitude_models=filter_series_plots(southAtlantic_longitude_models,models,sash_lon_limit_lower,sash_lon_limit_upper)
+            models, southPacific_longitude_models=filter_series_plots(southPacific_longitude_models,models,spsh_lon_limit_lower,spsh_lon_limit_upper)
+            models, nash_longitude_models=filter_series_plots(nash_longitude_models,models,nash_lon_limit_lower,nash_lon_limit_upper)
 
 
             #----------------------------------------------------------------------------------------------------
@@ -225,7 +283,10 @@ for i in range(len(list_calculation)):
             plot_series(ax3,nash_strength_ref,nash_strength_models,\
             'c. North Atlantic subtropical High (NASH)',models,'Pressure [hPa]','No',title_str_size, xy_label_str, tick_labels_str,'yes')
 
-            fig.legend( bbox_to_anchor=(0.92, 0.9), loc='upper left', fontsize=str(legends_str))
+            nrows = 20
+            ncols = int(np.ceil(len(models) / float(nrows)))
+
+            fig.legend( bbox_to_anchor=(0.92, 0.9), ncol=ncols,loc='upper left', fontsize=str(legends_str))
 
             fig.savefig(path_save+'SubtropicalHighs_intensity.png', \
             format = 'png', bbox_inches='tight')
@@ -337,7 +398,11 @@ for i in range(len(list_calculation)):
                                                     facecolor='blue',
                                                     alpha=1,fill=None,lw=2.5,
                                                     transform=ccrs.PlateCarree()))
-                fig1.legend( bbox_to_anchor=(0.92, 0.8), loc='upper left', fontsize=str(legends_str),frameon=False)
+                
+                nrows = 20
+                ncols = int(np.ceil(len(models) / float(nrows)))
+
+                fig1.legend( bbox_to_anchor=(0.92, 0.8), ncol=ncols,loc='upper left', fontsize=str(legends_str),frameon=False)
 
                 fig1.savefig(path_save+seasons_labels+'_SubtropicalHighs_Core.png', \
                 format = 'png', bbox_inches='tight')
@@ -455,6 +520,16 @@ for i in range(len(list_calculation)):
             trade_index_m=np.load(path_entry+'trade_winds_models.npz',allow_pickle=True)['arr_0']
             trade_index_r=np.load(path_entry+'trade_winds_ERA5.npz',allow_pickle=True)['arr_0']
 
+
+            #-------------------------------------------------------------------------------------------------------
+            #Performing the filter of the series 
+            models, subtropical_Str_models=filter_series_plots(subtropical_Str_models,models,subjet_str_limit_lower,subjet_str_limit_upper)
+            models, subtropical_Lat_models=filter_series_plots(subtropical_Lat_models,models,subjet_lat_limit_lower,subjet_lat_limit_upper)
+
+            models, westerlies_Str_model=filter_series_plots(westerlies_Str_model,models,westerlies_str_limit_lower,westerlies_str_limit_upper)
+            models, westerlies_Lat_model=filter_series_plots(westerlies_Lat_model,models,westerlies_lat_limit_lower,westerlies_lat_limit_upper)
+
+            models, trade_index_m=filter_series_plots(trade_index_m,models,trade_str_lower,trade_str_upper)
             #-------------------------------------------------------------------------------------------------------
             #Obtaining the metrics 
             series_metrics(subtropical_strength_ref,subtropical_Str_models,models,'subtropicalJet_strength',path_entry)
@@ -1200,8 +1275,11 @@ for i in range(len(list_calculation)):
             plot_boundary(ax8,'h. ', east_era5[1],models,east_cmip6[:,1,:],\
             '[Latitude]',arange_x_e,labels_plot_eastern,'no',\
                 y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',11,y_limits_pl)
+            
+            nrows = 20
+            ncols = int(np.ceil(len(models) / float(nrows)))
 
-            fig.legend(bbox_to_anchor=(0.95, 0.90), loc='upper left', fontsize=str(legends_str))
+            fig.legend(bbox_to_anchor=(0.95, 0.90), ncol=ncols,loc='upper left', fontsize=str(legends_str))
 
             plt.text(0.4,1.3,'DJF', fontsize=fig_title_font,rotation='horizontal',transform=ax1.transAxes)
             plt.text(0.4,1.3,'JJA', fontsize=fig_title_font,rotation='horizontal',transform=ax2.transAxes)
@@ -1326,8 +1404,11 @@ for i in range(len(list_calculation)):
             plot_boundary(ax8,'h. ', east_era5[1],models,east_cmip6[:,1,:],\
             '[Latitude]',arange_x_e,labels_plot_eastern,'no',\
                 y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',11,y_limits_pl)
+            
+            nrows = 20
+            ncols = int(np.ceil(len(models) / float(nrows)))
 
-            fig.legend(bbox_to_anchor=(0.95, 0.90), loc='upper left', fontsize=str(legends_str))
+            fig.legend(bbox_to_anchor=(0.95, 0.90), ncol=ncols,loc='upper left', fontsize=str(legends_str))
 
             plt.text(0.4,1.3,'DJF', fontsize=fig_title_font,rotation='horizontal',transform=ax1.transAxes)
             plt.text(0.4,1.3,'JJA', fontsize=fig_title_font,rotation='horizontal',transform=ax2.transAxes)
