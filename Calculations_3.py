@@ -493,9 +493,9 @@ for i in range(len(list_calculation)):
         np.savez_compressed(path_save+'pr_fields_models_N.npz',models_app)
 
         #Reading the reference files 
-        var_array_ref=np.load(path_save+'ERA5_mtpr_fields.npz')['arr_0']
-        lat_refe=np.load(path_save+'ERA5_mtpr_fields_Lat.npz')['arr_0']
-        lon_refe=np.load(path_save+'ERA5_mtpr_fields_Lon.npz')['arr_0']
+        var_array_ref=np.load(path_save+'ERA5_tp_fields.npz')['arr_0']
+        lat_refe=np.load(path_save+'ERA5_tp_fields_Lat.npz')['arr_0']
+        lon_refe=np.load(path_save+'ERA5_tp_fields_Lon.npz')['arr_0']
 
 
         for p in range(len(models)):

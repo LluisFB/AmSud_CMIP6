@@ -453,28 +453,28 @@ for i in range(len(list_calculation)):
             taylor=td_plots(fig,'SON',ref_std,models_metrics,'SLP',len(models),344,'d.',title_str_size,'no',None)
 
             ax5 = fig.add_subplot(3, 4, 5, projection=projection)
-            cs=plotMap(ax5,var_mmm[0],lon2D,lat2D,cmap_slp,limits_var,'e.',extent, projection,title_str_size,'no',None,'no',None)
+            cs=plotMap(ax5,var_mmm[0],lon2D,lat2D,cmap_slp,limits_var,'e.',extent, projection,title_str_size,'no',None,'no')
 
             ax6 = fig.add_subplot(3, 4, 6, projection=projection)
-            cs=plotMap(ax6,var_mmm[2],lon2D,lat2D,cmap_slp,limits_var,'f.',extent, projection,title_str_size,'no',None,'no',None)
+            cs=plotMap(ax6,var_mmm[2],lon2D,lat2D,cmap_slp,limits_var,'f.',extent, projection,title_str_size,'no',None,'no')
 
             ax7 = fig.add_subplot(3, 4, 7, projection=projection)
-            cs=plotMap(ax7,var_mmm[1],lon2D,lat2D,cmap_slp,limits_var,'g.',extent, projection,title_str_size,'no',None,'no',None)
+            cs=plotMap(ax7,var_mmm[1],lon2D,lat2D,cmap_slp,limits_var,'g.',extent, projection,title_str_size,'no',None,'no')
 
             ax8 = fig.add_subplot(3, 4, 8, projection=projection)
-            cs=plotMap(ax8,var_mmm[3],lon2D,lat2D,cmap_slp,limits_var,'h.',extent, projection,title_str_size,'no',None,'no',None)
+            cs=plotMap(ax8,var_mmm[3],lon2D,lat2D,cmap_slp,limits_var,'h.',extent, projection,title_str_size,'no',None,'no')
 
             ax9 = fig.add_subplot(3, 4, 9, projection=projection)
-            csb=plotMap(ax9,var_mmm_bias[0],lon2D,lat2D,cmap_bias,limits_bias,'i.',extent, projection,title_str_size,'yes',bias_mmm_agreement[0],'no',3)
+            csb=plotMap(ax9,var_mmm_bias[0],lon2D,lat2D,cmap_bias,limits_bias,'i.',extent, projection,title_str_size,'yes',bias_mmm_agreement[0],'no')
 
             ax10 = fig.add_subplot(3, 4, 10, projection=projection)
-            csb=plotMap(ax10,var_mmm_bias[2],lon2D,lat2D,cmap_bias,limits_bias,'j.',extent, projection,title_str_size,'yes',bias_mmm_agreement[2],'no',3)
+            csb=plotMap(ax10,var_mmm_bias[2],lon2D,lat2D,cmap_bias,limits_bias,'j.',extent, projection,title_str_size,'yes',bias_mmm_agreement[2],'no')
 
             ax11 = fig.add_subplot(3, 4, 11, projection=projection)
-            csb=plotMap(ax11,var_mmm_bias[1],lon2D,lat2D,cmap_bias,limits_bias,'k.',extent, projection,title_str_size,'yes',bias_mmm_agreement[1],'no',3)
+            csb=plotMap(ax11,var_mmm_bias[1],lon2D,lat2D,cmap_bias,limits_bias,'k.',extent, projection,title_str_size,'yes',bias_mmm_agreement[1],'no')
 
             ax12 = fig.add_subplot(3, 4, 12, projection=projection)
-            csb=plotMap(ax12,var_mmm_bias[3],lon2D,lat2D,cmap_bias,limits_bias,'l.',extent, projection,title_str_size,'yes',bias_mmm_agreement[3],'no',3)
+            csb=plotMap(ax12,var_mmm_bias[3],lon2D,lat2D,cmap_bias,limits_bias,'l.',extent, projection,title_str_size,'yes',bias_mmm_agreement[3],'no')
 
             cbar_ax = fig.add_axes(colorbar_attributes)
             cb = fig.colorbar(cs,cax=cbar_ax, orientation="vertical")
@@ -495,8 +495,9 @@ for i in range(len(list_calculation)):
             format = 'png', bbox_inches='tight')
             plt.close()
         
-        except:
+        except Exception as e:
             print('Error plot subtropical highs')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
 
 
     elif list_calculation[i]=='Wind_indices':
@@ -558,8 +559,9 @@ for i in range(len(list_calculation)):
             plot_one_plot(models,'Trade_Wind_Index',path_save,trade_index_m,trade_index_r,None,'Wind [m/s]',-4,12,'[850 hPa] Trade Wind Index',\
                         fig_title_font, xy_label_str, tick_labels_str, legends_str)
         
-        except:
+        except Exception as e:
             print('Error plot wind indices')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='Bolivian_high':
 
@@ -578,8 +580,9 @@ for i in range(len(list_calculation)):
             plot_one_plot(models,'Bolivian_High',path_save,bolivian_index_m,bolivian_index_r, None,'200 hPa GPH [Km]',12,13,'Bolivian High Index',\
                         fig_title_font, xy_label_str, tick_labels_str, legends_str)
             
-        except:
+        except Exception as e:
             print('Error plot bolivian high')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='Precipitation':
 
@@ -673,8 +676,9 @@ for i in range(len(list_calculation)):
             format = 'png', bbox_inches='tight')
             plt.close()
         
-        except:
+        except Exception as e:
             print('Error plot precipitation')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
 
     elif list_calculation[i]=='SST':
 
@@ -725,28 +729,28 @@ for i in range(len(list_calculation)):
             taylor=td_plots(fig,'SON',ref_std,models_metrics,'SST',len(models),344,'d.',title_str_size,'no',None)
 
             ax5 = fig.add_subplot(3, 4, 5, projection=projection)
-            cs=plotMap(ax5,var_mmm[0],lon2D,lat2D,cmap_sst,limits_var,'e.',extent, projection,title_str_size,'no',None,'yes',None)
+            cs=plotMap(ax5,var_mmm[0],lon2D,lat2D,cmap_sst,limits_var,'e.',extent, projection,title_str_size,'no',None,'yes')
 
             ax6 = fig.add_subplot(3, 4, 6, projection=projection)
-            cs=plotMap(ax6,var_mmm[2],lon2D,lat2D,cmap_sst,limits_var,'f.',extent, projection,title_str_size,'no',None,'yes',None)
+            cs=plotMap(ax6,var_mmm[2],lon2D,lat2D,cmap_sst,limits_var,'f.',extent, projection,title_str_size,'no',None,'yes')
 
             ax7 = fig.add_subplot(3, 4, 7, projection=projection)
-            cs=plotMap(ax7,var_mmm[1],lon2D,lat2D,cmap_sst,limits_var,'g.',extent, projection,title_str_size,'no',None,'yes',None)
+            cs=plotMap(ax7,var_mmm[1],lon2D,lat2D,cmap_sst,limits_var,'g.',extent, projection,title_str_size,'no',None,'yes')
 
             ax8 = fig.add_subplot(3, 4, 8, projection=projection)
-            cs=plotMap(ax8,var_mmm[3],lon2D,lat2D,cmap_sst,limits_var,'h.',extent, projection,title_str_size,'no',None,'yes',None)
+            cs=plotMap(ax8,var_mmm[3],lon2D,lat2D,cmap_sst,limits_var,'h.',extent, projection,title_str_size,'no',None,'yes')
 
             ax9 = fig.add_subplot(3, 4, 9, projection=projection)
-            csb=plotMap(ax9,var_mmm_bias[0],lon2D,lat2D,cmap_bias,limits_bias,'i.',extent, projection,title_str_size,'yes',bias_mmm_agreement[0],'yes',5)
+            csb=plotMap(ax9,var_mmm_bias[0],lon2D,lat2D,cmap_bias,limits_bias,'i.',extent, projection,title_str_size,'yes',bias_mmm_agreement[0],'yes')
 
             ax10 = fig.add_subplot(3, 4, 10, projection=projection)
-            csb=plotMap(ax10,var_mmm_bias[2],lon2D,lat2D,cmap_bias,limits_bias,'j.',extent, projection,title_str_size,'yes',bias_mmm_agreement[2],'yes',5)
+            csb=plotMap(ax10,var_mmm_bias[2],lon2D,lat2D,cmap_bias,limits_bias,'j.',extent, projection,title_str_size,'yes',bias_mmm_agreement[2],'yes')
 
             ax11 = fig.add_subplot(3, 4, 11, projection=projection)
-            csb=plotMap(ax11,var_mmm_bias[1],lon2D,lat2D,cmap_bias,limits_bias,'k.',extent, projection,title_str_size,'yes',bias_mmm_agreement[1],'yes',5)
+            csb=plotMap(ax11,var_mmm_bias[1],lon2D,lat2D,cmap_bias,limits_bias,'k.',extent, projection,title_str_size,'yes',bias_mmm_agreement[1],'yes')
 
             ax12 = fig.add_subplot(3, 4, 12, projection=projection)
-            csb=plotMap(ax12,var_mmm_bias[3],lon2D,lat2D,cmap_bias,limits_bias,'l.',extent, projection,title_str_size,'yes',bias_mmm_agreement[3],'yes',5)
+            csb=plotMap(ax12,var_mmm_bias[3],lon2D,lat2D,cmap_bias,limits_bias,'l.',extent, projection,title_str_size,'yes',bias_mmm_agreement[3],'yes')
 
             cbar_ax = fig.add_axes(colorbar_attributes)
             cb = fig.colorbar(cs,cax=cbar_ax, orientation="vertical")
@@ -767,8 +771,9 @@ for i in range(len(list_calculation)):
             format = 'png', bbox_inches='tight')
             plt.close()
         
-        except:
+        except Exception as e:
             print('Error plot SST')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='wind_200':
 
@@ -836,16 +841,16 @@ for i in range(len(list_calculation)):
             cs=plotMap_vector(ax8,mag_mmm[3],ua_mmm[3],va_mmm[3],lon2D,lat2D,cmap_w200,limits_var,'h.',extent, projection,title_str_size)
 
             ax9 = fig.add_subplot(3, 4, 9, projection=projection)
-            csb=plotMap(ax9,mag_mmm_bias[0],lon2D,lat2D,cmap_bias,limits_bias,'i.',extent, projection,title_str_size,'yes',bias_mmm_agreement[0],'no',3)
+            csb=plotMap(ax9,mag_mmm_bias[0],lon2D,lat2D,cmap_bias,limits_bias,'i.',extent, projection,title_str_size,'yes',bias_mmm_agreement[0],'no')
 
             ax10 = fig.add_subplot(3, 4, 10, projection=projection)
-            csb=plotMap(ax10,mag_mmm_bias[2],lon2D,lat2D,cmap_bias,limits_bias,'j.',extent, projection,title_str_size,'yes',bias_mmm_agreement[2],'no',3)
+            csb=plotMap(ax10,mag_mmm_bias[2],lon2D,lat2D,cmap_bias,limits_bias,'j.',extent, projection,title_str_size,'yes',bias_mmm_agreement[2],'no')
 
             ax11 = fig.add_subplot(3, 4, 11, projection=projection)
-            csb=plotMap(ax11,mag_mmm_bias[1],lon2D,lat2D,cmap_bias,limits_bias,'k.',extent, projection,title_str_size,'yes',bias_mmm_agreement[1],'no',3)
+            csb=plotMap(ax11,mag_mmm_bias[1],lon2D,lat2D,cmap_bias,limits_bias,'k.',extent, projection,title_str_size,'yes',bias_mmm_agreement[1],'no')
 
             ax12 = fig.add_subplot(3, 4, 12, projection=projection)
-            csb=plotMap(ax12,mag_mmm_bias[3],lon2D,lat2D,cmap_bias,limits_bias,'l.',extent, projection,title_str_size,'yes',bias_mmm_agreement[3],'no',3)
+            csb=plotMap(ax12,mag_mmm_bias[3],lon2D,lat2D,cmap_bias,limits_bias,'l.',extent, projection,title_str_size,'yes',bias_mmm_agreement[3],'no')
 
             cbar_ax = fig.add_axes(colorbar_attributes)
             cb = fig.colorbar(cs,cax=cbar_ax, orientation="vertical")
@@ -865,8 +870,9 @@ for i in range(len(list_calculation)):
             plt.savefig(path_save+'wind200_fields.png', \
             format = 'png', bbox_inches='tight')
             plt.close()
-        except:
+        except Exception as e:
             print('Error plot wind 200')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='wind_850':
 
@@ -878,25 +884,34 @@ for i in range(len(list_calculation)):
             ################################################################################
             #Obtaining the ensamble
 
+            print ('  Obteniendo mag850 mean ...')
             mag_mmm=seasonal_ensamble(models,path_entry,\
             'mag850_MMM_meanFields',len(Lat_common),len(Lon_common))
 
+            print ('  Obteniendo mag850 bias ...')
             mag_mmm_bias=seasonal_ensamble(models,path_entry,\
             'mag850_MMM_biasFields',len(Lat_common),len(Lon_common))
 
+            print ('  Obteniendo u850 mean ...')
             ua_mmm=seasonal_ensamble(models,path_entry,\
             'ua850_MMM_meanFields',len(Lat_common),len(Lon_common))
 
+            print ('  Obteniendo va850 mean ...')
             va_mmm=seasonal_ensamble(models,path_entry,\
             'va850_MMM_meanFields',len(Lat_common),len(Lon_common))
 
+            print ('  agreement_sign mag 850 ...')
             bias_mmm_agreement=agreement_sign(models,path_entry,'mag850_MMM_biasFields',\
                                             len(Lat_common),len(Lon_common))
 
             #PLOT
+            print ("  Leyendo '" + path_entry+"taylorDiagram_metrics_wind850.csv'")
             models_metrics=pd.read_csv(path_entry+'taylorDiagram_metrics_wind850.csv', index_col=[0])
 
+            print ("  Leyendo '" + path_entry+"reference_std_original.csv'")
             ref_std=pd.read_csv(path_entry+'reference_std_original.csv',index_col=[0])
+
+            print ('Ploteando ...')
 
             plot_label='Wind magnitude [m/s]'
             limits_var=np.arange(1.5,13.5,1.5)
@@ -909,10 +924,15 @@ for i in range(len(list_calculation)):
 
             colorbar_attributes_bias=[0.92, 0.1,  0.017,0.24]
 
+            print ('  mesh grid latD, lon2D')
+
             lon2D, lat2D = np.meshgrid(Lon_common, Lat_common)
             projection=ccrs.PlateCarree()
+
+            print ('  extent')
             extent = [min(Lon_common),max(Lon_common),min(Lat_common),max(Lat_common)]
 
+            print ('  ploteando DJF Taylor')
             taylor=td_plots(fig,'DJF',ref_std,models_metrics,'W850',len(models),341,'a.',title_str_size,'no',None)
 
             taylor=td_plots(fig,'MAM',ref_std,models_metrics,'W850',len(models),342,'b.',title_str_size,'no',None)
@@ -921,29 +941,47 @@ for i in range(len(list_calculation)):
 
             taylor=td_plots(fig,'SON',ref_std,models_metrics,'W850',len(models),344,'d.',title_str_size,'no',None)
 
+            print ('  ploteando Map vector')
+
+            print ('    shapes 0 mag_mmm', mag_mmm[0].shape, 'ua', ua_mmm[0].shape,  \
+              'va', va_mmm[0].shape, 'lon2D', lon2D.shape, 'lat2D', lat2D.shape)
             ax5 = fig.add_subplot(3, 4, 5, projection=projection)
             cs=plotMap_vector(ax5,mag_mmm[0],ua_mmm[0],va_mmm[0],lon2D,lat2D,cmap_w850,limits_var,'e.',extent, projection,title_str_size)
 
+            print ('    shapes 2 mag_mmm', mag_mmm[2].shape, 'ua', ua_mmm[2].shape,  \
+              'va', va_mmm[2].shape, 'lon2D', lon2D.shape, 'lat2D', lat2D.shape)
             ax6 = fig.add_subplot(3, 4, 6, projection=projection)
             cs=plotMap_vector(ax6,mag_mmm[2],ua_mmm[2],va_mmm[2],lon2D,lat2D,cmap_w850,limits_var,'f.',extent, projection,title_str_size)
 
+            print ('    shapes 1 mag_mmm', mag_mmm[1].shape, 'ua', ua_mmm[1].shape,  \
+              'va', va_mmm[1].shape, 'lon2D', lon2D.shape, 'lat2D', lat2D.shape)
             ax7 = fig.add_subplot(3, 4, 7, projection=projection)
             cs=plotMap_vector(ax7,mag_mmm[1],ua_mmm[1],va_mmm[1],lon2D,lat2D,cmap_w850,limits_var,'g.',extent, projection,title_str_size,)
 
+            print ('    shapes 3 mag_mmm', mag_mmm[3].shape, 'ua', ua_mmm[3].shape,  \
+              'va', va_mmm[3].shape, 'lon2D', lon2D.shape, 'lat2D', lat2D.shape)
             ax8 = fig.add_subplot(3, 4, 8, projection=projection)
             cs=plotMap_vector(ax8,mag_mmm[3],ua_mmm[3],va_mmm[3],lon2D,lat2D,cmap_w850,limits_var,'h.',extent, projection,title_str_size)
 
+            print ('    shapes 0 mag_bias', mag_mmm_bias[0].shape)
             ax9 = fig.add_subplot(3, 4, 9, projection=projection)
-            csb=plotMap(ax9,mag_mmm_bias[0],lon2D,lat2D,cmap_bias,limits_bias,'i.',extent, projection,title_str_size,'yes',bias_mmm_agreement[0],'no',3)
+            print ('  plotting ax9')
+            #lotMap(axs,var_data,lonPlot,latPlot,colorMap,limits,title_label,extent, projection,title_font2,scatter_status,points_scatter,land_cov):
+            csb=plotMap(ax9,mag_mmm_bias[0],lon2D,lat2D,cmap_bias,limits_bias,'i.',extent, projection,title_str_size,'yes',bias_mmm_agreement[0],'no')
 
+            print ('    shapes 2 mag_bias', mag_mmm_bias[2].shape)
             ax10 = fig.add_subplot(3, 4, 10, projection=projection)
-            csb=plotMap(ax10,mag_mmm_bias[2],lon2D,lat2D,cmap_bias,limits_bias,'j.',extent, projection,title_str_size,'yes',bias_mmm_agreement[2],'no',3)
+            csb=plotMap(ax10,mag_mmm_bias[2],lon2D,lat2D,cmap_bias,limits_bias,'j.',extent, projection,title_str_size,'yes',bias_mmm_agreement[2],'no')
 
+            print ('    shapes 1 mag_bias', mag_mmm_bias[1].shape)
             ax11 = fig.add_subplot(3, 4, 11, projection=projection)
-            csb=plotMap(ax11,mag_mmm_bias[1],lon2D,lat2D,cmap_bias,limits_bias,'k.',extent, projection,title_str_size,'yes',bias_mmm_agreement[1],'no',3)
+            csb=plotMap(ax11,mag_mmm_bias[1],lon2D,lat2D,cmap_bias,limits_bias,'k.',extent, projection,title_str_size,'yes',bias_mmm_agreement[1],'no')
 
+            print ('    shapes 3 mag_bias', mag_mmm_bias[3].shape)
             ax12 = fig.add_subplot(3, 4, 12, projection=projection)
-            csb=plotMap(ax12,mag_mmm_bias[3],lon2D,lat2D,cmap_bias,limits_bias,'l.',extent, projection,title_str_size,'yes',bias_mmm_agreement[3],'no',3)
+            csb=plotMap(ax12,mag_mmm_bias[3],lon2D,lat2D,cmap_bias,limits_bias,'l.',extent, projection,title_str_size,'yes',bias_mmm_agreement[3],'no')
+
+            print ('  añadiendo colorbars')
 
             cbar_ax = fig.add_axes(colorbar_attributes)
             cb = fig.colorbar(cs,cax=cbar_ax, orientation="vertical")
@@ -964,8 +1002,10 @@ for i in range(len(list_calculation)):
             format = 'png', bbox_inches='tight')
             plt.close()
         
-        except:
+        except Exception as e:
             print('Error plot wind 850')
+            # FROM: https://stackoverflow.com/questions/1483429/how-do-i-print-an-exception-in-python
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
 
     elif list_calculation[i]=='Regional_cells':
@@ -1162,8 +1202,9 @@ for i in range(len(list_calculation)):
             format = 'png', bbox_inches='tight')
             plt.close()
         
-        except:
+        except Exception as e:
             print('Error plot regional cells')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
 
     elif list_calculation[i]=='VIMF':
 
@@ -1293,8 +1334,9 @@ for i in range(len(list_calculation)):
             bbox_inches='tight')
             plt.close()
         
-        except:
+        except Exception as e:
             print('Error plot VIMF')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='MSE':
 
@@ -1422,8 +1464,9 @@ for i in range(len(list_calculation)):
             bbox_inches='tight')
             plt.close()
         
-        except:
+        except Exception as e:
             print('Error plot VIHF')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='qu_qv':
 
@@ -1569,8 +1612,9 @@ for i in range(len(list_calculation)):
                 format = 'png', bbox_inches='tight')
                 plt.close()
 
-        except:
+        except Exception as e:
             print('Error plot qu_qv')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='tu_tv':
 
@@ -1716,8 +1760,9 @@ for i in range(len(list_calculation)):
                 format = 'png', bbox_inches='tight')
                 plt.close()
         
-        except:
+        except Exception as e:
             print('Error plot tu_tv')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
 
 
 print('############################################')
