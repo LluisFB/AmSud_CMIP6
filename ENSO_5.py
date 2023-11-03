@@ -45,8 +45,10 @@ sns.set_context('notebook', font_scale=1.5)
 
 #This is the only part of the code to be changed
 
-path_save='/home/iccorreasa/Documentos/Paper_CMIP6_models/PLOTS_paper/PAPER_FINAL/npz/' #CHANGE
-path_save_plots='/home/iccorreasa/Documentos/Paper_CMIP6_models/PLOTS_paper/PAPER_FINAL/plots/' #CHANGE
+#path_save='/home/iccorreasa/Documentos/Paper_CMIP6_models/PLOTS_paper/PAPER_FINAL/npz/' #CHANGE
+#path_save_plots='/home/iccorreasa/Documentos/Paper_CMIP6_models/PLOTS_paper/PAPER_FINAL/plots/' #CHANGE
+path_save = '/scratchx/lfita/'
+path_save_plots = '/scratchx/lfita/'
 
 #-------------------------------------------------------------------------------------------------------
 
@@ -81,9 +83,9 @@ def ENSO_calculations(path_entry,model_name,type_data,lat_bnds_field,lon_bnds_fi
     
     else:
 
-        file_data=xr.open_dataset(path_entry+'ERA5_sst_original_mon_clim_LT.nc')
+        file_data=xr.open_dataset(path_entry+'ERA5_sstk_original_mon_clim_LT.nc')
 
-        data=file_data['sst']
+        data=file_data['sstk']
     
     if data.units=='K' or data.units=='k':
         data=data-273.15
@@ -354,8 +356,9 @@ try:
     np.savez_compressed(path_save+'ERA5_ENSO_fields.npz',slope_matrix_era5)
     np.savez_compressed(path_save+'ERA5_ENSO_fields_Lon.npz',lon_list_era5)
     np.savez_compressed(path_save+'ERA5_ENSO_fields_Lat.npz',lat_list_era5)
-except:
+except Exception as e:
     print('Error ERA5 ENSO')
+    print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
 
 #Models
 models=list(dict_models['tos'])
@@ -418,8 +421,9 @@ for p in range(len(models)):
 
         taylor_diagram_metrics_DT.to_csv(path_save+'taylorDiagram_metrics_ENSO.csv')
     
-    except:
+    except Exception as e:
         print('Error ENSO ', models[p])
+        print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
                 
 #----------------------------------------------------------------------------------------------------------
 print('Calculations - Finished')
@@ -489,8 +493,9 @@ try:
     format = 'png', bbox_inches='tight')
     plt.close()
 
-except:
+except Exception as e:
     print('ENSO plot error ')
+    print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
 
     
 
@@ -699,8 +704,9 @@ for i in range(len(list_calculation)):
             format = 'png', bbox_inches='tight')
             plt.close()
         
-        except:
+        except Exception as e:
             print('Error plot regional cells')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='qu_qv':
 
@@ -846,8 +852,9 @@ for i in range(len(list_calculation)):
                 format = 'png', bbox_inches='tight')
                 plt.close()
 
-        except:
+        except Exception as e:
             print('Error plot qu_qv')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='tu_tv':
 
@@ -993,8 +1000,9 @@ for i in range(len(list_calculation)):
                 format = 'png', bbox_inches='tight')
                 plt.close()
         
-        except:
+        except Exception as e:
             print('Error plot tu_tv')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
 
 
 print('############################################')
@@ -1069,8 +1077,9 @@ for n in range(len(models_ava_wap)):
                                                                 initial_time,final_time,p_level_interest_lower,p_level_interest_upper,\
                                                                     'model','Yes',path_save,models_ava_wap[n])
                     
-            except:
+            except Exception as e:
                 print('Error: ',var_sp,models_ava_wap[n])
+                print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
         
         else:
             pass
