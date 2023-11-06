@@ -343,12 +343,13 @@ try:
 
     #Obtaining the reference standar deviation 
     std_ref_enso=np.nanstd(slope_matrix_era5)
-    new_row_reference={'Characteristic': 'ENSO',\
-    'std_DJF':std_ref_enso, 'std_JJA':std_ref_enso, 'std_MAM':std_ref_enso, 'std_SON':std_ref_enso}
+    new_row_reference=pd.DataFrame({'Characteristic': ['ENSO'],\
+    'std_DJF':[std_ref_enso], 'std_JJA':[std_ref_enso], 'std_MAM':[std_ref_enso], 'std_SON':[std_ref_enso]})
 
     reference_std_DT=pd.read_csv(path_save+'reference_std_original.csv',\
     index_col=[0])
-    reference_std_DT=reference_std_DT.append(new_row_reference, ignore_index=True)
+
+    reference_std_DT=pd.concat([reference_std_DT, new_row_reference,], ignore_index=True)
     reference_std_DT.to_csv(path_save+'reference_std_original.csv')
 
     np.savez_compressed(path_save+'ENSO_frequency_ERA5.npz',f_era5)
@@ -414,10 +415,9 @@ for p in range(len(models)):
         #Saving the performance metrics 
         taylor_diagram_metrics_DT=pd.read_csv(path_save+'taylorDiagram_metrics_ENSO.csv', index_col=[0])
 
-        newRow_metrics={'Model':models[p],'corr_DJF': corr_m,'std_DJF':std_model}
+        newRow_metrics=pd.DataFrame({'Model':[models[p]],'corr_DJF': [corr_m],'std_DJF':[std_model]})
 
-        taylor_diagram_metrics_DT=taylor_diagram_metrics_DT.append(newRow_metrics,\
-        ignore_index=True)
+        taylor_diagram_metrics_DT=pd.concat([taylor_diagram_metrics_DT, newRow_metrics], ignore_index=True)
 
         taylor_diagram_metrics_DT.to_csv(path_save+'taylorDiagram_metrics_ENSO.csv')
     
