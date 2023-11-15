@@ -174,8 +174,11 @@ trade_str_upper=15
 
 #-------------------------------------------------------------------------------------------------------------
 
-list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation','Regional_cells',\
-                  'SST','Wind_indices','Bolivian_high','VIMF','qu_qv','MSE','tu_tv']
+#list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation','Regional_cells',\
+#                  'SST','Wind_indices','Bolivian_high','VIMF','qu_qv','MSE','tu_tv']
+
+list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation',\
+                  'SST','Wind_indices','Bolivian_high','VIMF','MSE']
 
 
 for i in range(len(list_calculation)):
@@ -286,7 +289,7 @@ for i in range(len(list_calculation)):
             nrows = 20
             ncols = int(np.ceil(len(models) / float(nrows)))
 
-            fig.legend( bbox_to_anchor=(0.92, 0.9), ncol=ncols,loc='upper left', fontsize=str(legends_str))
+            fig.legend( bbox_to_anchor=(0.92, 0.9), ncol=1,loc='upper left', fontsize=str(legends_str))
 
             fig.savefig(path_save+'SubtropicalHighs_intensity.png', \
             format = 'png', bbox_inches='tight')
@@ -402,7 +405,7 @@ for i in range(len(list_calculation)):
                 nrows = 20
                 ncols = int(np.ceil(len(models) / float(nrows)))
 
-                fig1.legend( bbox_to_anchor=(0.92, 0.8), ncol=ncols,loc='upper left', fontsize=str(legends_str),frameon=False)
+                fig1.legend( bbox_to_anchor=(0.92, 0.8), ncol=1,loc='upper left', fontsize=str(legends_str),frameon=False)
 
                 fig1.savefig(path_save+seasons_labels+'_SubtropicalHighs_Core.png', \
                 format = 'png', bbox_inches='tight')
@@ -521,6 +524,9 @@ for i in range(len(list_calculation)):
             trade_index_m=np.load(path_entry+'trade_winds_models.npz',allow_pickle=True)['arr_0']
             trade_index_r=np.load(path_entry+'trade_winds_ERA5.npz',allow_pickle=True)['arr_0']
 
+            print('-----------------------------------------------------------------------------------')
+            print('wind_indices: files read OK')
+            print('-----------------------------------------------------------------------------------')
 
             #-------------------------------------------------------------------------------------------------------
             #Performing the filter of the series 
@@ -531,6 +537,10 @@ for i in range(len(list_calculation)):
             models, westerlies_Lat_model=filter_series_plots(westerlies_Lat_model,models,westerlies_lat_limit_lower,westerlies_lat_limit_upper)
 
             models, trade_index_m=filter_series_plots(trade_index_m,models,trade_str_lower,trade_str_upper)
+
+            print('-----------------------------------------------------------------------------------')
+            print('wind_indices: filter series OK')
+            print('-----------------------------------------------------------------------------------')
             #-------------------------------------------------------------------------------------------------------
             #Obtaining the metrics 
             series_metrics(subtropical_strength_ref,subtropical_Str_models,models,'subtropicalJet_strength',path_entry)
@@ -540,6 +550,10 @@ for i in range(len(list_calculation)):
             series_metrics(westerly_latitude_ref,westerlies_Lat_model,models,'westerlies_latitude',path_entry)
 
             series_metrics(trade_index_r,trade_index_m,models,'Trade_winds',path_entry)
+
+            print('-----------------------------------------------------------------------------------')
+            print('wind_indices: series OK')
+            print('-----------------------------------------------------------------------------------')
 
             #Subtropical jet stream
             wind_indices('Southern Hemisphere Subtropical Jet Stream',subtropical_strength_ref,\
@@ -558,6 +572,10 @@ for i in range(len(list_calculation)):
             #Trade winds 
             plot_one_plot(models,'Trade_Wind_Index',path_save,trade_index_m,trade_index_r,None,'Wind [m/s]',-4,12,'[850 hPa] Trade Wind Index',\
                         fig_title_font, xy_label_str, tick_labels_str, legends_str)
+            
+            print('-----------------------------------------------------------------------------------')
+            print('wind_indices: plots OK')
+            print('-----------------------------------------------------------------------------------')
         
         except Exception as e:
             print('Error plot wind indices')
@@ -602,6 +620,10 @@ for i in range(len(list_calculation)):
 
             bias_mmm_agreement=agreement_sign(models,path_entry,'pr_MMM_biasFields',\
                                             len(Lat_common),len(Lon_common))
+            
+            print('-----------------------------------------------------------------------------------')
+            print('Precipitation: files read OK')
+            print('-----------------------------------------------------------------------------------')
 
             ################################################################################
             #PLOT
@@ -621,6 +643,10 @@ for i in range(len(list_calculation)):
 
             colorbar_attributes_bias=[0.92, 0.1,  0.017,0.24]
 
+            print('-----------------------------------------------------------------------------------')
+            print('Precipitation: files metrics OK')
+            print('-----------------------------------------------------------------------------------')
+
             lon2D, lat2D = np.meshgrid(Lon_common, Lat_common)
             projection=ccrs.PlateCarree()
             extent = [min(Lon_common),max(Lon_common),min(Lat_common),max(Lat_common)]
@@ -634,28 +660,28 @@ for i in range(len(list_calculation)):
             taylor=td_plots(fig,'SON',ref_std,models_metrics,'PPT',len(models),344,'d.',title_str_size,'no',None)
 
             ax5 = fig.add_subplot(3, 4, 5, projection=projection)
-            cs=plotMap(ax5,var_mmm[0],lon2D,lat2D,cmap_pr,limits_var,'e.',extent, projection,title_str_size,'no',None,'no',None)
+            cs=plotMap(ax5,var_mmm[0],lon2D,lat2D,cmap_pr,limits_var,'e.',extent, projection,title_str_size,'no',None,'no')
 
             ax6 = fig.add_subplot(3, 4, 6, projection=projection)
-            cs=plotMap(ax6,var_mmm[2],lon2D,lat2D,cmap_pr,limits_var,'f.',extent, projection,title_str_size,'no',None,'no',None)
+            cs=plotMap(ax6,var_mmm[2],lon2D,lat2D,cmap_pr,limits_var,'f.',extent, projection,title_str_size,'no',None,'no')
 
             ax7 = fig.add_subplot(3, 4, 7, projection=projection)
-            cs=plotMap(ax7,var_mmm[1],lon2D,lat2D,cmap_pr,limits_var,'g.',extent, projection,title_str_size,'no',None,'no',None)
+            cs=plotMap(ax7,var_mmm[1],lon2D,lat2D,cmap_pr,limits_var,'g.',extent, projection,title_str_size,'no',None,'no')
 
             ax8 = fig.add_subplot(3, 4, 8, projection=projection)
-            cs=plotMap(ax8,var_mmm[3],lon2D,lat2D,cmap_pr,limits_var,'h.',extent, projection,title_str_size,'no',None,'no',None)
+            cs=plotMap(ax8,var_mmm[3],lon2D,lat2D,cmap_pr,limits_var,'h.',extent, projection,title_str_size,'no',None,'no')
 
             ax9 = fig.add_subplot(3, 4, 9, projection=projection)
-            csb=plotMap(ax9,var_mmm_bias[0],lon2D,lat2D,cmap_bias,limits_bias,'i.',extent, projection,title_str_size,'yes',bias_mmm_agreement[0],'no',3)
+            csb=plotMap(ax9,var_mmm_bias[0],lon2D,lat2D,cmap_bias,limits_bias,'i.',extent, projection,title_str_size,'yes',bias_mmm_agreement[0],'no')
 
             ax10 = fig.add_subplot(3, 4, 10, projection=projection)
-            csb=plotMap(ax10,var_mmm_bias[2],lon2D,lat2D,cmap_bias,limits_bias,'j.',extent, projection,title_str_size,'yes',bias_mmm_agreement[2],'no',3)
+            csb=plotMap(ax10,var_mmm_bias[2],lon2D,lat2D,cmap_bias,limits_bias,'j.',extent, projection,title_str_size,'yes',bias_mmm_agreement[2],'no')
 
             ax11 = fig.add_subplot(3, 4, 11, projection=projection)
-            csb=plotMap(ax11,var_mmm_bias[1],lon2D,lat2D,cmap_bias,limits_bias,'k.',extent, projection,title_str_size,'yes',bias_mmm_agreement[1],'no',3)
+            csb=plotMap(ax11,var_mmm_bias[1],lon2D,lat2D,cmap_bias,limits_bias,'k.',extent, projection,title_str_size,'yes',bias_mmm_agreement[1],'no')
 
             ax12 = fig.add_subplot(3, 4, 12, projection=projection)
-            csb=plotMap(ax12,var_mmm_bias[3],lon2D,lat2D,cmap_bias,limits_bias,'l.',extent, projection,title_str_size,'yes',bias_mmm_agreement[2],'no',3)
+            csb=plotMap(ax12,var_mmm_bias[3],lon2D,lat2D,cmap_bias,limits_bias,'l.',extent, projection,title_str_size,'yes',bias_mmm_agreement[2],'no')
 
             cbar_ax = fig.add_axes(colorbar_attributes)
             cb = fig.colorbar(cs,cax=cbar_ax, orientation="vertical")
@@ -799,6 +825,10 @@ for i in range(len(list_calculation)):
 
             bias_mmm_agreement=agreement_sign(models,path_entry,'mag200_MMM_biasFields',\
                                             len(Lat_common),len(Lon_common))
+            
+            print('-----------------------------------------------------------------------------------')
+            print('wind_200: files read OK')
+            print('-----------------------------------------------------------------------------------')
 
             #PLOT
             models_metrics=pd.read_csv(path_entry+'taylorDiagram_metrics_wind200.csv', index_col=[0])
@@ -810,6 +840,10 @@ for i in range(len(list_calculation)):
             limits_bias=np.arange(-10,11,1)
 
             cmap_plot=['gist_rainbow_r','terrain','terrain_r','rainbow','RdBu']
+
+            print('-----------------------------------------------------------------------------------')
+            print('wind_200: files metrics OK')
+            print('-----------------------------------------------------------------------------------')
 
             fig=plt.figure(figsize=(24,14))
             colorbar_attributes=[0.92, 0.37,  0.017,0.24]
@@ -828,6 +862,10 @@ for i in range(len(list_calculation)):
 
             taylor=td_plots(fig,'SON',ref_std,models_metrics,'W200',len(models),344,'d.',title_str_size,'no',None)
 
+            print('-----------------------------------------------------------------------------------')
+            print('wind_200: td plots OK')
+            print('-----------------------------------------------------------------------------------')
+
             ax5 = fig.add_subplot(3, 4, 5, projection=projection)
             cs=plotMap_vector(ax5,mag_mmm[0],ua_mmm[0],va_mmm[0],lon2D,lat2D,cmap_w200,limits_var,'e.',extent, projection,title_str_size)
 
@@ -839,6 +877,10 @@ for i in range(len(list_calculation)):
 
             ax8 = fig.add_subplot(3, 4, 8, projection=projection)
             cs=plotMap_vector(ax8,mag_mmm[3],ua_mmm[3],va_mmm[3],lon2D,lat2D,cmap_w200,limits_var,'h.',extent, projection,title_str_size)
+
+            print('-----------------------------------------------------------------------------------')
+            print('wind_200: plot vector OK')
+            print('-----------------------------------------------------------------------------------')
 
             ax9 = fig.add_subplot(3, 4, 9, projection=projection)
             csb=plotMap(ax9,mag_mmm_bias[0],lon2D,lat2D,cmap_bias,limits_bias,'i.',extent, projection,title_str_size,'yes',bias_mmm_agreement[0],'no')
@@ -879,7 +921,7 @@ for i in range(len(list_calculation)):
         try:
 
             #input
-            models=np.load(path_entry+'wind200_fields_models_N.npz',allow_pickle=True)['arr_0']
+            models=np.load(path_entry+'wind850_fields_models_N.npz',allow_pickle=True)['arr_0']
 
             ################################################################################
             #Obtaining the ensamble
@@ -903,6 +945,10 @@ for i in range(len(list_calculation)):
             print ('  agreement_sign mag 850 ...')
             bias_mmm_agreement=agreement_sign(models,path_entry,'mag850_MMM_biasFields',\
                                             len(Lat_common),len(Lon_common))
+            
+            print('-----------------------------------------------------------------------------------')
+            print('wind_850: files read OK')
+            print('-----------------------------------------------------------------------------------')
 
             #PLOT
             print ("  Leyendo '" + path_entry+"taylorDiagram_metrics_wind850.csv'")
@@ -924,7 +970,9 @@ for i in range(len(list_calculation)):
 
             colorbar_attributes_bias=[0.92, 0.1,  0.017,0.24]
 
-            print ('  mesh grid latD, lon2D')
+            print('-----------------------------------------------------------------------------------')
+            print('wind_850: files metrics OK')
+            print('-----------------------------------------------------------------------------------')
 
             lon2D, lat2D = np.meshgrid(Lon_common, Lat_common)
             projection=ccrs.PlateCarree()
@@ -941,7 +989,9 @@ for i in range(len(list_calculation)):
 
             taylor=td_plots(fig,'SON',ref_std,models_metrics,'W850',len(models),344,'d.',title_str_size,'no',None)
 
-            print ('  ploteando Map vector')
+            print('-----------------------------------------------------------------------------------')
+            print('wind_850: td plots OK')
+            print('-----------------------------------------------------------------------------------')
 
             print ('    shapes 0 mag_mmm', mag_mmm[0].shape, 'ua', ua_mmm[0].shape,  \
               'va', va_mmm[0].shape, 'lon2D', lon2D.shape, 'lat2D', lat2D.shape)
@@ -963,7 +1013,10 @@ for i in range(len(list_calculation)):
             ax8 = fig.add_subplot(3, 4, 8, projection=projection)
             cs=plotMap_vector(ax8,mag_mmm[3],ua_mmm[3],va_mmm[3],lon2D,lat2D,cmap_w850,limits_var,'h.',extent, projection,title_str_size)
 
-            print ('    shapes 0 mag_bias', mag_mmm_bias[0].shape)
+            print('-----------------------------------------------------------------------------------')
+            print('wind_850: plot vector OK')
+            print('-----------------------------------------------------------------------------------')
+
             ax9 = fig.add_subplot(3, 4, 9, projection=projection)
             print ('  plotting ax9')
             #lotMap(axs,var_data,lonPlot,latPlot,colorMap,limits,title_label,extent, projection,title_font2,scatter_status,points_scatter,land_cov):
@@ -1233,10 +1286,18 @@ for i in range(len(list_calculation)):
             east_cmip6=np.load(path_entry+'VIMF_CMIP6_eastern_Boundary.npz',\
             allow_pickle=True)['arr_0']
 
+            print('-----------------------------------------------------------------------------------')
+            print('VIMF: files read OK')
+            print('-----------------------------------------------------------------------------------')
+
             series_metrics_bound(east_era5,east_cmip6,models,'VIMF_Eastern',path_entry)
             series_metrics_bound(west_era5,west_cmip6,models,'VIMF_Western',path_entry)
             series_metrics_bound(north_era5,north_cmip6,models,'VIMF_Northern',path_entry)
             series_metrics_bound(south_era5,south_cmip6,models,'VIMF_Southern',path_entry)
+
+            print('-----------------------------------------------------------------------------------')
+            print('VIMF: series metrics OK')
+            print('-----------------------------------------------------------------------------------')
 
             ################################################################################
             #Delimiting the longitude and latitudes bands
@@ -1273,6 +1334,10 @@ for i in range(len(list_calculation)):
             arange_x_e=np.arange(0,labels_x_e.shape[0],1)
 
             y_limits_pl=np.arange(0,400,50)
+
+            print('-----------------------------------------------------------------------------------')
+            print('VIMF: labels OK')
+            print('-----------------------------------------------------------------------------------')
 
             #---------------------------------------------------------------------------------
             #Creating the plot 
@@ -1365,10 +1430,18 @@ for i in range(len(list_calculation)):
             east_cmip6=np.load(path_entry+'MSE_CMIP6_eastern_Boundary.npz',\
             allow_pickle=True)['arr_0']*(1e-10)
 
+            print('-----------------------------------------------------------------------------------')
+            print('MSE: files read OK')
+            print('-----------------------------------------------------------------------------------')
+
             series_metrics_bound(east_era5,east_cmip6,models,'VIHF_Eastern',path_entry)
             series_metrics_bound(west_era5,west_cmip6,models,'VIHF_Western',path_entry)
             series_metrics_bound(north_era5,north_cmip6,models,'VIHF_Northern',path_entry)
             series_metrics_bound(south_era5,south_cmip6,models,'VIHF_Southern',path_entry)
+
+            print('-----------------------------------------------------------------------------------')
+            print('MSE: series metrics OK')
+            print('-----------------------------------------------------------------------------------')
 
             ################################################################################
             #Delimiting the longitude and latitudes bands
@@ -1403,6 +1476,10 @@ for i in range(len(list_calculation)):
             arange_x_e=np.arange(0,labels_x_e.shape[0],1)
 
             y_limits_pl=np.arange(-15,25,5)
+
+            print('-----------------------------------------------------------------------------------')
+            print('MSE: labels OK')
+            print('-----------------------------------------------------------------------------------')
 
             #---------------------------------------------------------------------------------
             #Creating the plot 
@@ -1530,7 +1607,7 @@ for i in range(len(list_calculation)):
 
             seasons_labels_i=['DJF','JJA','MAM','SON']
 
-            plot_label='[m * g/ Kg *s]'
+            plot_label='[m g/ Kg s]'
 
             for n in range(4):
 
@@ -1678,7 +1755,7 @@ for i in range(len(list_calculation)):
 
             seasons_labels_i=['DJF','JJA','MAM','SON']
 
-            plot_label='[ x 10³ K * m/ s]'
+            plot_label='[ x 10³ K m/ s]'
 
             for n in range(4):
 

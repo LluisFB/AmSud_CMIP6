@@ -485,7 +485,7 @@ def td_plots(fig,season_str,ref_table,models_table,characteristic,number_models,
     dia._ax.set_title(title_label,fontsize=title_size,loc='left', pad=20)
 
     nrows = 16
-    ncols = int(np.ceil(len(dia.samplePoints) / float(nrows)))
+    ncols = int(np.ceil(number_models / float(nrows)))
 
 
     fig.legend(dia.samplePoints,
@@ -1469,7 +1469,7 @@ def plot_series_int_loc(title_plot,index_strength_ref,index_strength_m,index_lat
     nrows = 20
     ncols = int(np.ceil(len(list_models) / float(nrows)))
 
-    fig.legend( bbox_to_anchor=(0.92, 0.9), ncol=ncols, loc='upper left', fontsize=str(legend_font))
+    fig.legend( bbox_to_anchor=(0.92, 0.9), ncol=1, loc='upper left', fontsize=str(legend_font))
 
     fig.savefig(path_save_plots+save_str+'.png', \
     format = 'png', bbox_inches='tight')
@@ -1576,7 +1576,7 @@ def plot_series_int_loc_combined(title_plot,index_strength_ref_sash,index_streng
     nrows = 20
     ncols = int(np.ceil(len(list_models) / float(nrows)))
 
-    fig.legend( bbox_to_anchor=(0.92, 0.9), ncol=ncols,loc='upper left', fontsize=str(legend_font))
+    fig.legend( bbox_to_anchor=(0.92, 0.9), ncol=1,loc='upper left', fontsize=str(legend_font))
 
     fig.savefig(path_save_plots+save_str+'.png', \
     format = 'png', bbox_inches='tight')
@@ -1663,7 +1663,7 @@ def plot_one_plot(models_n,index_name,path_save_plots,Index_model,wind_ref_arr_i
     #plt.legend(fontsize=12)
     nrows = 20
     ncols = int(np.ceil(len(models_n) / float(nrows)))
-    plt.legend( bbox_to_anchor=(1.05, 1.1), ncol=ncols,loc='upper left', fontsize=str(legend_font))
+    plt.legend( bbox_to_anchor=(0.1, 0.1), ncol=ncols,loc='lower left', fontsize=str(legend_font))
     fig.savefig(path_save_plots+index_name+'.png', format = 'png',\
     bbox_inches='tight')
     plt.close()
@@ -2680,7 +2680,7 @@ def agreement_sign(list_models,path_entry_npz,file_name,len_lats, len_lons):
             var_ensamble[p]=var_model_season[i]
 
         #averaging the models
-        var_mean=np.mean(var_ensamble,axis=0)
+        var_mean=np.nanmean(var_ensamble,axis=0)
 
         for p in range(len(list_models)):
             var_model_season=np.load(path_entry_npz+list_models[p]+'_'+\
