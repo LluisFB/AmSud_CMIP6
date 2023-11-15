@@ -378,6 +378,7 @@ ref_lat=np.load(path_save+'ERA5_ENSO_fields_Lat.npz')['arr_0']
 ref_lon=np.load(path_save+'ERA5_ENSO_fields_Lon.npz')['arr_0']
 
 for p in range(len(models)):
+    print ("  'tos' Procesando modelo '" + models[p] + "'...")
 
     try:
 
@@ -471,7 +472,7 @@ try:
     extent = [min(Lon_common_tos),max(Lon_common_tos),min(Lat_common_tos),max(Lat_common_tos)]
 
     ax1 = fig.add_subplot(2, 2, 1, projection=projection)
-    cs=plotMap(ax1,mean_field_models,lon2D,lat2D,cmap_bias,limits_var,'a.',extent, projection,title_str_size,'no',None,'yes',None)
+    cs=plotMap(ax1,mean_field_models,lon2D,lat2D,cmap_bias,limits_var,'a.',extent, projection,title_str_size,'no',None,'yes')
 
     taylor=td_plots(fig,'DJF',ref_std,models_metrics,'ENSO',len(models_calc),222,'b.',title_str_size,'no',None)
 
@@ -497,8 +498,6 @@ except Exception as e:
     print('ENSO plot error ')
     print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
 
-    
-
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 #SECOND PART OF THE CODE 
@@ -509,6 +508,8 @@ except Exception as e:
 list_calculation=['Regional_cells','qu_qv','tu_tv']
 
 for i in range(len(list_calculation)):
+
+    print ("  plotting '" + list_calculation[i] + "' ...")
 
     if list_calculation[i]=='Regional_cells':
 
@@ -632,7 +633,7 @@ for i in range(len(list_calculation)):
             plt.text(0.3,2.42,'JJA', fontsize=title_str_size,rotation='horizontal',transform=ax7.transAxes)
             plt.text(0.3,2.42,'SON', fontsize=title_str_size,rotation='horizontal',transform=ax8.transAxes)
             #fig.subplots_adjust(hspace=0.3)
-            plt.savefig(path_save_plots+'HadleyCell_fields.png', \
+            plt.savefig(path_save_plots+'HadleyCell_fields_ENSO.png', \
             format = 'png', bbox_inches='tight')
             plt.close()
 
@@ -700,7 +701,7 @@ for i in range(len(list_calculation)):
             plt.text(0.3,2.42,'JJA', fontsize=title_str_size,rotation='horizontal',transform=ax7.transAxes)
             plt.text(0.3,2.42,'SON', fontsize=title_str_size,rotation='horizontal',transform=ax8.transAxes)
             #fig.subplots_adjust(hspace=0.3)
-            plt.savefig(path_save_plots+'WalkerCell_fields.png', \
+            plt.savefig(path_save_plots+'WalkerCell_fields_ENSO.png', \
             format = 'png', bbox_inches='tight')
             plt.close()
         
@@ -848,7 +849,7 @@ for i in range(len(list_calculation)):
                 plt.text(0.3,2.42,'Eastern', fontsize=title_str_size,rotation='horizontal',transform=ax7.transAxes)
                 plt.text(0.3,2.42,'Western', fontsize=title_str_size,rotation='horizontal',transform=ax8.transAxes)
                 #fig.subplots_adjust(hspace=0.3)
-                plt.savefig(path_save_plots+'qu_qv_'+seasons_labels+'.png', \
+                plt.savefig(path_save_plots+'qu_qv_'+seasons_labels+'_ENSO.png', \
                 format = 'png', bbox_inches='tight')
                 plt.close()
 
@@ -996,7 +997,7 @@ for i in range(len(list_calculation)):
                 plt.text(0.3,2.42,'Eastern', fontsize=title_str_size,rotation='horizontal',transform=ax7.transAxes)
                 plt.text(0.3,2.42,'Western', fontsize=title_str_size,rotation='horizontal',transform=ax8.transAxes)
                 #fig.subplots_adjust(hspace=0.3)
-                plt.savefig(path_save_plots+'tu_tv_'+seasons_labels+'.png', \
+                plt.savefig(path_save_plots+'tu_tv_'+seasons_labels+'_ENSO.png', \
                 format = 'png', bbox_inches='tight')
                 plt.close()
         
@@ -1073,7 +1074,7 @@ for n in range(len(models_ava_wap)):
 
             try:
 
-                gridsize_x, gridsize_y=netcdf_creation_original(path_entry,var_sp,'Amon',lat_limits_full,lon_limits_full,\
+                gridsize_x, gridsize_y, pathOUT=netcdf_creation_original(path_entry,var_sp,'Amon',lat_limits_full,lon_limits_full,\
                                                                 initial_time,final_time,p_level_interest_lower,p_level_interest_upper,\
                                                                     'model','Yes',path_save,models_ava_wap[n])
                     
