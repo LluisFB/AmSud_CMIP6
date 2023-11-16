@@ -180,12 +180,12 @@ trade_str_upper=15
 list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation',\
                   'SST','Wind_indices','Bolivian_high','VIMF','MSE']
 
-list_calculation=['VIMF']
-
 for i in range(len(list_calculation)):
     if list_calculation[i]=='Subtropical_highs':
 
         try:
+
+            """
 
             #Inputs for the plot 
             models=np.load(path_entry+'subtropicalHighs_models_N.npz',allow_pickle=True)['arr_0']
@@ -411,7 +411,7 @@ for i in range(len(list_calculation)):
                 fig1.savefig(path_save+seasons_labels+'_SubtropicalHighs_Core.png', \
                 format = 'png', bbox_inches='tight')
                 plt.close()
-            
+            """
             #--------------------------------------------------------------------------------------------------------------------------
             #4. Spatial fields of SLP 
             ################################################################################

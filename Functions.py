@@ -490,8 +490,8 @@ def td_plots(fig,season_str,ref_table,models_table,characteristic,number_models,
 
     fig.legend(dia.samplePoints,
                [ p.get_label() for p in dia.samplePoints ],
-               numpoints=1, prop=dict(size='medium'),bbox_to_anchor=(1.11, 0.85) \
-               ,ncol=ncols,loc='right')
+               numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
+               ,ncol=1,loc='right')
 
     #fig.tight_layout()
 
@@ -579,7 +579,8 @@ def plotMap_vector(axs,wind_data,u_data,v_data,lonPlot,latPlot,colorMap,limits,t
     axs.add_feature(cfeature.COASTLINE)
     axs.add_feature(cfeature.BORDERS, linestyle=':')
     cs=axs.contourf(lonPlot, latPlot,wind_data,limits,cmap=colorMap,extend='both')
-    axs.quiver(lonPlot[::3,::3], latPlot[::3,::3],u_data[::3,::3],v_data[::3,::3],transform=ccrs.PlateCarree())
+    #axs.quiver(lonPlot[::2,::2], latPlot[::2,::2],u_data[::2,::2],v_data[::2,::2],transform=ccrs.PlateCarree())
+    axs.quiver(lonPlot[::2,::2], latPlot[::2,::2],u_data[::2,::2],v_data[::2,::2],transform=ccrs.PlateCarree())
     # regrid_shape=40,scale=500,scale_units='width', linewidths=widths
     gl=axs.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,)
     gl.xlabels_top = False
@@ -1663,7 +1664,7 @@ def plot_one_plot(models_n,index_name,path_save_plots,Index_model,wind_ref_arr_i
     #plt.legend(fontsize=12)
     nrows = 20
     ncols = int(np.ceil(len(models_n) / float(nrows)))
-    plt.legend( bbox_to_anchor=(0.1, 0.1), ncol=ncols,loc='lower left', fontsize=str(legend_font))
+    plt.legend( bbox_to_anchor=(-0.2, -0.4), ncol=ncols,loc='lower left', fontsize=str(legend_font))
     fig.savefig(path_save_plots+index_name+'.png', format = 'png',\
     bbox_inches='tight')
     plt.close()
@@ -2721,10 +2722,26 @@ def series_metrics(series_ref,series_models,list_models,feature,path_save_df):
 
         model_nm=list_models[r]
 
-        corr_coef=np.corrcoef(series_ref, series_models[r])[0,1]
+        if np.isnan(series_models[r])==True :
 
-        MSE = mean_squared_error(series_ref,series_models[r])
-        RMSE = math.sqrt(MSE)
+            corr_coef=ma.corrcoef(ma.masked_invalid(series_ref), \
+                ma.masked_invalid(series_models[r]))[0,1]
+            
+            sum_diff=np.array([])
+            for w in range(len(series_models[r])):
+                diff_points=(series_models[r,w]-series_ref[w])**2
+                sum_diff=np.append(sum_diff,diff_points)
+            
+            N=len(series_models[r])
+
+            RMSE=np.sqrt(np.sum(sum_diff[np.isfinite(sum_diff)])/N)
+        
+        else:
+
+            corr_coef=np.corrcoef(series_ref, series_models[r])[0,1]
+
+            MSE = mean_squared_error(series_ref,series_models[r])
+            RMSE = math.sqrt(MSE)
 
         #Appending the dataframe 
         dt_row=pd.DataFrame({'Model':[model_nm], 'Corr':[corr_coef], 'RMSE':[RMSE]})
@@ -2749,10 +2766,26 @@ def series_metrics_bound(series_ref,series_models,list_models,feature,path_save_
 
         for y in range(4):
 
-            corr_coef=np.corrcoef(series_ref[y], series_models[r,y])[0,1]
+            if np.isnan(series_models[r,y])==True :
 
-            MSE = mean_squared_error(series_ref[y],series_models[r,y])
-            RMSE = math.sqrt(MSE)
+                corr_coef=ma.corrcoef(ma.masked_invalid(series_ref[y]), \
+                    ma.masked_invalid(series_models[r,y]))[0,1]
+                
+                sum_diff=np.array([])
+                for w in range(len(series_models[r,y])):
+                    diff_points=(series_models[r,y,w]-series_ref[y,w])**2
+                    sum_diff=np.append(sum_diff,diff_points)
+                
+                N=len(series_models[r,y])
+
+                RMSE=np.sqrt(np.sum(sum_diff[np.isfinite(sum_diff)])/N)
+        
+            else:
+
+                corr_coef=np.corrcoef(series_ref[y], series_models[r,y])[0,1]
+
+                MSE = mean_squared_error(series_ref[y],series_models[r,y])
+                RMSE = math.sqrt(MSE)
 
             #Appending the dataframe 
             dt_row=pd.DataFrame({'Model':[model_nm], 'Season':[season_lb[y]], 'Corr':[corr_coef], 'RMSE':[RMSE]})
