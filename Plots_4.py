@@ -180,6 +180,7 @@ trade_str_upper=15
 list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation',\
                   'SST','Wind_indices','Bolivian_high','VIMF','MSE']
 
+list_calculation=['VIMF']
 
 for i in range(len(list_calculation)):
     if list_calculation[i]=='Subtropical_highs':
@@ -1289,6 +1290,34 @@ for i in range(len(list_calculation)):
             print('-----------------------------------------------------------------------------------')
             print('VIMF: files read OK')
             print('-----------------------------------------------------------------------------------')
+
+            # FROM: https://stackoverflow.com/questions/31368710/how-to-open-an-npz-file
+            npz_east_cmip6 = np.load(path_entry+'VIMF_CMIP6_northern_Boundary.npz',\
+              allow_pickle=True)
+            print ('  models data...', type(npz_east_cmip6))
+            print ('    files:', npz_east_cmip6.files)
+            print ('    dir npz', dir(npz_east_cmip6))
+            print ('    shape arr_0:', east_cmip6.shape)
+            print ('    min', east_cmip6.min(axis=(1,2)))
+            print ('    max', east_cmip6.max(axis=(1,2)))
+            print ('    mean', east_cmip6.mean(axis=(1,2)))
+            print ('    era5 max', east_era5.max())
+
+            east_era5 = np.ma.masked_invalid(east_era5)
+            west_era5 = np.ma.masked_invalid(west_era5)
+            north_era5 = np.ma.masked_invalid(north_era5)
+            south_era5 = np.ma.masked_invalid(south_era5)
+
+            east_cmip6 = np.ma.masked_invalid(east_cmip6)
+            west_cmip6 = np.ma.masked_invalid(west_cmip6)
+            north_cmip6 = np.ma.masked_invalid(north_cmip6)
+            south_cmip6 = np.ma.masked_invalid(south_cmip6)
+
+            east_cmip6 = np.ma.masked_greater(east_cmip6, 10.e20)
+            west_cmip6 = np.ma.masked_greater(west_cmip6, 10.e20)
+            south_cmip6 = np.ma.masked_greater(south_cmip6, 10.e20)
+            north_cmip6 = np.ma.masked_greater(north_cmip6, 10.e20)
+            print ('    mean', east_cmip6.mean(axis=(1,2)))
 
             series_metrics_bound(east_era5,east_cmip6,models,'VIMF_Eastern',path_entry)
             series_metrics_bound(west_era5,west_cmip6,models,'VIMF_Western',path_entry)
