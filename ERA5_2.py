@@ -97,7 +97,7 @@ Lon_common_b=np.arange(lon_limits_B[0],lon_limits_B[1], dx_common)
 list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation','Regional_cells',\
                   'SST','VIMF','qu_qv','MSE','tu_tv']
 # Lacking ....
-list_calculation = ['tu_tv']
+list_calculation=['Precipitation']
 
 for i in range(len(list_calculation)):
 
@@ -130,8 +130,9 @@ for i in range(len(list_calculation)):
             np.savez_compressed(path_save+'westerlies_latitude_ERA5.npz',westerly_latitude_ref)
             np.savez_compressed(path_save+'trade_winds_ERA5.npz',trade_index_arr_ref)
         
-        except:
+        except Exception as e:
             print('Error ERA5 Wind Indices')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='Subtropical_highs':
 
@@ -236,8 +237,9 @@ for i in range(len(list_calculation)):
             print('Subtropical_Highs: std_ref OK')
             print('####################################')
         
-        except:
+        except Exception as e:
             print('Error ERA5 Subtropical Highs')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
 
     elif list_calculation[i]=='Bolivian_high':
 
@@ -251,8 +253,10 @@ for i in range(len(list_calculation)):
             var_array_r=(var_array_r/9.8)/1000
 
             np.savez_compressed(path_save+'Bolivian_High_index_monthly_ERA5.npz',var_array_r)
-        except:
+
+        except Exception as e:
             print('Erros ERA5 Bolivian High')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='Precipitation':
 
@@ -260,8 +264,6 @@ for i in range(len(list_calculation)):
         lat_limits_pr=lat_limits_F
 
         try:
-
-            print ("  Lluis getting in 'var_field_calc' ...")
 
             pr_array,Lat_list_pr,Lon_list_pr,dx_data_pr, dy_data_pr=var_field_calc(path_save,'tp','ERA5',\
                                                                                     lat_limits_pr,lon_limits_pr,None,None,\
@@ -271,7 +273,7 @@ for i in range(len(list_calculation)):
             print('Precipitation: var_array OK')
             print('####################################')
             
-            pr_array=pr_array*86400
+            pr_array=pr_array*1000
 
             var_sum=np.sum(pr_array)
 
@@ -296,8 +298,9 @@ for i in range(len(list_calculation)):
             print('Precipitation: std_ref OK')
             print('####################################')
         
-        except:
+        except Exception as e:
             print('Error ERA5 Precipitation')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='SST':
 
@@ -320,8 +323,9 @@ for i in range(len(list_calculation)):
 
             std_ref(var_array_r, path_save, 'SST')
         
-        except:
+        except Exception as e:
             print('Error ERA5 SST')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='wind_200':
 
@@ -374,8 +378,9 @@ for i in range(len(list_calculation)):
             print('wind_200: std_ref OK')
             print('####################################')
         
-        except:
+        except Exception as e:
             print('Error ERA5 wind_200')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='wind_850':
 
@@ -416,10 +421,6 @@ for i in range(len(list_calculation)):
 
             #-----------------------------------------------------------------------------------------------------------------------
             #Saving the spatial fields 
-            print ("wind_850: saving files '" + path_save+'ERA5_u850_fields.npz' +   \
-              "' array:", u_array_r.shape)
-            print ('    v_array', v_array_r.shape, 'mag', mag_array_r.shape, 'lat',  \
-              len(Lat_list_w850), 'Lon', len(Lon_list_w850))
             np.savez_compressed(path_save+'ERA5_u850_fields.npz',u_array_r)
             np.savez_compressed(path_save+'ERA5_v850_fields.npz',v_array_r)
             np.savez_compressed(path_save+'ERA5_W850_fields.npz',mag_array_r)
@@ -432,8 +433,9 @@ for i in range(len(list_calculation)):
             print('wind_850: std_ref OK')
             print('####################################')
         
-        except:
+        except Exception as e:
             print('Error ERA5 wind_850')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='Regional_cells':
 
@@ -472,8 +474,9 @@ for i in range(len(list_calculation)):
             print('regional_cells: std_ref OK')
             print('####################################')
         
-        except:
+        except Exception as e:
             print('Error ERA5 Regional Cells')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
 
     elif list_calculation[i]=='VIMF':
 
@@ -567,9 +570,9 @@ for i in range(len(list_calculation)):
             np.savez_compressed(path_save+'VIMF_ERA5_western_Boundary.npz',VIMF_ref_western)
             np.savez_compressed(path_save+'VIMF_ERA5_eastern_Boundary.npz',VIMF_ref_eastern)
 
-        except:
+        except Exception as e:
             print('Error ERA5 VIMF')
-
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='MSE':
 
@@ -597,11 +600,6 @@ for i in range(len(list_calculation)):
         #Applying the function
 
         try:
-
-            print ("  going into 'MSE_calc'")
-            print ('    1', path_save, 'v', 'q', 'ta','geopt', 'ERA5')
-            print ('    2', lat_limits,lon_limits,None, None)
-            print ('    3', p_level_interest_lower,p_level_interest_upper,'ERA5')
 
             MSE_ref,Lat_ref,Lon_ref,dx_ref,\
             dy_ref=MSE_calc(path_save, 'v', 'q', 'ta','geopt', 'ERA5',lat_limits,lon_limits,None, None,\
@@ -666,8 +664,9 @@ for i in range(len(list_calculation)):
             np.savez_compressed(path_save+'MSE_ERA5_western_Boundary.npz',MSE_ref_western)
             np.savez_compressed(path_save+'MSE_ERA5_eastern_Boundary.npz',MSE_ref_eastern)
         
-        except:
+        except Exception as e:
             print('Error ERA5 MSE')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
 
     elif list_calculation[i]=='qu_qv':
 
@@ -766,8 +765,9 @@ for i in range(len(list_calculation)):
             std_ref(qu_r_eastern_av, path_save, 'qu_qv_east')
             std_ref(qu_r_western_av, path_save, 'qu_qv_west')
         
-        except:
+        except Exception as e:
             print('Error ERA5 qu_qv')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
     
     elif list_calculation[i]=='tu_tv':
 
@@ -789,10 +789,6 @@ for i in range(len(list_calculation)):
 
         try:
 
-            print ("  going into 'boundaries_fluxes'")
-            print ('    1', path_save, 'v', 'ta',  'ERA5')
-            print ('    2', north_boundaries_lat,north_boundaries_lon, None, None)
-            print ('    3',p_level_interest_lower, p_level_interest_upper,'reference')
 
             tv_r_northern,Lat_r_north,Lon_r_north,dx_r, \
             dy_r,levels_r=boundaries_fluxes(path_save, 'v', 'ta',  'ERA5',\
@@ -868,8 +864,9 @@ for i in range(len(list_calculation)):
             std_ref(tu_r_eastern_av, path_save, 'tu_tv_east')
             std_ref(tu_r_western_av, path_save, 'tu_tv_west')
         
-        except:
+        except Exception as e:
             print('Error ERA5 tu_tv')
+            print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
 
 #-----------------------------------------------------------------------------------------
 print('#################################################')
