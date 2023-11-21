@@ -491,7 +491,7 @@ def td_plots(fig,season_str,ref_table,models_table,characteristic,number_models,
     fig.legend(dia.samplePoints,
                [ p.get_label() for p in dia.samplePoints ],
                numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
-               ,ncol=1,loc='right')
+               ,ncol=2,loc='right')
 
     #fig.tight_layout()
 
@@ -598,9 +598,6 @@ def var_field_calc(path_entry,var_sp,model_name,lat_d,lon_d,time_0,time_1,level_
 
     fname = 'var_field_calc'
 
-    print ("  " + fname + ": open dataset: '" + path_entry+model_name+'_'+var_sp +   \
-      '_original_seasonal_mean.nc' + "'")
-
     var_data=xr.open_mfdataset(path_entry+model_name+'_'+var_sp+'_original_seasonal_mean.nc')
 
     print ("   " + fname + ": var_sp", var_sp)
@@ -653,14 +650,9 @@ def wind_field_calc(path_entry,var_sp1,var_sp2,model_name,lat_d,lon_d,time_0,tim
 
     fname = 'wind_field_calc'
 
-    print ('  ' + fname + ": path_entry:", path_entry, 'model_name', model_name,  \
-      'var_sp1', var_sp1, 'var_sp2', var_sp2)
-    print ('    ' + fname + ": '" + path_entry+model_name+'_'+var_sp1+'_original_seasonal_mean.nc'+ "'")
-
     var_data1=xr.open_mfdataset(path_entry+model_name+'_'+var_sp1+'_original_seasonal_mean.nc')
 
     u_field=var_data1[var_sp1]
-    print ('    ' + fname + ": '" + path_entry+model_name+'_'+var_sp2+'_original_seasonal_mean.nc'+ "'")
 
     var_data2=xr.open_mfdataset(path_entry+model_name+'_'+var_sp2+'_original_seasonal_mean.nc')
 
@@ -824,13 +816,9 @@ def netcdf_creation_original(path_entry_files,var_name,ft,lat_d,lon_d,time_0,tim
     dx_data=np.round(abs(Lon_list[1])-abs(Lon_list[0]),2)
     dy_data=np.round(abs(Lat_list[-1:][0])-  abs(Lat_list[-2:][0]),2)
 
-    print ("  " + fname + ": salida dx, dy, path", dx_data, dy_data, path_to_print)
-
     print('========================================================')
     print('   ' + fname + ': Lat and Lon list and grid size defined succesfully')
     print('========================================================')
-
-    print ("  " + fname + ": salida dx, dy, path 2", dx_data, dy_data, path_to_print)
 
     return  dx_data, dy_data, path_to_print
 
@@ -902,9 +890,6 @@ def netcdf_creation_original_ERA5(path_entry_files,var_name,lat_d,lon_d,level_lo
     var_seasonal=var_levels.groupby('time.season').mean('time')
 
     #--------------------------------------------------------------------------------------
-    print ('  ' + fname + ": var_name '" + var_name + "'")
-    print ("    clim: '" + path_save+'ERA5_'+var_name+'_original_mon_clim_LT.nc' + "'")
-    print ("    seas: '" + path_save+'ERA5_'+var_name+'_original_seasonal_mean.nc' + "'")
     #1. Saving the netcdf of the climatology of the variable 
     var_levels.to_netcdf(path_save+'ERA5_'+var_name+'_original_mon_clim_LT.nc')
     #2. Saving the netcdf of the seasonal mean of the variable
@@ -980,11 +965,6 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
 
     remapbill_info=xr.open_mfdataset(path_files+'tos_Omon_'+model_name+'_historical_*.nc')
     m_sst_grid_var=remapbill_info['tos']
-    infiles = path_files+'tos_Omon_'+model_name+'_historical_*.nc'
-    print ('  ' + fname + ": first looking files at '" + infiles + "'")
-    print ('    files _______')
-    for n in range(len(grid_list)):
-        print (grid_list[n])
 
     print('###################################################')
     print('  ' + fname + ': read files OK')
@@ -1003,11 +983,6 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
 
     #Generating the list of the files 
     list_path=os.listdir(path_files)
-    print ('  ' + fname + ': found ', len(list_path), ' files in ', path_files)
-    print ('    files _______')
-    for n in range(len(list_path)):
-        print (list_path[n], ':', 'tos_Omon_'+model_name in list_path[n])
-
 
     files_var=[]
 
@@ -1022,8 +997,6 @@ def cdo_remapbill(path_entry_files,model_name,path_save_files):
     print('###################################################')
     
     #remaping
-
-    print ('  ' + fname + ': remaping ', len(files_var), ' from ', model_name)
 
     if len(files_var)>1:
         for n in range(len(files_var)):
@@ -1664,7 +1637,7 @@ def plot_one_plot(models_n,index_name,path_save_plots,Index_model,wind_ref_arr_i
     #plt.legend(fontsize=12)
     nrows = 20
     ncols = int(np.ceil(len(models_n) / float(nrows)))
-    plt.legend( bbox_to_anchor=(-0.2, -0.4), ncol=ncols,loc='lower left', fontsize=str(legend_font))
+    plt.legend( bbox_to_anchor=(-0.2, -1), ncol=ncols,loc='lower left', fontsize=str(legend_font))
     fig.savefig(path_save_plots+index_name+'.png', format = 'png',\
     bbox_inches='tight')
     plt.close()
@@ -2222,38 +2195,21 @@ def MSE_calc(path_entry, var_sp1, var_sp2, var_sp3, var_sp4, model_name,lat_d,lo
     
     fname = 'MSE_calc'
 
-    print ('  ' + fname + ": reading '" + path_entry+model_name+'_'+var_sp1 +         \
-      '_original_seasonal_mean.nc' + "'")
-    print ('  ' + fname + ": reading '" + path_entry+model_name+'_'+var_sp2 +         \
-      '_original_seasonal_mean.nc' + "'")
-    print ('  ' + fname + ": reading '" + path_entry+model_name+'_'+var_sp3 +         \
-      '_original_seasonal_mean.nc' + "'")
-    print ('  ' + fname + ": reading '" + path_entry+model_name+'_'+var_sp4 +         \
-      '_original_seasonal_mean.nc' + "'")
-
     var_data1=xr.open_mfdataset(path_entry+model_name+'_'+var_sp1+'_original_seasonal_mean.nc')
 
-    print ('   ' + fname + ": getting '" + var_sp1 + "' type", type(var_data1))
     v_field=var_data1[var_sp1]
-    print ('   ' + fname + ": shape", v_field.shape)
 
     var_data2=xr.open_mfdataset(path_entry+model_name+'_'+var_sp2+'_original_seasonal_mean.nc')
 
-    print ('   ' + fname + ": getting '" + var_sp2 + "'")
     q_field=var_data2[var_sp2]
-    print ('   ' + fname + ": shape", q_field.shape)
 
     var_data3=xr.open_mfdataset(path_entry+model_name+'_'+var_sp3+'_original_seasonal_mean.nc')
 
-    print ('   ' + fname + ": getting '" + var_sp3 + "'")
     t_field=var_data3[var_sp3]
-    print ('   ' + fname + ": shape", t_field.shape)
 
     var_data4=xr.open_mfdataset(path_entry+model_name+'_'+var_sp4+'_original_seasonal_mean.nc')
 
-    print ('   ' + fname + ": getting '" + var_sp4 + "'")
     z_field=var_data4[var_sp4]
-    print ('   ' + fname + ": shape", z_field.shape)
 
     print('#########################')
     print('MSE_calc: read files OK')
@@ -2396,22 +2352,13 @@ def MSE_calc(path_entry, var_sp1, var_sp2, var_sp3, var_sp4, model_name,lat_d,lo
 def boundaries_fluxes(path_entry, var_sp1, var_sp2, model_name,lat_d,lon_d,time_0,time_1,level_lower,level_upper,type_data):
     fname = 'boundaries_fluxes'
 
-    print ('  ' + fname + ": reading '" + path_entry+model_name+'_'+var_sp1 +         \
-      '_original_seasonal_mean.nc' + "'")
-    print ('  ' + fname + ": reading '" + path_entry+model_name+'_'+var_sp2 +         \
-      '_original_seasonal_mean.nc' + "'")
-
     var_data1=xr.open_mfdataset(path_entry+model_name+'_'+var_sp1+'_original_seasonal_mean.nc')
 
-    print ('   ' + fname + ": getting '" + var_sp1 + "' type", type(var_data1))
     wind_field=var_data1[var_sp1]
-    print ('   ' + fname + ": shape", wind_field.shape)
 
     var_data2=xr.open_mfdataset(path_entry+model_name+'_'+var_sp2+'_original_seasonal_mean.nc')
 
-    print ('   ' + fname + ": getting '" + var_sp2)
     q_field=var_data2[var_sp2]
-    print ('   ' + fname + ": shape", q_field.shape)
 
     print('#########################')
     print('boundaries_fluxes: read files OK')
@@ -2637,17 +2584,10 @@ def std_ref(array, path_save_df, str_feature):
     print('---------------------------------')
     print('std_ref: std_ref calculation OK')
 
-    print ('  ' +fname + ": new_row_reference:")
-    print ('    ' + fname + " feature '" + str_feature + "' std dev.:", std_ref)
-
-    new_row_reference=pd.DataFrame({'Characteristic': [str_feature],                 \
-      'std_DJF':[std_ref[0]], 'std_JJA':[std_ref[1]], 'std_MAM':[std_ref[2]],        \
-      'std_SON':[std_ref[3]]})
 
     print('---------------------------------')
     print('std_ref: new_row OK')
 
-    print ('  ' +fname + ": reading csv '" + path_save_df+'reference_std_original.csv' + "'")
     reference_std_DT=pd.read_csv(path_save_df+'reference_std_original.csv',\
     index_col=[0])
     print('---------------------------------')
