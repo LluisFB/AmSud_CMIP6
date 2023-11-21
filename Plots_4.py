@@ -179,6 +179,7 @@ trade_str_upper=15
 
 list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation',\
                   'SST','Wind_indices','Bolivian_high','VIMF','MSE']
+list_calculation=[ 'VIMF']
 
 for i in range(len(list_calculation)):
     if list_calculation[i]=='Subtropical_highs':
@@ -1318,6 +1319,14 @@ for i in range(len(list_calculation)):
             south_cmip6 = np.ma.masked_greater(south_cmip6, 10.e20)
             north_cmip6 = np.ma.masked_greater(north_cmip6, 10.e20)
             print ('    mean', east_cmip6.mean(axis=(1,2)))
+            print ('  has it NaNs east_era5?', np.any(np.isnan(east_era5)))
+            print ('  has it NaNs west_era5?', np.any(np.isnan(west_era5)))
+            print ('  has it NaNs south_era5?', np.any(np.isnan(south_era5)))
+            print ('  has it NaNs north_era5?', np.any(np.isnan(north_era5)))
+            print ('  has it NaNs east_cmip6?', np.any(np.isnan(east_cmip6)))
+            print ('  has it NaNs west_cmip6?', np.any(np.isnan(west_cmip6)))
+            print ('  has it NaNs south_cmip6?', np.any(np.isnan(south_cmip6)))
+            print ('  has it NaNs north_cmip6?', np.any(np.isnan(north_cmip6)))
 
             series_metrics_bound(east_era5,east_cmip6,models,'VIMF_Eastern',path_entry)
             series_metrics_bound(west_era5,west_cmip6,models,'VIMF_Western',path_entry)

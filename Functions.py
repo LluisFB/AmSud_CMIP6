@@ -2722,7 +2722,7 @@ def series_metrics(series_ref,series_models,list_models,feature,path_save_df):
 
         model_nm=list_models[r]
 
-        if np.isnan(series_models[r])==True :
+        if np.any(np.isnan(series_models[r])) :
 
             corr_coef=ma.corrcoef(ma.masked_invalid(series_ref), \
                 ma.masked_invalid(series_models[r]))[0,1]
@@ -2755,8 +2755,14 @@ def series_metrics(series_ref,series_models,list_models,feature,path_save_df):
 
 def series_metrics_bound(series_ref,series_models,list_models,feature,path_save_df):
 
+    fname = 'series_metrics_bound'
+
+    print ('  ' + fname + ": aca estamos ...")
+
     series_metrics=pd.DataFrame(columns=['Model','Season','Corr','RMSE'])
     series_metrics.to_csv(path_save_df+feature+'_series_metrics_corr_rmse.csv')
+
+    print ('  ' + fname + ": datos cargados ...")
 
     season_lb=['DJF','JJA','MAM','SON']
 
@@ -2764,9 +2770,12 @@ def series_metrics_bound(series_ref,series_models,list_models,feature,path_save_
 
         model_nm=list_models[r]
 
+        print ('  ' + fname + ": procesando '" + model_nm + "' ...")
+        print ('    nans?', np.any(np.isnan(series_models[r,:])))
+
         for y in range(4):
 
-            if np.isnan(series_models[r,y])==True :
+            if np.any(np.isnan(series_models[r,y])) :
 
                 corr_coef=ma.corrcoef(ma.masked_invalid(series_ref[y]), \
                     ma.masked_invalid(series_models[r,y]))[0,1]
@@ -2787,15 +2796,23 @@ def series_metrics_bound(series_ref,series_models,list_models,feature,path_save_
                 MSE = mean_squared_error(series_ref[y],series_models[r,y])
                 RMSE = math.sqrt(MSE)
 
+            print ('  ' + fname + ": calculos de corr, MSE, RMSE terminados")
+
             #Appending the dataframe 
             dt_row=pd.DataFrame({'Model':[model_nm], 'Season':[season_lb[y]], 'Corr':[corr_coef], 'RMSE':[RMSE]})
+            print ('  ' + fname + ": dataframe appended")
 
             series_metrics_r=pd.read_csv(path_save_df+feature+'_series_metrics_corr_rmse.csv', index_col=[0])
+            print ('  ' + fname + ": series_metrics_corr_rmse.csv leido")
 
             #series_metrics_r=series_metrics_r.append(dt_row,ignore_index=True)
             series_metrics_r=pd.concat([series_metrics_r, dt_row], ignore_index=True)
+            print ('  ' + fname + ": series_metrics_r concated")
 
             series_metrics_r.to_csv(path_save_df+feature+'_series_metrics_corr_rmse.csv')
+            print ('  ' + fname + ": archivo creado '" + path_save_df+feature+"_series_metrics_corr_rmse.csv'")
+
+    return
 
 def filter_series_plots(seriesm,listm,range_lower,range_upper):
     new_modelS=[]
