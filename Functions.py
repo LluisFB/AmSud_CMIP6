@@ -2584,8 +2584,9 @@ def std_ref(array, path_save_df, str_feature):
     print('---------------------------------')
     print('std_ref: std_ref calculation OK')
 
-    new_row_reference=pd.DataFrame({'Characteristic': [str_feature],\
-    'std_DJF':[std_ref[0]], 'std_JJA':[std_ref[1]], 'std_MAM':[std_ref[2]], 'std_SON':[std_ref[3]]})
+    new_row_reference=pd.DataFrame({'Characteristic': [str_feature],                 \
+      'std_DJF':[std_ref[0]], 'std_JJA':[std_ref[1]], 'std_MAM':[std_ref[2]],        \
+      'std_SON':[std_ref[3]]})
 
     print('---------------------------------')
     print('std_ref: new_row OK')
@@ -2713,7 +2714,6 @@ def series_metrics_bound(series_ref,series_models,list_models,feature,path_save_
         model_nm=list_models[r]
 
         print ('  ' + fname + ": procesando '" + model_nm + "' ...")
-        print ('    nans?', np.any(np.isnan(series_models[r,:])))
 
         for y in range(4):
 
@@ -2734,8 +2734,17 @@ def series_metrics_bound(series_ref,series_models,list_models,feature,path_save_
             else:
 
                 corr_coef=np.corrcoef(series_ref[y], series_models[r,y])[0,1]
-
-                MSE = mean_squared_error(series_ref[y],series_models[r,y])
+                if (np.isnan(corr_coef)):
+                    print ('  ' + fname + ': NaN corr_coef !!', corr_coef)
+                    print ('      series_ref;', series_ref[y])
+                    print ('      series_models:', series_models[r,y])
+                    print ('      np.corrcoef:', np.corrcoef(series_ref[y], series_models[r,y]))
+                    corr_coef=ma.corrcoef(series_ref[y], series_models[r,y])[0,1]
+                    print ('      ma.corrcoef:', corr_coef)
+                    MSE = (series_ref[y] - series_models[r,y])**2
+                    MSE = MSE.mean()
+                else:
+                    MSE = mean_squared_error(series_ref[y],series_models[r,y])
                 RMSE = math.sqrt(MSE)
 
             #Appending the dataframe 
