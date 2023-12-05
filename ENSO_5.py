@@ -242,7 +242,7 @@ def power_spectrum_plot(axs,freq_ref, power_ref, freq_models,power_models,list_m
     plt.ylabel('Power spectrum', size=label_font)
     plt.xlim(0.9,12)
     plt.xticks([1,2,3,4,5,6,7,8,9,10],['1','','3','','5','','7','','','10'], size=ticks_font)
-    plt.legend( bbox_to_anchor=(0.7, -1), loc='lower right', fontsize=str(legend_font),ncol=4,frameon=False)
+    plt.legend( bbox_to_anchor=(0.7, -2), loc='lower right', fontsize=str(legend_font),ncol=4,frameon=False)
 
 def plotCells_scatter(axs,cell_data,horPlot,pressPlot,colorMap,limits,xlabel,labels_x_cross,step_hor, title_label,y_label_status,title_font2,label_font, ticks_font,scatter_status,points_scatter):
     """

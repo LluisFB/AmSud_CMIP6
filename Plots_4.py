@@ -172,6 +172,12 @@ subjet_lat_limit_upper=-15
 trade_str_lower=-4
 trade_str_upper=15
 
+vimf_lower=0
+vimf_upper=550
+
+vihf_lower=-25
+vihf_upper=50
+
 #-------------------------------------------------------------------------------------------------------------
 
 #list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation','Regional_cells',\
@@ -1337,6 +1343,17 @@ for i in range(len(list_calculation)):
             print('VIMF: series metrics OK')
             print('-----------------------------------------------------------------------------------')
 
+            #################################################################################
+            #Applying the filter to the plot 
+            models, north_cmip6=filter_series_plots_bounds(north_cmip6,models,vimf_lower,vimf_upper)
+            models, south_cmip6=filter_series_plots_bounds(south_cmip6,models,vimf_lower,vimf_upper)
+            models, east_cmip6=filter_series_plots_bounds(east_cmip6,models,vimf_lower,vimf_upper)
+            models, west_cmip6=filter_series_plots_bounds(west_cmip6,models,vimf_lower,vimf_upper)
+
+            print('-----------------------------------------------------------------------------------')
+            print('VIMF: filter OK')
+            print('-----------------------------------------------------------------------------------')
+
             ################################################################################
             #Delimiting the longitude and latitudes bands
             north_boundaries_lat=[15,20]
@@ -1423,7 +1440,7 @@ for i in range(len(list_calculation)):
             nrows = 20
             ncols = int(np.ceil(len(models) / float(nrows)))
 
-            fig.legend(bbox_to_anchor=(0.95, 0.90), ncol=ncols,loc='upper left', fontsize=str(legends_str))
+            fig.legend(bbox_to_anchor=(0.95, 0.90), ncol=2,loc='upper left', fontsize=str(legends_str))
 
             plt.text(0.4,1.3,'DJF', fontsize=fig_title_font,rotation='horizontal',transform=ax1.transAxes)
             plt.text(0.4,1.3,'JJA', fontsize=fig_title_font,rotation='horizontal',transform=ax2.transAxes)
@@ -1472,6 +1489,30 @@ for i in range(len(list_calculation)):
             print('MSE: files read OK')
             print('-----------------------------------------------------------------------------------')
 
+            east_era5 = np.ma.masked_invalid(east_era5)
+            west_era5 = np.ma.masked_invalid(west_era5)
+            north_era5 = np.ma.masked_invalid(north_era5)
+            south_era5 = np.ma.masked_invalid(south_era5)
+
+            east_cmip6 = np.ma.masked_invalid(east_cmip6)
+            west_cmip6 = np.ma.masked_invalid(west_cmip6)
+            north_cmip6 = np.ma.masked_invalid(north_cmip6)
+            south_cmip6 = np.ma.masked_invalid(south_cmip6)
+
+            east_cmip6 = np.ma.masked_greater(east_cmip6, 10.e20)
+            west_cmip6 = np.ma.masked_greater(west_cmip6, 10.e20)
+            south_cmip6 = np.ma.masked_greater(south_cmip6, 10.e20)
+            north_cmip6 = np.ma.masked_greater(north_cmip6, 10.e20)
+            print ('    mean', east_cmip6.mean(axis=(1,2)))
+            print ('  has it NaNs east_era5?', np.any(np.isnan(east_era5)))
+            print ('  has it NaNs west_era5?', np.any(np.isnan(west_era5)))
+            print ('  has it NaNs south_era5?', np.any(np.isnan(south_era5)))
+            print ('  has it NaNs north_era5?', np.any(np.isnan(north_era5)))
+            print ('  has it NaNs east_cmip6?', np.any(np.isnan(east_cmip6)))
+            print ('  has it NaNs west_cmip6?', np.any(np.isnan(west_cmip6)))
+            print ('  has it NaNs south_cmip6?', np.any(np.isnan(south_cmip6)))
+            print ('  has it NaNs north_cmip6?', np.any(np.isnan(north_cmip6)))
+
             series_metrics_bound(east_era5,east_cmip6,models,'VIHF_Eastern',path_entry)
             series_metrics_bound(west_era5,west_cmip6,models,'VIHF_Western',path_entry)
             series_metrics_bound(north_era5,north_cmip6,models,'VIHF_Northern',path_entry)
@@ -1479,6 +1520,17 @@ for i in range(len(list_calculation)):
 
             print('-----------------------------------------------------------------------------------')
             print('MSE: series metrics OK')
+            print('-----------------------------------------------------------------------------------')
+
+            #################################################################################
+            #Applying the filter to the plot 
+            models, north_cmip6=filter_series_plots_bounds(north_cmip6,models,vihf_lower,vihf_upper)
+            models, south_cmip6=filter_series_plots_bounds(south_cmip6,models,vihf_lower,vihf_upper)
+            models, east_cmip6=filter_series_plots_bounds(east_cmip6,models,vihf_lower,vihf_upper)
+            models, west_cmip6=filter_series_plots_bounds(west_cmip6,models,vihf_lower,vihf_upper)
+
+            print('-----------------------------------------------------------------------------------')
+            print('MSE: filter OK')
             print('-----------------------------------------------------------------------------------')
 
             ################################################################################
@@ -1565,7 +1617,7 @@ for i in range(len(list_calculation)):
             nrows = 20
             ncols = int(np.ceil(len(models) / float(nrows)))
 
-            fig.legend(bbox_to_anchor=(0.95, 0.90), ncol=ncols,loc='upper left', fontsize=str(legends_str))
+            fig.legend(bbox_to_anchor=(0.95, 0.90), ncol=2,loc='upper left', fontsize=str(legends_str))
 
             plt.text(0.4,1.3,'DJF', fontsize=fig_title_font,rotation='horizontal',transform=ax1.transAxes)
             plt.text(0.4,1.3,'JJA', fontsize=fig_title_font,rotation='horizontal',transform=ax2.transAxes)

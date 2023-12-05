@@ -490,7 +490,7 @@ def td_plots(fig,season_str,ref_table,models_table,characteristic,number_models,
 
     fig.legend(dia.samplePoints,
                [ p.get_label() for p in dia.samplePoints ],
-               numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
+               numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.61, 0.85) \
                ,ncol=2,loc='right')
 
     #fig.tight_layout()
@@ -1637,7 +1637,7 @@ def plot_one_plot(models_n,index_name,path_save_plots,Index_model,wind_ref_arr_i
     #plt.legend(fontsize=12)
     nrows = 20
     ncols = int(np.ceil(len(models_n) / float(nrows)))
-    plt.legend( bbox_to_anchor=(-0.2, -1), ncol=ncols,loc='lower left', fontsize=str(legend_font))
+    plt.legend( bbox_to_anchor=(-0.2, -2), ncol=ncols,loc='lower left', fontsize=str(legend_font))
     fig.savefig(path_save_plots+index_name+'.png', format = 'png',\
     bbox_inches='tight')
     plt.close()
@@ -2779,5 +2779,24 @@ def filter_series_plots(seriesm,listm,range_lower,range_upper):
     return new_listm, new_seriesm
 
 
+def filter_series_plots_bounds(seriesm,listm,range_lower,range_upper):
+    new_modelS=[]
+    new_modelL=[]
+
+    for g in range(len(listm)):
+        val_min=np.min(seriesm[g,:,:])
+        val_max=np.max(seriesm[g,:,:])
+
+        if (val_min<range_lower) or (val_max>range_upper):
+            pass
+        else:
+            new_modelL.append(listm[g])
+            new_modelS.append(seriesm[g,:,:])
     
+    #------------------------------------------------------------
+    #Converting into array 
+    new_listm=np.array(new_modelL)
+    new_seriesm=np.array(new_modelS)
+
+    return new_listm, new_seriesm    
     
