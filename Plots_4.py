@@ -185,7 +185,7 @@ vihf_upper=50
 
 list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation',\
                   'SST','Wind_indices','Bolivian_high','VIMF','MSE']
-list_calculation=[ 'VIMF']
+#list_calculation=[ 'VIMF']
 
 for i in range(len(list_calculation)):
     if list_calculation[i]=='Subtropical_highs':
