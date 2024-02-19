@@ -488,10 +488,10 @@ def td_plots(fig,season_str,ref_table,models_table,characteristic,number_models,
     ncols = int(np.ceil(number_models / float(nrows)))
 
 
-    fig.legend(dia.samplePoints,
-               [ p.get_label() for p in dia.samplePoints ],
-               numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.61, 0.85) \
-               ,ncol=2,loc='right')
+    #fig.legend(dia.samplePoints,
+    #           [ p.get_label() for p in dia.samplePoints ],
+    #           numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.61, 0.85) \
+    #           ,ncol=2,loc='right')
 
     #fig.tight_layout()
 
@@ -1611,10 +1611,34 @@ def wind_indices(title_plot,index_strength_ref,index_strength_m,index_latitude_r
     nrows = 20
     ncols = int(np.ceil(len(list_models) / float(nrows)))
 
-    fig.legend( bbox_to_anchor=(0.92, 0.9), ncol=ncols,loc='upper left', fontsize=str(legend_font))
+    #fig.legend( bbox_to_anchor=(0.92, 0.9), ncol=ncols,loc='upper left', fontsize=str(legend_font))
 
     fig.savefig(path_save_plots+save_str+'.png', \
     format = 'png', bbox_inches='tight')
+
+    #Saving the legend in an independant plot
+
+    legend=plt.legend(ncol=ncols,loc='lower left', fontsize=str(legend_font))
+
+    fig.canvas.draw()
+    legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
+    legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
+    legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
+    legend_squared = legend_ax.legend(
+        *axs.get_legend_handles_labels(), 
+        bbox_transform=legend_fig.transFigure,
+        bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+        frameon=False,
+        fancybox=None,
+        shadow=False,
+        ncol=ncols,
+        mode='expand',
+    )
+    legend_ax.axis('off')
+    legend_fig.savefig(
+        path_save_plots+save_str+'_legend.png', format = 'png',\
+    bbox_inches='tight',bbox_extra_artists=[legend_squared],
+    )
     plt.close()
 
 def plot_one_plot(models_n,index_name,path_save_plots,Index_model,wind_ref_arr_index,pressure_levels_index,ylabel_str,ylim_low,ylim_up,title_str,title_font1, label_font, ticks_font, legend_font):
@@ -1637,9 +1661,32 @@ def plot_one_plot(models_n,index_name,path_save_plots,Index_model,wind_ref_arr_i
     #plt.legend(fontsize=12)
     nrows = 20
     ncols = int(np.ceil(len(models_n) / float(nrows)))
-    plt.legend( bbox_to_anchor=(-0.2, -2), ncol=ncols,loc='lower left', fontsize=str(legend_font))
+    #plt.legend( bbox_to_anchor=(-0.2, -1), ncol=ncols,loc='lower left', fontsize=str(legend_font))
     fig.savefig(path_save_plots+index_name+'.png', format = 'png',\
     bbox_inches='tight')
+    
+    #to save the legend
+    legend=plt.legend(ncol=ncols,loc='lower left', fontsize=str(legend_font))
+
+    fig.canvas.draw()
+    legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
+    legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
+    legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
+    legend_squared = legend_ax.legend(
+        *ax.get_legend_handles_labels(), 
+        bbox_transform=legend_fig.transFigure,
+        bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+        frameon=False,
+        fancybox=None,
+        shadow=False,
+        ncol=ncols,
+        mode='expand',
+    )
+    legend_ax.axis('off')
+    legend_fig.savefig(
+        path_save_plots+index_name+'_legend.png', format = 'png',\
+    bbox_inches='tight',bbox_extra_artists=[legend_squared],
+    )
     plt.close()
 
 def interpolation_fields(var_array_ref,lat_refe,lon_refe,lat_mo,lon_mo,dx_mo,dy_mo):

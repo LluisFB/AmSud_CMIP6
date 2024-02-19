@@ -504,6 +504,36 @@ for i in range(len(list_calculation)):
             #fig.subplots_adjust(hspace=0.3)
             plt.savefig(path_save+'slp_fields.png', \
             format = 'png', bbox_inches='tight')
+            
+            #To save the legend independently
+            dia=taylor
+
+            legend= fig.legend(dia.samplePoints,
+            [ p.get_label() for p in dia.samplePoints ],
+            numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
+            ,ncol=2,loc='right')
+
+            ncols=2
+
+            fig.canvas.draw()
+            legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
+            legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+            legend_squared = legend_ax.legend(
+            *dia._ax.get_legend_handles_labels(), 
+            bbox_transform=legend_fig.transFigure,
+            bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+            frameon=False,
+            fancybox=None,
+            shadow=False,
+            ncol=ncols,
+            mode='expand',
+            )
+            legend_ax.axis('off')
+            legend_fig.savefig(
+            path_save+'slp_fields_legend.png', format = 'png',\
+            bbox_inches='tight',bbox_extra_artists=[legend_squared],
+            ) 
             plt.close()
         
         except Exception as e:
@@ -708,6 +738,36 @@ for i in range(len(list_calculation)):
             #fig.subplots_adjust(hspace=0.3)
             plt.savefig(path_save+'pr_mm_day.png', \
             format = 'png', bbox_inches='tight')
+            
+            #To save the legend independently
+            dia=taylor
+
+            legend= fig.legend(dia.samplePoints,
+            [ p.get_label() for p in dia.samplePoints ],
+            numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
+            ,ncol=2,loc='right')
+
+            ncols=2
+
+            fig.canvas.draw()
+            legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
+            legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+            legend_squared = legend_ax.legend(
+            *dia._ax.get_legend_handles_labels(), 
+            bbox_transform=legend_fig.transFigure,
+            bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+            frameon=False,
+            fancybox=None,
+            shadow=False,
+            ncol=ncols,
+            mode='expand',
+            )
+            legend_ax.axis('off')
+            legend_fig.savefig(
+            path_save+'pr_mm_day_legend.png', format = 'png',\
+            bbox_inches='tight',bbox_extra_artists=[legend_squared],
+            ) 
             plt.close()
         
         except Exception as e:
@@ -803,6 +863,36 @@ for i in range(len(list_calculation)):
             #fig.subplots_adjust(hspace=0.3)
             plt.savefig(path_save+'tos_fields_c.png', \
             format = 'png', bbox_inches='tight')
+            
+            #To save the legend independently
+            dia=taylor
+
+            legend= fig.legend(dia.samplePoints,
+            [ p.get_label() for p in dia.samplePoints ],
+            numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
+            ,ncol=2,loc='right')
+
+            ncols=2
+
+            fig.canvas.draw()
+            legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
+            legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+            legend_squared = legend_ax.legend(
+            *dia._ax.get_legend_handles_labels(), 
+            bbox_transform=legend_fig.transFigure,
+            bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+            frameon=False,
+            fancybox=None,
+            shadow=False,
+            ncol=ncols,
+            mode='expand',
+            )
+            legend_ax.axis('off')
+            legend_fig.savefig(
+            path_save+'tos_fields_c_legend.png', format = 'png',\
+            bbox_inches='tight',bbox_extra_artists=[legend_squared],
+            ) 
             plt.close()
         
         except Exception as e:
@@ -919,6 +1009,36 @@ for i in range(len(list_calculation)):
             #fig.subplots_adjust(hspace=0.3)
             plt.savefig(path_save+'wind200_fields.png', \
             format = 'png', bbox_inches='tight')
+            
+            #To save the legend independently
+            dia=taylor
+
+            legend= fig.legend(dia.samplePoints,
+            [ p.get_label() for p in dia.samplePoints ],
+            numpoints=1, prop=dict(size='small') \
+            ,ncol=2,loc='right')
+
+            ncols=2
+
+            fig.canvas.draw()
+            legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
+            legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+            legend_squared = legend_ax.legend(
+            *dia._ax.get_legend_handles_labels(), 
+            bbox_transform=legend_fig.transFigure,
+            bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+            frameon=False,
+            fancybox=None,
+            shadow=False,
+            ncol=ncols,
+            mode='expand',
+            )
+            legend_ax.axis('off')
+            legend_fig.savefig(
+            path_save+'wind200_legend.png', format = 'png',\
+            bbox_inches='tight',bbox_extra_artists=[legend_squared],
+            ) 
             plt.close()
         except Exception as e:
             print('Error plot wind 200')
@@ -1061,6 +1181,37 @@ for i in range(len(list_calculation)):
             #fig.subplots_adjust(hspace=0.3)
             plt.savefig(path_save+'wind850_fields.png', \
             format = 'png', bbox_inches='tight')
+            
+            #To save the legend independently
+            dia=taylor
+
+            legend= fig.legend(dia.samplePoints,
+            [ p.get_label() for p in dia.samplePoints ],
+            numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
+            ,ncol=2,loc='right')
+
+            ncols=2
+
+            fig.canvas.draw()
+            legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
+            legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+            legend_squared = legend_ax.legend(
+            *dia._ax.get_legend_handles_labels(), 
+            bbox_transform=legend_fig.transFigure,
+            bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+            frameon=False,
+            fancybox=None,
+            shadow=False,
+            ncol=ncols,
+            mode='expand',
+            )
+            legend_ax.axis('off')
+            legend_fig.savefig(
+            path_save+'wind850_legend.png', format = 'png',\
+            bbox_inches='tight',bbox_extra_artists=[legend_squared],
+            ) 
+
             plt.close()
         
         except Exception as e:
@@ -1193,7 +1344,39 @@ for i in range(len(list_calculation)):
             #fig.subplots_adjust(hspace=0.3)
             plt.savefig(path_save+'HadleyCell_fields.png', \
             format = 'png', bbox_inches='tight')
+            
+            #To save the legend independently
+            dia=taylor
+
+            legend= fig.legend(dia.samplePoints,
+            [ p.get_label() for p in dia.samplePoints ],
+            numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
+            ,ncol=2,loc='right')
+
+            ncols=2
+
+            fig.canvas.draw()
+            legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
+            legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+            legend_squared = legend_ax.legend(
+            *dia._ax.get_legend_handles_labels(), 
+            bbox_transform=legend_fig.transFigure,
+            bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+            frameon=False,
+            fancybox=None,
+            shadow=False,
+            ncol=ncols,
+            mode='expand',
+            )
+            legend_ax.axis('off')
+            legend_fig.savefig(
+            path_save+'HadleyCell_fields_legend.png', format = 'png',\
+            bbox_inches='tight',bbox_extra_artists=[legend_squared],
+            ) 
             plt.close()
+
+            #-----------------------------------------------------------------------------------------
 
 
             #Creating the plot for the Walker cell 
@@ -1261,6 +1444,37 @@ for i in range(len(list_calculation)):
             #fig.subplots_adjust(hspace=0.3)
             plt.savefig(path_save+'WalkerCell_fields.png', \
             format = 'png', bbox_inches='tight')
+            
+            #To save the legend independently
+
+            dia=taylor
+
+            legend= fig.legend(dia.samplePoints,
+            [ p.get_label() for p in dia.samplePoints ],
+            numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
+            ,ncol=2,loc='right')
+
+            ncols=2
+
+            fig.canvas.draw()
+            legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
+            legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+            legend_squared = legend_ax.legend(
+            *dia._ax.get_legend_handles_labels(), 
+            bbox_transform=legend_fig.transFigure,
+            bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+            frameon=False,
+            fancybox=None,
+            shadow=False,
+            ncol=ncols,
+            mode='expand',
+            )
+            legend_ax.axis('off')
+            legend_fig.savefig(
+            path_save+'WalkerCell_fields_legend.png', format = 'png',\
+            bbox_inches='tight',bbox_extra_artists=[legend_squared],
+            ) 
             plt.close()
         
         except Exception as e:
@@ -1440,7 +1654,7 @@ for i in range(len(list_calculation)):
             nrows = 20
             ncols = int(np.ceil(len(models) / float(nrows)))
 
-            fig.legend(bbox_to_anchor=(0.95, 0.90), ncol=2,loc='upper left', fontsize=str(legends_str))
+            #fig.legend(bbox_to_anchor=(0.95, 0.90), ncol=2,loc='upper left', fontsize=str(legends_str))
 
             plt.text(0.4,1.3,'DJF', fontsize=fig_title_font,rotation='horizontal',transform=ax1.transAxes)
             plt.text(0.4,1.3,'JJA', fontsize=fig_title_font,rotation='horizontal',transform=ax2.transAxes)
@@ -1452,6 +1666,30 @@ for i in range(len(list_calculation)):
 
             fig.savefig(path_save+'VIMF_Boundaries_Series.png', format = 'png',\
             bbox_inches='tight')
+            
+            #To save the legend in an independent plot 
+
+            legend=plt.legend(ncol=ncols,loc='lower left', fontsize=str(legends_str))
+
+            fig.canvas.draw()
+            legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
+            legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
+            legend_squared = legend_ax.legend(
+                *ax.get_legend_handles_labels(), 
+                bbox_transform=legend_fig.transFigure,
+                bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+                frameon=False,
+                fancybox=None,
+                shadow=False,
+                ncol=ncols,
+                mode='expand',
+            )
+            legend_ax.axis('off')
+            legend_fig.savefig(
+                path_save_plots+'VIMF_Boundaries_Series_legend.png', format = 'png',\
+            bbox_inches='tight',bbox_extra_artists=[legend_squared],
+            )
             plt.close()
         
         except Exception as e:
@@ -1617,7 +1855,7 @@ for i in range(len(list_calculation)):
             nrows = 20
             ncols = int(np.ceil(len(models) / float(nrows)))
 
-            fig.legend(bbox_to_anchor=(0.95, 0.90), ncol=2,loc='upper left', fontsize=str(legends_str))
+            #fig.legend(bbox_to_anchor=(0.95, 0.90), ncol=2,loc='upper left', fontsize=str(legends_str))
 
             plt.text(0.4,1.3,'DJF', fontsize=fig_title_font,rotation='horizontal',transform=ax1.transAxes)
             plt.text(0.4,1.3,'JJA', fontsize=fig_title_font,rotation='horizontal',transform=ax2.transAxes)
@@ -1629,6 +1867,28 @@ for i in range(len(list_calculation)):
 
             fig.savefig(path_save+'VIHF_Boundaries_Series.png', format = 'png',\
             bbox_inches='tight')
+            
+            legend=plt.legend(ncol=ncols,loc='lower left', fontsize=str(legends_str))
+
+            fig.canvas.draw()
+            legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
+            legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
+            legend_squared = legend_ax.legend(
+                *ax.get_legend_handles_labels(), 
+                bbox_transform=legend_fig.transFigure,
+                bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+                frameon=False,
+                fancybox=None,
+                shadow=False,
+                ncol=ncols,
+                mode='expand',
+            )
+            legend_ax.axis('off')
+            legend_fig.savefig(
+                path_save_plots+'VIHF_Boundaries_Series_legend.png', format = 'png',\
+            bbox_inches='tight',bbox_extra_artists=[legend_squared],
+            )
             plt.close()
         
         except Exception as e:
@@ -1777,6 +2037,36 @@ for i in range(len(list_calculation)):
                 #fig.subplots_adjust(hspace=0.3)
                 plt.savefig(path_save+'qu_qv_'+seasons_labels+'.png', \
                 format = 'png', bbox_inches='tight')
+               
+                #To save the legend independently
+                dia=taylor
+
+                legend= fig.legend(dia.samplePoints,
+                [ p.get_label() for p in dia.samplePoints ],
+                numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
+                ,ncol=2,loc='right')
+
+                ncols=2
+
+                fig.canvas.draw()
+                legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
+                legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
+                legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+                legend_squared = legend_ax.legend(
+                *dia._ax.get_legend_handles_labels(), 
+                bbox_transform=legend_fig.transFigure,
+                bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+                frameon=False,
+                fancybox=None,
+                shadow=False,
+                ncol=ncols,
+                mode='expand',
+                )
+                legend_ax.axis('off')
+                legend_fig.savefig(
+                path_save+'qu_qv_'+seasons_labels+'_legend.png', format = 'png',\
+                bbox_inches='tight',bbox_extra_artists=[legend_squared],
+                ) 
                 plt.close()
 
         except Exception as e:
@@ -1925,6 +2215,36 @@ for i in range(len(list_calculation)):
                 #fig.subplots_adjust(hspace=0.3)
                 plt.savefig(path_save+'tu_tv_'+seasons_labels+'.png', \
                 format = 'png', bbox_inches='tight')
+                
+                #To save the legend independently
+                dia=taylor
+
+                legend= fig.legend(dia.samplePoints,
+                [ p.get_label() for p in dia.samplePoints ],
+                numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
+                ,ncol=2,loc='right')
+
+                ncols=2
+
+                fig.canvas.draw()
+                legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
+                legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
+                legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+                legend_squared = legend_ax.legend(
+                *dia._ax.get_legend_handles_labels(), 
+                bbox_transform=legend_fig.transFigure,
+                bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+                frameon=False,
+                fancybox=None,
+                shadow=False,
+                ncol=ncols,
+                mode='expand',
+                )
+                legend_ax.axis('off')
+                legend_fig.savefig(
+                path_save+'tu_tv_'+seasons_labels+'_legend.png', format = 'png',\
+                bbox_inches='tight',bbox_extra_artists=[legend_squared],
+                ) 
                 plt.close()
         
         except Exception as e:
