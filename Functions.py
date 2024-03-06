@@ -1627,7 +1627,7 @@ def wind_indices(title_plot,index_strength_ref,index_strength_m,index_latitude_r
     legend_squared = legend_ax.legend(
         *axs.get_legend_handles_labels(), 
         bbox_transform=legend_fig.transFigure,
-        bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+        bbox_to_anchor=(0,0,1,1),
         frameon=False,
         fancybox=None,
         shadow=False,
@@ -1675,7 +1675,7 @@ def plot_one_plot(models_n,index_name,path_save_plots,Index_model,wind_ref_arr_i
     legend_squared = legend_ax.legend(
         *ax.get_legend_handles_labels(), 
         bbox_transform=legend_fig.transFigure,
-        bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+        bbox_to_anchor=(0,0,1,1),
         frameon=False,
         fancybox=None,
         shadow=False,

@@ -192,10 +192,12 @@ for i in range(len(list_calculation)):
 
         try:
 
-            """
+            
 
             #Inputs for the plot 
             models=np.load(path_entry+'subtropicalHighs_models_N.npz',allow_pickle=True)['arr_0']
+
+            """
 
             southAtlantic_strength_ref=np.load(path_entry+'southAtlantic_high_strength_ERA5.npz',allow_pickle=True)['arr_0']
             southPacific_strength_ref=np.load(path_entry+'southPacific_high_strength_ERA5.npz',allow_pickle=True)['arr_0']
@@ -518,11 +520,11 @@ for i in range(len(list_calculation)):
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
             legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
-            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+            bbox_to_anchor=(0,0,1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -752,11 +754,11 @@ for i in range(len(list_calculation)):
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
             legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
-            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+            bbox_to_anchor=(0,0,1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -877,11 +879,11 @@ for i in range(len(list_calculation)):
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
             legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
-            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+            bbox_to_anchor=(0,0,1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -1023,11 +1025,11 @@ for i in range(len(list_calculation)):
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
             legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
-            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+            bbox_to_anchor=(0,0,1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -1195,11 +1197,11 @@ for i in range(len(list_calculation)):
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
             legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
-            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+            bbox_to_anchor=(0,0,1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -1358,11 +1360,11 @@ for i in range(len(list_calculation)):
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
             legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
-            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+            bbox_to_anchor=(0,0,1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -1459,11 +1461,11 @@ for i in range(len(list_calculation)):
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
             legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
-            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+            legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+            bbox_to_anchor=(0,0,1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -1678,7 +1680,7 @@ for i in range(len(list_calculation)):
             legend_squared = legend_ax.legend(
                 *ax.get_legend_handles_labels(), 
                 bbox_transform=legend_fig.transFigure,
-                bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+                bbox_to_anchor=(0,0,1,1),
                 frameon=False,
                 fancybox=None,
                 shadow=False,
@@ -1877,7 +1879,7 @@ for i in range(len(list_calculation)):
             legend_squared = legend_ax.legend(
                 *ax.get_legend_handles_labels(), 
                 bbox_transform=legend_fig.transFigure,
-                bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+                bbox_to_anchor=(0,0,1,1),
                 frameon=False,
                 fancybox=None,
                 shadow=False,
@@ -2051,11 +2053,11 @@ for i in range(len(list_calculation)):
                 fig.canvas.draw()
                 legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
                 legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
-                legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+                legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
                 legend_squared = legend_ax.legend(
                 *dia._ax.get_legend_handles_labels(), 
                 bbox_transform=legend_fig.transFigure,
-                bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+                bbox_to_anchor=(0,0,1,1),
                 frameon=False,
                 fancybox=None,
                 shadow=False,
@@ -2229,11 +2231,11 @@ for i in range(len(list_calculation)):
                 fig.canvas.draw()
                 legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
                 legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
-                legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width/2, legend_bbox.height))
+                legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
                 legend_squared = legend_ax.legend(
                 *dia._ax.get_legend_handles_labels(), 
                 bbox_transform=legend_fig.transFigure,
-                bbox_to_anchor=(0,0,legend.get_window_extent().width/100,legend.get_window_extent().height/100),
+                bbox_to_anchor=(0,0,1,1),
                 frameon=False,
                 fancybox=None,
                 shadow=False,
