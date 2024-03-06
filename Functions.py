@@ -1592,7 +1592,7 @@ def wind_indices(title_plot,index_strength_ref,index_strength_m,index_latitude_r
         colors=iter(cm.rainbow(np.linspace(0,1,len(list_models))))
 
         for m in range(len(list_models)):
-            if k==0:
+            if k==1:
                 labels_plots=list_models[m]
             else:
                 labels_plots=None
