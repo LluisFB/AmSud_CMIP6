@@ -1556,7 +1556,7 @@ def plot_series_int_loc_combined(title_plot,index_strength_ref_sash,index_streng
     format = 'png', bbox_inches='tight')
     plt.close()
     
-def wind_indices(title_plot,index_strength_ref,index_strength_m,index_latitude_ref,index_latitude_m,title_subplot_0,title_subplot_1,y_ticks_0,y_ticks_1,list_models,save_str, path_save_plots,nrow,ncol,fzx,fzy,title_font1,title_font2, label_font, ticks_font, legend_font):
+def wind_indices(title_plot,index_strength_ref,index_strength_m,index_latitude_ref,index_latitude_m,title_subplot_0,title_subplot_1,y_ticks_0,y_ticks_1,list_models,save_str, path_save_plots,nrow,ncol,fzx,fzy,title_font1,title_font2, label_font, ticks_font, legend_font,list_q):
     labels=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug',\
     'Sep','Oct','Nov','Dec']
     row=nrow
@@ -1572,7 +1572,7 @@ def wind_indices(title_plot,index_strength_ref,index_strength_m,index_latitude_r
             models_data=index_strength_m
             y_label_plot='Wind [m/s]'
             title_subplot=title_subplot_0
-            labels_ref_plot='Reference [ERA5]'
+            labels_ref_plot=None
             y_ticks_plot=y_ticks_0
 
         else:
@@ -1580,25 +1580,29 @@ def wind_indices(title_plot,index_strength_ref,index_strength_m,index_latitude_r
             models_data=index_latitude_m
             y_label_plot='Latitude [°S]'
             title_subplot=title_subplot_1
-            labels_ref_plot=None
+            labels_ref_plot='Reference [ERA5]'
             y_ticks_plot=y_ticks_1
 
         axs.set_title(title_subplot,fontsize=title_font2,loc='left')
         axs.spines['top'].set_visible(False)
         axs.spines['right'].set_visible(False)
-
-        axs.plot(reference_data, color = 'k', linewidth=2.2,label=labels_ref_plot)
         #iterating in the models to obtain the serie
         colors=iter(cm.rainbow(np.linspace(0,1,len(list_models))))
 
         for m in range(len(list_models)):
-            if k==1:
-                labels_plots=list_models[m]
+            if list_models[m] in list_q:
+                pass
             else:
-                labels_plots=None
-            c=next(colors)
 
-            axs.plot(models_data[m] ,color =c ,linewidth=1.5,label=labels_plots)
+                if k==1:
+                    labels_plots=list_models[m]
+                else:
+                    labels_plots=None
+                c=next(colors)
+
+                axs.plot(models_data[m] ,color =c ,linewidth=1.5,label=labels_plots)
+        
+        axs.plot(reference_data, color = 'k', linewidth=2.2,label=labels_ref_plot)
         axs.set_xticks(np.arange(0,12,1))
         axs.set_xticklabels(labels,fontsize=ticks_font)
         axs.set_yticks(y_ticks_plot)
@@ -1641,7 +1645,7 @@ def wind_indices(title_plot,index_strength_ref,index_strength_m,index_latitude_r
     )
     plt.close()
 
-def plot_one_plot(models_n,index_name,path_save_plots,Index_model,wind_ref_arr_index,pressure_levels_index,ylabel_str,ylim_low,ylim_up,title_str,title_font1, label_font, ticks_font, legend_font):
+def plot_one_plot(models_n,index_name,path_save_plots,Index_model,wind_ref_arr_index,pressure_levels_index,ylabel_str,ylim_low,ylim_up,title_str,title_font1, label_font, ticks_font, legend_font,list_q):
     color=iter(cm.rainbow(np.linspace(0,1,len(models_n))))
     labels_x=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
     fig,ax = plt.subplots(figsize=(10.5,7))
@@ -1650,8 +1654,12 @@ def plot_one_plot(models_n,index_name,path_save_plots,Index_model,wind_ref_arr_i
     plt.ylabel(ylabel_str,fontsize=label_font)
     plt.xlabel('Month',fontsize=label_font)
     for i in range(len(models_n)):
-        c=next(color)
-        plt.plot(Index_model[i,:],color =c ,linewidth=1.5,label=models_n[i])
+        if models_n[i] in list_q:
+            pass
+        else:
+            c=next(color)
+            plt.plot(Index_model[i,:],color =c ,linewidth=1.5,label=models_n[i])
+
     plt.plot(wind_ref_arr_index, color = 'k', linewidth=2.2,label='Reference [ERA5]')
     plt.title(title_str,\
     fontsize=title_font1,loc='left')
@@ -2575,21 +2583,24 @@ def plotCells(axs,cell_data,horPlot,pressPlot,colorMap,limits,xlabel,labels_x_cr
 
     return cs
 
-def plot_boundary(axs,title_str, ref_arr,models_list,models_arr,x_label_str,arange_x,labels_x,legend_status,ylabel_str,title_font2,label_font, ticks_font,lower_st,sep,y_l):
+def plot_boundary(axs,title_str, ref_arr,models_list,models_arr,x_label_str,arange_x,labels_x,legend_status,ylabel_str,title_font2,label_font, ticks_font,lower_st,sep,y_l,list_q):
     axs.set_title(title_str,fontsize=title_font2,loc='left')
     axs.spines['top'].set_visible(False)
     axs.spines['right'].set_visible(False)
     #iterating in the models to obtain the serie
     colors=iter(cm.rainbow(np.linspace(0,1,len(models_list))))
     for m in range(len(models_list)):
-        c=next(colors)
-        if legend_status=='yes':
-            label_serie=models_list[m]
-            label_era='Reference [ERA5]'
+        if models_list[m] in list_q:
+            pass
         else:
-            label_serie=None
-            label_era=None
-        axs.plot(models_arr[m] ,color =c ,linewidth=1.5,label=label_serie)
+            c=next(colors)
+            if legend_status=='yes':
+                label_serie=models_list[m]
+                label_era='Reference [ERA5]'
+            else:
+                label_serie=None
+                label_era=None
+            axs.plot(models_arr[m] ,color =c ,linewidth=1.5,label=label_serie)
     axs.plot(ref_arr, color = 'k', linewidth=2.2,label=label_era)
     axs.set_xticks(arange_x[::sep])
     axs.set_xticklabels(labels_x[::sep],fontsize=ticks_font)
