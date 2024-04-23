@@ -197,7 +197,7 @@ for i in range(len(list_calculation)):
             #Inputs for the plot 
             models=np.load(path_entry+'subtropicalHighs_models_N.npz',allow_pickle=True)['arr_0']
 
-            """
+            
 
             southAtlantic_strength_ref=np.load(path_entry+'southAtlantic_high_strength_ERA5.npz',allow_pickle=True)['arr_0']
             southPacific_strength_ref=np.load(path_entry+'southPacific_high_strength_ERA5.npz',allow_pickle=True)['arr_0']
@@ -239,6 +239,7 @@ for i in range(len(list_calculation)):
 
             #----------------------------------------------------------------------------------------------------
             #Obtaining the metrics of the series 
+            """
             series_metrics(southAtlantic_strength_ref,southAtlantic_strength_models,models,'southAtlantic_high_strength',path_entry)
             series_metrics(southPacific_strength_ref,southPacific_strength_models,models,'southPacific_high_strength',path_entry)
             series_metrics(nash_strength_ref,nash_strength_models,models,'nash_high_strength',path_entry)
@@ -250,6 +251,7 @@ for i in range(len(list_calculation)):
             series_metrics(southAtlantic_lon_ref,southAtlantic_longitude_models,models,'southAtlantic_high_lon',path_entry)
             series_metrics(southPacific_lon_ref,southPacific_longitude_models,models,'southPacific_high_lon',path_entry)
             series_metrics(nash_lon_ref,nash_longitude_models,models,'nash_high_lon',path_entry)
+            """
 
             #---------------------------------------------------------------------------------------------
             #1. Intensity, location (Lat, Lon)
@@ -313,6 +315,8 @@ for i in range(len(list_calculation)):
                                'a. SASH Intensity','d. SASH Latitude','g. SASH Longitude','b. SPSH Intensity','e. SPSH Latitude','h. SPSH Longitude',\
                                'c. NASH Intensity','f. NASH Latitude','i. NASH Longitude',models,'SubtropicalHighs_indices','Pressure [hPa]', path_save,3,3,27,21,fig_title_font,title_str_size, \
                                 xy_label_str, tick_labels_str, legends_str)
+
+            """
 
             #--------------------------------------------------------------------------------------------------------
             #4. Subtropical center 
@@ -1671,14 +1675,14 @@ for i in range(len(list_calculation)):
             
             #To save the legend in an independent plot 
 
-            legend=plt.legend(ncol=ncols,loc='lower left', fontsize=str(legends_str))
+            legend=ax1.legend(ncol=ncols,loc='lower left', fontsize=str(legends_str))
 
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
             legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
             legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
             legend_squared = legend_ax.legend(
-                *ax.get_legend_handles_labels(), 
+                *ax1.get_legend_handles_labels(), 
                 bbox_transform=legend_fig.transFigure,
                 bbox_to_anchor=(0,0,1,1),
                 frameon=False,
@@ -1689,7 +1693,7 @@ for i in range(len(list_calculation)):
             )
             legend_ax.axis('off')
             legend_fig.savefig(
-                path_save_plots+'VIMF_Boundaries_Series_legend.png', format = 'png',\
+                path_save+'VIMF_Boundaries_Series_legend.png', format = 'png',\
             bbox_inches='tight',bbox_extra_artists=[legend_squared],
             )
             plt.close()
@@ -1870,14 +1874,14 @@ for i in range(len(list_calculation)):
             fig.savefig(path_save+'VIHF_Boundaries_Series.png', format = 'png',\
             bbox_inches='tight')
             
-            legend=plt.legend(ncol=ncols,loc='lower left', fontsize=str(legends_str))
+            legend=ax1.legend(ncol=ncols,loc='lower left', fontsize=str(legends_str))
 
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
             legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
             legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
             legend_squared = legend_ax.legend(
-                *ax.get_legend_handles_labels(), 
+                *ax1.get_legend_handles_labels(), 
                 bbox_transform=legend_fig.transFigure,
                 bbox_to_anchor=(0,0,1,1),
                 frameon=False,
@@ -1888,7 +1892,7 @@ for i in range(len(list_calculation)):
             )
             legend_ax.axis('off')
             legend_fig.savefig(
-                path_save_plots+'VIHF_Boundaries_Series_legend.png', format = 'png',\
+                path_save+'VIHF_Boundaries_Series_legend.png', format = 'png',\
             bbox_inches='tight',bbox_extra_artists=[legend_squared],
             )
             plt.close()

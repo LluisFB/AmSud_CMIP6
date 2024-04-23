@@ -1366,7 +1366,6 @@ def plot_series(axs,index_strength_ref,index_strength_m,title_subplot_0,list_mod
     axs.spines['top'].set_visible(False)
     axs.spines['right'].set_visible(False)
 
-    axs.plot(reference_data, color = 'k', linewidth=2.2,label=labels_ref_plot)
     #iterating in the models to obtain the serie
     colors=iter(cm.rainbow(np.linspace(0,1,len(list_models))))
 
@@ -1378,6 +1377,9 @@ def plot_series(axs,index_strength_ref,index_strength_m,title_subplot_0,list_mod
         c=next(colors)
 
         axs.plot(models_data[m] ,color =c ,linewidth=1.5,label=labels_plots)
+    
+    axs.plot(reference_data, color = 'k', linewidth=2.2,label=labels_ref_plot)
+
     axs.set_xticks(np.arange(0,12,1))
     axs.set_xticklabels(labels,fontsize=ticks_font)
     axs.set_ylabel(y_label_plot,fontsize=label_font)
@@ -1422,7 +1424,6 @@ def plot_series_int_loc(title_plot,index_strength_ref,index_strength_m,index_lat
         axs.spines['top'].set_visible(False)
         axs.spines['right'].set_visible(False)
 
-        axs.plot(reference_data, color = 'k', linewidth=2.2,label=labels_ref_plot)
         #iterating in the models to obtain the serie
         colors=iter(cm.rainbow(np.linspace(0,1,len(list_models))))
 
@@ -1434,6 +1435,9 @@ def plot_series_int_loc(title_plot,index_strength_ref,index_strength_m,index_lat
             c=next(colors)
 
             axs.plot(models_data[m] ,color =c ,linewidth=1.5,label=labels_plots)
+        
+        axs.plot(reference_data, color = 'k', linewidth=2.2,label=labels_ref_plot)
+
         axs.set_xticks(np.arange(0,12,1))
         axs.set_xticklabels(labels,fontsize=ticks_font)
         axs.set_ylabel(y_label_plot,fontsize=label_font)
@@ -1529,7 +1533,6 @@ def plot_series_int_loc_combined(title_plot,index_strength_ref_sash,index_streng
         axs.spines['top'].set_visible(False)
         axs.spines['right'].set_visible(False)
 
-        axs.plot(reference_data, color = 'k', linewidth=2.2,label=labels_ref_plot)
         #iterating in the models to obtain the serie
         colors=iter(cm.rainbow(np.linspace(0,1,len(list_models))))
 
@@ -1541,6 +1544,9 @@ def plot_series_int_loc_combined(title_plot,index_strength_ref_sash,index_streng
             c=next(colors)
 
             axs.plot(models_data[m] ,color =c ,linewidth=1.5,label=labels_plots)
+        
+        axs.plot(reference_data, color = 'k', linewidth=2.2,label=labels_ref_plot)
+        
         axs.set_xticks(np.arange(0,12,1))
         axs.set_xticklabels(labels,fontsize=ticks_font)
         axs.set_ylabel(y_label_plot,fontsize=label_font)
