@@ -218,7 +218,7 @@ def interpolation_fields_ENSO(var_array_ref,lat_refe,lon_refe,lat_mo,lon_mo,dx_m
 
     return var_ref_interpolated
 
-def power_spectrum_plot(axs,freq_ref, power_ref, freq_models,power_models,list_models,title_subplot,legend_font,title_font2,label_font,ticks_font,path_save):
+def power_spectrum_plot(axs,freq_ref, power_ref, freq_models,power_models,list_models,title_subplot,legend_font,title_font2,label_font,ticks_font):
 
     axs.set_title(title_subplot,fontsize=title_font2,loc='left')
 
@@ -532,7 +532,7 @@ try:
     path_save_plots+'ENSO_taylor_legend.png', format = 'png',\
     bbox_inches='tight',bbox_extra_artists=[legend_squared],
     ) 
-    
+
     #----------------------------------------------------------------------------------------------------
     #To save the legend of the power spectrum plot 
     legend=ax3.legend( bbox_to_anchor=(0.7, -1), loc='lower right', fontsize=str(legends_str),ncol=4,frameon=False)
