@@ -222,7 +222,6 @@ def power_spectrum_plot(axs,freq_ref, power_ref, freq_models,power_models,list_m
 
     axs.set_title(title_subplot,fontsize=title_font2,loc='left')
 
-    axs.plot(1.0/freq_ref[1:]/12, power_ref[1:],color='k', linewidth=2.5,label='ERA5')
     colors=iter(cm.rainbow(np.linspace(0,1,len(list_models))))
 
     for m in range(len(list_models)):
@@ -232,6 +231,8 @@ def power_spectrum_plot(axs,freq_ref, power_ref, freq_models,power_models,list_m
         c=next(colors)
 
         axs.plot(1.0/freq_models[m,1:]/12, power_models[m,1:],color=c, linewidth=1.5,label=labels_plots)
+    
+    axs.plot(1.0/freq_ref[1:]/12, power_ref[1:],color='k', linewidth=2.5,label='ERA5')
     # adjust spines
     axs = plt.gca()
     axs.spines['top'].set_color('none')
@@ -242,33 +243,6 @@ def power_spectrum_plot(axs,freq_ref, power_ref, freq_models,power_models,list_m
     plt.ylabel('Power spectrum', size=label_font)
     plt.xlim(0.9,12)
     plt.xticks([1,2,3,4,5,6,7,8,9,10],['1','','3','','5','','7','','','10'], size=ticks_font)
-
-    #to save the legend
-    legend=plt.legend( bbox_to_anchor=(0.7, -1), loc='lower right', fontsize=str(legend_font),ncol=4,frameon=False)
-
-    nrows = 20
-    ncols = int(np.ceil(len(list_models) / float(nrows)))
-
-    fig.canvas.draw()
-    legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
-    legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
-    legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
-    legend_squared = legend_ax.legend(
-        *axs.get_legend_handles_labels(), 
-        bbox_transform=legend_fig.transFigure,
-        bbox_to_anchor=(0,0,1,1),
-        frameon=False,
-        fancybox=None,
-        shadow=False,
-        ncol=ncols,
-        mode='expand',
-    )
-    legend_ax.axis('off')
-    legend_fig.savefig(
-        path_save+'ENSO_power_legend.png', format = 'png',\
-    bbox_inches='tight',bbox_extra_artists=[legend_squared],
-    )
-    plt.close()
 
 def plotCells_scatter(axs,cell_data,horPlot,pressPlot,colorMap,limits,xlabel,labels_x_cross,step_hor, title_label,y_label_status,title_font2,label_font, ticks_font,scatter_status,points_scatter):
     """
@@ -525,8 +499,10 @@ try:
     #fig.subplots_adjust(hspace=0.3)
     plt.savefig(path_save_plots+'ENSO.png', \
     format = 'png', bbox_inches='tight')
+
+    #---------------------------------------------------------------------
     
-    #To save the legend independently
+    #To save the legend independently Taylor diagram
 
     dia=taylor
 
@@ -553,9 +529,35 @@ try:
     )
     legend_ax.axis('off')
     legend_fig.savefig(
-    path_save+'ENSO_taylor_legend.png', format = 'png',\
+    path_save_plots+'ENSO_taylor_legend.png', format = 'png',\
     bbox_inches='tight',bbox_extra_artists=[legend_squared],
     ) 
+    
+    #----------------------------------------------------------------------------------------------------
+    #To save the legend of the power spectrum plot 
+    legend=ax3.legend( bbox_to_anchor=(0.7, -1), loc='lower right', fontsize=str(legends_str),ncol=4,frameon=False)
+
+    nrows = 20
+
+    fig.canvas.draw()
+    legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
+    legend_bbox = legend_bbox.transformed(fig.dpi_scale_trans.inverted())
+    legend_fig, legend_ax = plt.subplots(figsize=(legend_bbox.width, legend_bbox.height))
+    legend_squared = legend_ax.legend(
+        *ax3.get_legend_handles_labels(), 
+        bbox_transform=legend_fig.transFigure,
+        bbox_to_anchor=(0,0,1,1),
+        frameon=False,
+        fancybox=None,
+        shadow=False,
+        ncol=4,
+        mode='expand',
+    )
+    legend_ax.axis('off')
+    legend_fig.savefig(
+        path_save_plots+'ENSO_power_legend.png', format = 'png',\
+    bbox_inches='tight',bbox_extra_artists=[legend_squared],
+    )
     plt.close()
 
 except Exception as e:
