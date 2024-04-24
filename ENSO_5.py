@@ -841,7 +841,17 @@ for i in range(len(list_calculation)):
         try:
 
             #input
-            models=np.load(path_save+'qu_qv_models_N.npz',allow_pickle=True)['arr_0']
+            models_o=np.load(path_save+'qu_qv_models_N.npz',allow_pickle=True)['arr_0']
+
+            models=[]
+
+            for h in range(len(models_o)):
+                if models_o[h]=='E3SM-1-1':
+                    pass
+                else:
+                    models.append(models_o[h])
+            
+            models=np.array(models)
 
             var_mmm_north=seasonal_ensamble(models,path_save,'qu_qv_north',len(p_level_common),len(Lon_common_fl))
 
@@ -1019,7 +1029,17 @@ for i in range(len(list_calculation)):
         try:
 
             #input
-            models=np.load(path_save+'tu_tv_models_N.npz',allow_pickle=True)['arr_0']
+            models_o=np.load(path_save+'tu_tv_models_N.npz',allow_pickle=True)['arr_0']
+
+            models=[]
+
+            for h in range(len(models_o)):
+                if models_o[h]=='E3SM-1-1':
+                    pass
+                else:
+                    models.append(models_o[h])
+            
+            models=np.array(models)
 
             var_mmm_north=seasonal_ensamble(models,path_save,'tu_tv_north',len(p_level_common),len(Lon_common_fl))
 
