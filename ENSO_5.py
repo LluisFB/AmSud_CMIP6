@@ -520,7 +520,7 @@ try:
     legend_squared = legend_ax.legend(
     *dia._ax.get_legend_handles_labels(), 
     bbox_transform=legend_fig.transFigure,
-    bbox_to_anchor=(0,0,1,1),
+    bbox_to_anchor=(0,0,1.1,1),
     frameon=False,
     fancybox=None,
     shadow=False,
@@ -719,7 +719,7 @@ for i in range(len(list_calculation)):
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,1,1),
+            bbox_to_anchor=(0,0,1.1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -818,7 +818,7 @@ for i in range(len(list_calculation)):
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,1,1),
+            bbox_to_anchor=(0,0,1.1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -1006,7 +1006,7 @@ for i in range(len(list_calculation)):
                 legend_squared = legend_ax.legend(
                 *dia._ax.get_legend_handles_labels(), 
                 bbox_transform=legend_fig.transFigure,
-                bbox_to_anchor=(0,0,1,1),
+                bbox_to_anchor=(0,0,1.1,1),
                 frameon=False,
                 fancybox=None,
                 shadow=False,
@@ -1194,7 +1194,7 @@ for i in range(len(list_calculation)):
                 legend_squared = legend_ax.legend(
                 *dia._ax.get_legend_handles_labels(), 
                 bbox_transform=legend_fig.transFigure,
-                bbox_to_anchor=(0,0,1,1),
+                bbox_to_anchor=(0,0,1.1,1),
                 frameon=False,
                 fancybox=None,
                 shadow=False,

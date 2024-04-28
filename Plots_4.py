@@ -197,7 +197,7 @@ for i in range(len(list_calculation)):
             #Inputs for the plot 
             models=np.load(path_entry+'subtropicalHighs_models_N.npz',allow_pickle=True)['arr_0']
 
-            
+            """
 
             southAtlantic_strength_ref=np.load(path_entry+'southAtlantic_high_strength_ERA5.npz',allow_pickle=True)['arr_0']
             southPacific_strength_ref=np.load(path_entry+'southPacific_high_strength_ERA5.npz',allow_pickle=True)['arr_0']
@@ -239,7 +239,7 @@ for i in range(len(list_calculation)):
 
             #----------------------------------------------------------------------------------------------------
             #Obtaining the metrics of the series 
-            """
+            
             series_metrics(southAtlantic_strength_ref,southAtlantic_strength_models,models,'southAtlantic_high_strength',path_entry)
             series_metrics(southPacific_strength_ref,southPacific_strength_models,models,'southPacific_high_strength',path_entry)
             series_metrics(nash_strength_ref,nash_strength_models,models,'nash_high_strength',path_entry)
@@ -251,7 +251,7 @@ for i in range(len(list_calculation)):
             series_metrics(southAtlantic_lon_ref,southAtlantic_longitude_models,models,'southAtlantic_high_lon',path_entry)
             series_metrics(southPacific_lon_ref,southPacific_longitude_models,models,'southPacific_high_lon',path_entry)
             series_metrics(nash_lon_ref,nash_longitude_models,models,'nash_high_lon',path_entry)
-            """
+            
 
             #---------------------------------------------------------------------------------------------
             #1. Intensity, location (Lat, Lon)
@@ -316,7 +316,7 @@ for i in range(len(list_calculation)):
                                'c. NASH Intensity','f. NASH Latitude','i. NASH Longitude',models,'SubtropicalHighs_indices','Pressure [hPa]', path_save,3,3,27,21,fig_title_font,title_str_size, \
                                 xy_label_str, tick_labels_str, legends_str)
 
-            """
+            
 
             #--------------------------------------------------------------------------------------------------------
             #4. Subtropical center 
@@ -528,7 +528,7 @@ for i in range(len(list_calculation)):
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,1,1),
+            bbox_to_anchor=(0,0,1.1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -762,7 +762,7 @@ for i in range(len(list_calculation)):
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,1,1),
+            bbox_to_anchor=(0,0,1.1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -887,7 +887,7 @@ for i in range(len(list_calculation)):
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,1,1),
+            bbox_to_anchor=(0,0,1.1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -1033,7 +1033,7 @@ for i in range(len(list_calculation)):
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,1,1),
+            bbox_to_anchor=(0,0,1.1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -1205,7 +1205,7 @@ for i in range(len(list_calculation)):
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,1,1),
+            bbox_to_anchor=(0,0,1.1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -1368,7 +1368,7 @@ for i in range(len(list_calculation)):
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,1,1),
+            bbox_to_anchor=(0,0,1.1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -1469,7 +1469,7 @@ for i in range(len(list_calculation)):
             legend_squared = legend_ax.legend(
             *dia._ax.get_legend_handles_labels(), 
             bbox_transform=legend_fig.transFigure,
-            bbox_to_anchor=(0,0,1,1),
+            bbox_to_anchor=(0,0,1.1,1),
             frameon=False,
             fancybox=None,
             shadow=False,
@@ -1620,42 +1620,42 @@ for i in range(len(list_calculation)):
             ax1 = fig.add_subplot(4, 2, 1)
             plot_boundary(ax1,'a. ', north_era5[0],models,north_cmip6[:,0,:],\
             '[Longitude]',arange_x_n,labels_plot_northern,'yes',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
 
             ax2 = fig.add_subplot(4, 2, 2)
             plot_boundary(ax2,'b. ', north_era5[1],models,north_cmip6[:,1,:],\
             '[Longitude]',arange_x_n,labels_plot_northern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
 
             ax3 = fig.add_subplot(4, 2, 3)
             plot_boundary(ax3,'c. ', south_era5[0],models,south_cmip6[:,0,:],\
             '[Longitude]',arange_x_s,labels_plot_southern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
 
             ax4 = fig.add_subplot(4, 2, 4)
             plot_boundary(ax4,'d. ', south_era5[1],models,south_cmip6[:,1,:],\
             '[Longitude]',arange_x_s,labels_plot_southern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
 
             ax5 = fig.add_subplot(4, 2, 5)
             plot_boundary(ax5,'e. ', west_era5[0],models,west_cmip6[:,0,:],\
             '[Latitude]',arange_x_w,labels_plot_western,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
 
             ax6 = fig.add_subplot(4, 2, 6)
             plot_boundary(ax6,'f. ', west_era5[1],models,west_cmip6[:,1,:],\
             '[Latitude]',arange_x_w,labels_plot_western,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
 
             ax7 = fig.add_subplot(4, 2, 7)
             plot_boundary(ax7,'g. ', east_era5[0],models,east_cmip6[:,0,:],\
             '[Latitude]',arange_x_e,labels_plot_eastern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
 
             ax8 = fig.add_subplot(4, 2, 8)
             plot_boundary(ax8,'h. ', east_era5[1],models,east_cmip6[:,1,:],\
             '[Latitude]',arange_x_e,labels_plot_eastern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
             
             nrows = 20
             ncols = int(np.ceil(len(models) / float(nrows)))
@@ -2061,7 +2061,7 @@ for i in range(len(list_calculation)):
                 legend_squared = legend_ax.legend(
                 *dia._ax.get_legend_handles_labels(), 
                 bbox_transform=legend_fig.transFigure,
-                bbox_to_anchor=(0,0,1,1),
+                bbox_to_anchor=(0,0,1.1,1),
                 frameon=False,
                 fancybox=None,
                 shadow=False,
@@ -2239,7 +2239,7 @@ for i in range(len(list_calculation)):
                 legend_squared = legend_ax.legend(
                 *dia._ax.get_legend_handles_labels(), 
                 bbox_transform=legend_fig.transFigure,
-                bbox_to_anchor=(0,0,1,1),
+                bbox_to_anchor=(0,0,1.1,1),
                 frameon=False,
                 fancybox=None,
                 shadow=False,
