@@ -184,7 +184,7 @@ vihf_upper=50
 #                  'SST','Wind_indices','Bolivian_high','VIMF','qu_qv','MSE','tu_tv']
 
 list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation',\
-                  'SST','Wind_indices','Bolivian_high','VIMF','MSE']
+                  'SST','VIMF','MSE']
 #list_calculation=[ 'VIMF']
 
 for i in range(len(list_calculation)):
