@@ -183,8 +183,7 @@ vihf_upper=50
 #list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation','Regional_cells',\
 #                  'SST','Wind_indices','Bolivian_high','VIMF','qu_qv','MSE','tu_tv']
 
-list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation',\
-                  'SST','VIMF','MSE']
+list_calculation=['wind_850','Precipitation','SST','VIMF','MSE']
 #list_calculation=[ 'VIMF']
 
 for i in range(len(list_calculation)):
@@ -196,8 +195,6 @@ for i in range(len(list_calculation)):
 
             #Inputs for the plot 
             models=np.load(path_entry+'subtropicalHighs_models_N.npz',allow_pickle=True)['arr_0']
-
-            """
 
             southAtlantic_strength_ref=np.load(path_entry+'southAtlantic_high_strength_ERA5.npz',allow_pickle=True)['arr_0']
             southPacific_strength_ref=np.load(path_entry+'southPacific_high_strength_ERA5.npz',allow_pickle=True)['arr_0']
@@ -424,7 +421,7 @@ for i in range(len(list_calculation)):
                 fig1.savefig(path_save+seasons_labels+'_SubtropicalHighs_Core.png', \
                 format = 'png', bbox_inches='tight')
                 plt.close()
-            """
+            
             #--------------------------------------------------------------------------------------------------------------------------
             #4. Spatial fields of SLP 
             ################################################################################
@@ -1540,10 +1537,10 @@ for i in range(len(list_calculation)):
             north_cmip6 = np.ma.masked_invalid(north_cmip6)
             south_cmip6 = np.ma.masked_invalid(south_cmip6)
 
-            east_cmip6 = np.ma.masked_greater(east_cmip6, 10.e20)
-            west_cmip6 = np.ma.masked_greater(west_cmip6, 10.e20)
-            south_cmip6 = np.ma.masked_greater(south_cmip6, 10.e20)
-            north_cmip6 = np.ma.masked_greater(north_cmip6, 10.e20)
+            east_cmip6 = np.ma.masked_greater(east_cmip6, 1000)
+            west_cmip6 = np.ma.masked_greater(west_cmip6, 1000)
+            south_cmip6 = np.ma.masked_greater(south_cmip6, 1000)
+            north_cmip6 = np.ma.masked_greater(north_cmip6, 1000)
             print ('    mean', east_cmip6.mean(axis=(1,2)))
             print ('  has it NaNs east_era5?', np.any(np.isnan(east_era5)))
             print ('  has it NaNs west_era5?', np.any(np.isnan(west_era5)))
@@ -1608,7 +1605,7 @@ for i in range(len(list_calculation)):
             labels_plot_eastern=labels_str(labels_x_e,'eastern')
             arange_x_e=np.arange(0,labels_x_e.shape[0],1)
 
-            y_limits_pl=np.arange(0,400,50)
+            y_limits_pl=np.arange(0,550,50)
 
             print('-----------------------------------------------------------------------------------')
             print('VIMF: labels OK')
@@ -1791,7 +1788,7 @@ for i in range(len(list_calculation)):
             east_boundaries_lat=[-60,20]
             east_boundaries_lon=[-25,-20]
 
-            y_label_str='VIHF [ x 1⁻¹⁰ W]'
+            y_label_str='VIHF [ x 10¹⁰ W]'
 
             labels_x_n=np.round(np.arange(north_boundaries_lon[0],north_boundaries_lon[1],dx_common),0)
             labels_plot_northern=labels_str(labels_x_n,'northern')

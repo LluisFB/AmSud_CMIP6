@@ -332,7 +332,7 @@ east_boundaries_lon=[-25,-20]
 Lon_common_fl=np.arange(south_boundaries_lon[0],south_boundaries_lon[1],dx_common)
 Lat_common_fl=np.arange(west_boundaries_lat[0],west_boundaries_lat[1],dy_common)
 
-
+"""
 #-------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------
 #ENSO CALCULATIONS 
@@ -341,7 +341,7 @@ try:
     ninno3_era5, slope_matrix_era5, lat_list_era5, lon_list_era5, f_era5, p_era5, dx_era5, dy_era5=ENSO_calculations(path_save,\
                             None,'ERA5',lat_regre,lon_regre,ninno3_lat,ninno3_lon)
     
-    """
+    
 
     #Obtaining the reference standar deviation 
     std_ref_enso=np.nanstd(slope_matrix_era5)
@@ -359,7 +359,7 @@ try:
     np.savez_compressed(path_save+'ERA5_ENSO_fields.npz',slope_matrix_era5)
     np.savez_compressed(path_save+'ERA5_ENSO_fields_Lon.npz',lon_list_era5)
     np.savez_compressed(path_save+'ERA5_ENSO_fields_Lat.npz',lat_list_era5)
-    """
+    
 except Exception as e:
     print('Error ERA5 ENSO')
     print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
@@ -369,14 +369,14 @@ models=list(dict_models['tos'])
 #---------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------
 #Generating the empty arrays to save the information 
-"""
+
 models_app=np.array([])
 
 taylor_diagram_metrics=pd.DataFrame(columns=['Model','corr_DJF','std_DJF'])
 
 taylor_diagram_metrics.to_csv(path_save+'taylorDiagram_metrics_ENSO.csv')
 np.savez_compressed(path_save+'ENSO_fields_models_N.npz',models_app)
-"""
+
 ref_matrix=np.load(path_save+'ERA5_ENSO_fields.npz')['arr_0']
 ref_lat=np.load(path_save+'ERA5_ENSO_fields_Lat.npz')['arr_0']
 ref_lon=np.load(path_save+'ERA5_ENSO_fields_Lon.npz')['arr_0']
@@ -408,7 +408,7 @@ for p in range(len(models)):
         #-----------------------------------------------------------------------------------------------------------------------
         #Saving the npz 
 
-        """
+        
 
         models_enso_calc=np.load(path_save+'ENSO_fields_models_N.npz',allow_pickle=True)['arr_0']
 
@@ -427,7 +427,7 @@ for p in range(len(models)):
         taylor_diagram_metrics_DT=pd.concat([taylor_diagram_metrics_DT, newRow_metrics], ignore_index=True)
 
         taylor_diagram_metrics_DT.to_csv(path_save+'taylorDiagram_metrics_ENSO.csv')
-        """
+        
     
     except Exception as e:
         print('Error ENSO ', models[p])
@@ -563,7 +563,7 @@ try:
 except Exception as e:
     print('ENSO plot error ')
     print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
-
+"""
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 #SECOND PART OF THE CODE 
@@ -571,7 +571,7 @@ except Exception as e:
 
 #-------------------------------------------------------------------------------------------------------------
 
-list_calculation=['Regional_cells','qu_qv','tu_tv']
+list_calculation=['qu_qv','tu_tv']
 
 for i in range(len(list_calculation)):
 
@@ -1112,7 +1112,7 @@ for i in range(len(list_calculation)):
 
                 levels=np.arange(-5,5.5,0.5)
 
-                levels_bias=np.arange(-2,2.1,0.1)
+                levels_bias=np.arange(-1,1.1,0.1)
 
 
                 taylor=td_plots(fig,seasons_labels,ref_std,models_metrics,'tu_tv',len(models),341,'a.',title_str_size,'yes','north')
