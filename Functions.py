@@ -2842,7 +2842,6 @@ def filter_series_plots(seriesm,listm,range_lower,range_upper):
 
     return new_listm, new_seriesm
 
-
 def filter_series_plots_bounds(seriesm,listm,range_lower,range_upper):
     new_modelS=[]
     new_modelL=[]
@@ -2870,12 +2869,12 @@ def filter_series_zeros_repeated(seriesm,listm):
 
     for g in range(len(listm)):
 
-        if len(set(seriesm[g,:]))!=1:
-           new_modelL.append(listm[g])
-           new_modelS.append(seriesm[g]) 
+        if (len(set(seriesm[g,0,:]))==1) or (len(set(seriesm[g,1,:]))==1) or (len(set(seriesm[g,2,:]))==1) or (len(set(seriesm[g,3,:]))==1):
+           pass
         
         else:
-            pass
+            new_modelL.append(listm[g])
+            new_modelS.append(seriesm[g,:,:]) 
     
     #------------------------------------------------------------
     #Converting into array 
