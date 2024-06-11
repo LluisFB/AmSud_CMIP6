@@ -2848,8 +2848,8 @@ def filter_series_plots_bounds(seriesm,listm,range_lower,range_upper):
     new_modelL=[]
 
     for g in range(len(listm)):
-        val_min=np.min(seriesm[g,:,:])
-        val_max=np.max(seriesm[g,:,:])
+        val_min=np.nanmin(seriesm[g,:,:])
+        val_max=np.nanmax(seriesm[g,:,:])
 
         if (val_min<range_lower) or (val_max>range_upper):
             pass
@@ -2876,4 +2876,13 @@ def filter_series_zeros_repeated(seriesm,listm):
         
         else:
             pass
+    
+    #------------------------------------------------------------
+    #Converting into array 
+    new_listm=np.array(new_modelL)
+    new_seriesm=np.array(new_modelS)
+
+    return new_listm, new_seriesm 
+
+
 
