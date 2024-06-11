@@ -2864,3 +2864,16 @@ def filter_series_plots_bounds(seriesm,listm,range_lower,range_upper):
 
     return new_listm, new_seriesm    
     
+def filter_series_zeros_repeated(seriesm,listm):
+    new_modelS=[]
+    new_modelL=[]
+
+    for g in range(len(listm)):
+
+        if len(set(seriesm[g,:]))!=1:
+           new_modelL.append(listm[g])
+           new_modelS.append(seriesm[g]) 
+        
+        else:
+            pass
+

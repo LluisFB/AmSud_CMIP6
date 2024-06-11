@@ -674,8 +674,8 @@ for i in range(len(list_calculation)):
 
             
             plot_label='Precipitation rate\n [mm/day]'
-            limits_var=np.arange(0,22,2)
-            limits_bias=np.arange(-10,11,1)
+            limits_var=np.arange(2,18,1)
+            limits_bias=np.arange(-9,10,1)
 
             cmap_plot=['gist_rainbow_r','terrain','terrain_r','rainbow','RdBu']
 
@@ -1537,10 +1537,10 @@ for i in range(len(list_calculation)):
             north_cmip6 = np.ma.masked_invalid(north_cmip6)
             south_cmip6 = np.ma.masked_invalid(south_cmip6)
 
-            east_cmip6 = np.ma.masked_greater(east_cmip6, 1000)
-            west_cmip6 = np.ma.masked_greater(west_cmip6, 1000)
-            south_cmip6 = np.ma.masked_greater(south_cmip6, 1000)
-            north_cmip6 = np.ma.masked_greater(north_cmip6, 1000)
+            east_cmip6 = np.ma.masked_greater(east_cmip6, 700)
+            west_cmip6 = np.ma.masked_greater(west_cmip6, 700)
+            south_cmip6 = np.ma.masked_greater(south_cmip6, 700)
+            north_cmip6 = np.ma.masked_greater(north_cmip6, 700)
             print ('    mean', east_cmip6.mean(axis=(1,2)))
             print ('  has it NaNs east_era5?', np.any(np.isnan(east_era5)))
             print ('  has it NaNs west_era5?', np.any(np.isnan(west_era5)))
@@ -1566,6 +1566,12 @@ for i in range(len(list_calculation)):
             models, south_cmip6=filter_series_plots_bounds(south_cmip6,models,vimf_lower,vimf_upper)
             models, east_cmip6=filter_series_plots_bounds(east_cmip6,models,vimf_lower,vimf_upper)
             models, west_cmip6=filter_series_plots_bounds(west_cmip6,models,vimf_lower,vimf_upper)
+
+            #Applying another filter to the plot of the models with series of one sigle value 
+            models, north_cmip6=filter_series_zeros_repeated(north_cmip6,models)
+            models, south_cmip6=filter_series_zeros_repeated(south_cmip6,models)
+            models, east_cmip6=filter_series_zeros_repeated(east_cmip6,models)
+            models, west_cmip6=filter_series_zeros_repeated(west_cmip6,models)
 
             print('-----------------------------------------------------------------------------------')
             print('VIMF: filter OK')
@@ -1769,6 +1775,12 @@ for i in range(len(list_calculation)):
             models, south_cmip6=filter_series_plots_bounds(south_cmip6,models,vihf_lower,vihf_upper)
             models, east_cmip6=filter_series_plots_bounds(east_cmip6,models,vihf_lower,vihf_upper)
             models, west_cmip6=filter_series_plots_bounds(west_cmip6,models,vihf_lower,vihf_upper)
+
+            #Applying another filter to the plot of the models with series of one sigle value 
+            models, north_cmip6=filter_series_zeros_repeated(north_cmip6,models)
+            models, south_cmip6=filter_series_zeros_repeated(south_cmip6,models)
+            models, east_cmip6=filter_series_zeros_repeated(east_cmip6,models)
+            models, west_cmip6=filter_series_zeros_repeated(west_cmip6,models)
 
             print('-----------------------------------------------------------------------------------')
             print('MSE: filter OK')
