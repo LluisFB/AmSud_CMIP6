@@ -459,7 +459,7 @@ def td_plots(fig,season_str,ref_table,models_table,characteristic,number_models,
             sample_models.append(new_row)
 
     #Creating the plot
-    list_markers=['o','P','X','D']
+    list_markers=['o','P','X','D','s','v','^','<','>']
     n_repeat=math.ceil(number_models/len(list_markers))
     list_markers_repeated=list_markers*n_repeat
     markers=list_markers_repeated[0:number_models]
@@ -2882,6 +2882,57 @@ def filter_series_zeros_repeated(seriesm,listm):
     new_seriesm=np.array(new_modelS)
 
     return new_listm, new_seriesm 
+
+def agreement_sign_ENSO(list_models,path_entry_npz,file_name,len_lats, len_lons):
+
+    n_models_group=len(list_models)
+    n_models_80_percent=np.round(((n_models_group*80)/100),0)
+
+    var_seasonal_agreement=np.empty((len_lats,len_lons))
+
+    var_ensamble=np.empty((len(list_models),len_lats,len_lons))
+    var_agree=np.empty((len(list_models),len_lats,len_lons))
+
+    for p in range(len(list_models)):
+        var_model_season=np.load(path_entry_npz+list_models[p]+'_'+\
+        file_name+'.npz')['arr_0']
+
+        #selecting the specific season
+
+        var_ensamble[p]=var_model_season
+
+    #averaging the models
+    var_mean=np.nanmean(var_ensamble,axis=0)
+
+    for p in range(len(list_models)):
+        var_model_season=np.load(path_entry_npz+list_models[p]+'_'+\
+        file_name+'.npz')['arr_0']
+
+        positive_change_mag=np.where(var_model_season>=0.0)
+
+        var_agree[p][positive_change_mag]=1
+
+        negative_change_mag=np.where(var_model_season<0.0)
+
+        var_agree[p][negative_change_mag]=-1
+    
+    #-----------------------------------------------------------------
+    for m in range(len_lons):
+        for n in range(len_lats):
+            cell_mmm_mag=var_mean[n,m]
+            models_mag_agree=var_agree[:,n,m]
+            if cell_mmm_mag>=0:
+                count_models_agree_mag=np.where(models_mag_agree>=0.0)[0].shape
+            else:
+                count_models_agree_mag=np.where(models_mag_agree<0.0)[0].shape
+
+            if  count_models_agree_mag>=n_models_80_percent:
+                var_seasonal_agreement[n,m]=1
+            else:
+    
+                var_seasonal_agreement[n,m]=0
+
+    return var_seasonal_agreement    
 
 
 

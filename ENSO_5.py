@@ -332,7 +332,7 @@ east_boundaries_lon=[-25,-20]
 Lon_common_fl=np.arange(south_boundaries_lon[0],south_boundaries_lon[1],dx_common)
 Lat_common_fl=np.arange(west_boundaries_lat[0],west_boundaries_lat[1],dy_common)
 
-"""
+
 #-------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------
 #ENSO CALCULATIONS 
@@ -341,7 +341,7 @@ try:
     ninno3_era5, slope_matrix_era5, lat_list_era5, lon_list_era5, f_era5, p_era5, dx_era5, dy_era5=ENSO_calculations(path_save,\
                             None,'ERA5',lat_regre,lon_regre,ninno3_lat,ninno3_lon)
     
-    
+    """    
 
     #Obtaining the reference standar deviation 
     std_ref_enso=np.nanstd(slope_matrix_era5)
@@ -359,11 +359,11 @@ try:
     np.savez_compressed(path_save+'ERA5_ENSO_fields.npz',slope_matrix_era5)
     np.savez_compressed(path_save+'ERA5_ENSO_fields_Lon.npz',lon_list_era5)
     np.savez_compressed(path_save+'ERA5_ENSO_fields_Lat.npz',lat_list_era5)
-    
+    """  
 except Exception as e:
     print('Error ERA5 ENSO')
     print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
-
+"""  
 #Models
 models=list(dict_models['tos'])
 #---------------------------------------------------------------------------------------
@@ -435,7 +435,7 @@ for p in range(len(models)):
                 
 #----------------------------------------------------------------------------------------------------------
 print('Calculations - Finished')
-
+"""
 len_series=len(f_era5)
 
 try:
@@ -458,6 +458,10 @@ try:
 
     mean_field_models=np.nanmean(mmm_models,axis=0)
 
+    #Obtaining the agreement of the sign of the slope
+    mmm_agreement_enso=agreement_sign_ENSO(models_calc,path_save,'ENSO_MMM_meanFields.npz',\
+                                            len(Lat_common_tos),len(Lon_common_tos))
+
     #---------------------------------------------------------------------------------
     #obtaining the performance of the series of the power spectrum 
     series_metrics(enso_power_ref,enso_power_models,models_calc,'ENSO_power_spectrum',path_save)
@@ -479,7 +483,7 @@ try:
     extent = [min(Lon_common_tos),max(Lon_common_tos),min(Lat_common_tos),max(Lat_common_tos)]
 
     ax1 = fig.add_subplot(2, 2, 1, projection=projection)
-    cs=plotMap(ax1,mean_field_models,lon2D,lat2D,cmap_bias,limits_var,'a.',extent, projection,title_str_size,'no',None,'yes')
+    cs=plotMap(ax1,mean_field_models,lon2D,lat2D,cmap_bias,limits_var,'a.',extent, projection,title_str_size,'yes',mmm_agreement_enso,'yes')
 
     taylor=td_plots(fig,'DJF',ref_std,models_metrics,'ENSO',len(models_calc),222,'b.',title_str_size,'no',None)
 
@@ -563,7 +567,7 @@ try:
 except Exception as e:
     print('ENSO plot error ')
     print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
-"""
+
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 #SECOND PART OF THE CODE 
@@ -846,7 +850,7 @@ for i in range(len(list_calculation)):
             models=[]
 
             for h in range(len(models_o)):
-                if models_o[h]=='E3SM-1-1':
+                if (models_o[h]=='E3SM-1-1') or (models_o[h]=='GISS-E2-1-G') or (models_o[h]=='GISS-E2-1-H'):
                     pass
                 else:
                     models.append(models_o[h])
