@@ -2934,5 +2934,111 @@ def agreement_sign_ENSO(list_models,path_entry_npz,file_name,len_lats, len_lons)
 
     return var_seasonal_agreement    
 
+def individual_plots(type_plot,list_models,path_entry_npz,path_save_plots_ind,file_name,file_name_bias,var_1,var_2,
+                     len_lats, len_lons, limits_abs,limits_bias_abs,loc_bar_mag,loc_bar_bias):
+    
+
+    for p in range(len(list_models)):
+
+        var_model_season=np.load(path_entry_npz+list_models[p]+'_'+\
+        file_name+'.npz')['arr_0']
+
+        var_model_season_bias=np.load(path_entry_npz+list_models[p]+'_'+\
+        file_name_bias+'.npz')['arr_0']
+
+        #Creating the plot 
+
+        if type_plot=='vector':
+
+            var_1_season=np.load(path_entry_npz+list_models[p]+'_'+\
+            var_1+'.npz')['arr_0']
+            
+            var_2_season=np.load(path_entry_npz+list_models[p]+'_'+\
+            var_2+'.npz')['arr_0']
+
+            lon2D_ind, lat2D_ind = np.meshgrid(len_lons, len_lats)
+            projection_ind=ccrs.PlateCarree()
+            extent_ind = [min(len_lons),max(len_lons),min(len_lats),max(len_lats)]
+
+            fig=plt.figure(figsize=(24,10))
+            
+            ax1_ind = fig.add_subplot(2, 4, 1, projection=projection_ind)
+            cs_ind=plotMap_vector(ax1_ind,var_model_season[0],var_1_season[0],var_2_season[0],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'a. DJF',extent_ind, projection_ind,15)
+
+            ax2_ind = fig.add_subplot(2, 4, 2, projection=projection_ind)
+            cs_ind=plotMap_vector(ax2_ind,var_model_season[2],var_1_season[2],var_2_season[2],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'b. MAM',extent_ind, projection_ind,15)
+
+            ax3_ind = fig.add_subplot(2, 4, 3, projection=projection_ind)
+            cs_ind=plotMap_vector(ax3_ind,var_model_season[1],var_1_season[1],var_2_season[1],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'c. JJA',extent_ind, projection_ind,15)
+
+            ax4_ind = fig.add_subplot(2, 4, 4, projection=projection_ind)
+            cs_ind=plotMap_vector(ax4_ind,var_model_season[3],var_1_season[3],var_2_season[3],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'d. SON',extent_ind, projection_ind,15)
+
+            ax5_ind = fig.add_subplot(2, 4, 5, projection=projection_ind)
+            cs_ind_b=plotMap(ax5_ind,var_model_season_bias[0],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'e. DJF',extent_ind, projection_ind,15,'no',None,'no')
+
+            ax6_ind = fig.add_subplot(2, 4, 6, projection=projection_ind)
+            cs_ind_b=plotMap(ax6_ind,var_model_season_bias[2],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'f. MAM',extent_ind, projection_ind,15,'no',None,'no')
+
+            ax7_ind = fig.add_subplot(2, 4, 7, projection=projection_ind)
+            cs_ind_b=plotMap(ax7_ind,var_model_season_bias[1],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'g. JJA',extent_ind, projection_ind,15,'no',None,'no')
+
+            ax8_ind = fig.add_subplot(2, 4, 8, projection=projection_ind)
+            cs_ind_b=plotMap(ax8_ind,var_model_season_bias[3],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'h. SON',extent_ind, projection_ind,15,'no',None,'no')
+
+            cbar_ax_ind = fig.add_axes(loc_bar_mag)
+            cb_ind = fig.colorbar(cs_ind,cax=cbar_ax_ind, orientation="vertical")
+
+            cbar_ax_b_ind = fig.add_axes(loc_bar_bias)
+            cbb_ind = fig.colorbar(cs_ind_b,cax=cbar_ax_b_ind, orientation="vertical")
+
+            plt.savefig(path_save_plots_ind+list_models[p]+'_'+file_name+'_ind.png', \
+            format = 'png', bbox_inches='tight')
+
+            plt.close()
+        
+        else:
+
+            lon2D_ind, lat2D_ind = np.meshgrid(len_lons, len_lats)
+            projection_ind=ccrs.PlateCarree()
+            extent_ind = [min(len_lons),max(len_lons),min(len_lats),max(len_lats)]
+
+            fig=plt.figure(figsize=(24,10))
+            
+            ax1_ind = fig.add_subplot(2, 4, 1, projection=projection_ind)
+            cs_ind=plotMap(ax1_ind,var_model_season[0],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'a. DJF',extent_ind, projection_ind,15,'no',None,'yes')
+
+            ax2_ind = fig.add_subplot(2, 4, 2, projection=projection_ind)
+            cs_ind=plotMap(ax2_ind,var_model_season[2],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'b. MAM',extent_ind, projection_ind,15,'no',None,'yes')
+
+            ax3_ind = fig.add_subplot(2, 4, 3, projection=projection_ind)
+            cs_ind=plotMap(ax3_ind,var_model_season[1],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'c. JJA',extent_ind, projection_ind,15,'no',None,'yes')
+
+            ax4_ind = fig.add_subplot(2, 4, 4, projection=projection_ind)
+            cs_ind=plotMap(ax4_ind,var_model_season[3],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'d. SON',extent_ind, projection_ind,15,'no',None,'yes')
+
+            ax5_ind = fig.add_subplot(2, 4, 5, projection=projection_ind)
+            cs_ind_b=plotMap(ax5_ind,var_model_season_bias[0],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'e. DJF',extent_ind, projection_ind,15,'no',None,'yes')
+
+            ax6_ind = fig.add_subplot(2, 4, 6, projection=projection_ind)
+            cs_ind_b=plotMap(ax6_ind,var_model_season_bias[2],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'f. MAM',extent_ind, projection_ind,15,'no',None,'yes')
+
+            ax7_ind = fig.add_subplot(2, 4, 7, projection=projection_ind)
+            cs_ind_b=plotMap(ax7_ind,var_model_season_bias[1],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'g. JJA',extent_ind, projection_ind,15,'no',None,'yes')
+
+            ax8_ind = fig.add_subplot(2, 4, 8, projection=projection_ind)
+            cs_ind_b=plotMap(ax8_ind,var_model_season_bias[3],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'h. SON',extent_ind, projection_ind,15,'no',None,'yes')
+
+            cbar_ax_ind = fig.add_axes(loc_bar_mag)
+            cb_ind = fig.colorbar(cs_ind,cax=cbar_ax_ind, orientation="vertical")
+
+            cbar_ax_b_ind = fig.add_axes(loc_bar_bias)
+            cbb_ind = fig.colorbar(cs_ind_b,cax=cbar_ax_b_ind, orientation="vertical")
+
+            plt.savefig(path_save_plots_ind+list_models[p]+'_'+file_name+'_ind.png', \
+            format = 'png', bbox_inches='tight')
+
+            plt.close()
+
 
 
