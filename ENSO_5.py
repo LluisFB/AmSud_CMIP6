@@ -575,7 +575,7 @@ except Exception as e:
 
 #-------------------------------------------------------------------------------------------------------------
 
-list_calculation=['qu_qv','tu_tv']
+list_calculation=['Regional_cells','qu_qv','tu_tv']
 
 for i in range(len(list_calculation)):
 

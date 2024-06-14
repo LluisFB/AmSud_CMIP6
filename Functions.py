@@ -459,7 +459,7 @@ def td_plots(fig,season_str,ref_table,models_table,characteristic,number_models,
             sample_models.append(new_row)
 
     #Creating the plot
-    list_markers=['o','P','X','D','s','v','^','<','>']
+    list_markers=['o','P','X','D','s','v','^','<','>','H']
     n_repeat=math.ceil(number_models/len(list_markers))
     list_markers_repeated=list_markers*n_repeat
     markers=list_markers_repeated[0:number_models]
