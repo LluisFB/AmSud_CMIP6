@@ -53,7 +53,7 @@ path_save='/scratchx/lfita/'
 
 os.system('mkdir '+path_save+'model_season_ind') 
 
-path_save_ind=path_save+'models_season_ind/'
+path_save_ind=path_save+'model_season_ind/'
 #-------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------
 #Defining the parameters of the plots 
