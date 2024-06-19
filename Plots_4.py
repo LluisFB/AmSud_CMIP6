@@ -48,6 +48,12 @@ sns.set_context('notebook', font_scale=1.5)
 path_entry='/scratchx/lfita/'
 path_save='/scratchx/lfita/'
 
+
+#Creating the path to save the figures of individual models 
+
+os.system('mkdir '+path_save+'model_season_ind') 
+
+path_save_ind=path_save+'models_season_ind/'
 #-------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------
 #Defining the parameters of the plots 
@@ -901,7 +907,7 @@ for i in range(len(list_calculation)):
             #----------------------------------------------------------------------------------------------
             #----------------------------------------------------------------------------------------------
             #Applying the function to check the models individually
-            individual_plots('sst',models,path_entry,path_save,'tos_MMM_meanFields','tos_MMM_biasFields',
+            individual_plots('sst',models,path_entry,path_save_ind,'tos_MMM_meanFields','tos_MMM_biasFields',
                              None,None,Lat_common_tos, Lon_common_tos, np.arange(0,32,2),np.arange(-6,7,1),
                              [0.92, 0.51,  0.017,0.34],[0.92, 0.12,  0.017,0.34])
         
@@ -1228,7 +1234,7 @@ for i in range(len(list_calculation)):
             #-------------------------------------------------------------------------
             #Creating the individual plots to check the models individually 
 
-            individual_plots('vector',models,path_entry,path_save,'mag850_MMM_meanFields',
+            individual_plots('vector',models,path_entry,path_save_ind,'mag850_MMM_meanFields',
                              'mag850_MMM_biasFields','ua850_MMM_meanFields','va850_MMM_meanFields',
                              Lat_common, Lon_common, np.arange(1.5,13.5,1.5),np.arange(-5,6,1),
                              [0.92, 0.51,  0.017,0.34],[0.92, 0.12,  0.017,0.34])
