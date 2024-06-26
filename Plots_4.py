@@ -51,7 +51,7 @@ path_save='/scratchx/lfita/'
 
 #Creating the path to save the figures of individual models 
 
-os.system('mkdir '+path_save+'model_season_ind') 
+#os.system('mkdir '+path_save+'model_season_ind') 
 
 path_save_ind=path_save+'model_season_ind/'
 #-------------------------------------------------------------------------------------------------------------
