@@ -2906,7 +2906,7 @@ def agreement_sign_ENSO(list_models,path_entry_npz,file_name,len_lats, len_lons)
 
     for p in range(len(list_models)):
         var_model_season=np.load(path_entry_npz+list_models[p]+'_'+\
-        file_name+'.npz')['arr_0']
+        file_name+'.npz')['arr_0'][0]
 
         positive_change_mag=np.where(var_model_season>=0.0)
 

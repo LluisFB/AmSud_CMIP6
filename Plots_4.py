@@ -189,9 +189,7 @@ vihf_upper=50
 #list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation','Regional_cells',\
 #                  'SST','Wind_indices','Bolivian_high','VIMF','qu_qv','MSE','tu_tv']
 
-list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation',\
-                  'SST','VIMF','MSE']
-#list_calculation=[ 'VIMF']
+list_calculation=['wind_850','SST']
 
 for i in range(len(list_calculation)):
     if list_calculation[i]=='Subtropical_highs':
@@ -200,7 +198,7 @@ for i in range(len(list_calculation)):
 
             #Inputs for the plot 
             models=np.load(path_entry+'subtropicalHighs_models_N.npz',allow_pickle=True)['arr_0']
-            """
+            
             southAtlantic_strength_ref=np.load(path_entry+'southAtlantic_high_strength_ERA5.npz',allow_pickle=True)['arr_0']
             southPacific_strength_ref=np.load(path_entry+'southPacific_high_strength_ERA5.npz',allow_pickle=True)['arr_0']
             nash_strength_ref=np.load(path_entry+'northAtlantic_high_strength_ERA5.npz',allow_pickle=True)['arr_0']
@@ -426,7 +424,7 @@ for i in range(len(list_calculation)):
                 fig1.savefig(path_save+seasons_labels+'_SubtropicalHighs_Core.png', \
                 format = 'png', bbox_inches='tight')
                 plt.close()
-            """
+            
             #--------------------------------------------------------------------------------------------------------------------------
             #4. Spatial fields of SLP 
             ################################################################################
@@ -787,7 +785,17 @@ for i in range(len(list_calculation)):
         try:
 
             #input
-            models=np.load(path_entry+'tos_fields_models_N.npz',allow_pickle=True)['arr_0']
+            models_o=np.load(path_entry+'tos_fields_models_N.npz',allow_pickle=True)['arr_0']
+
+            models=[]
+
+            for o in range(len(models_o)):
+                if models_o[o]=='MIROC6':
+                    pass 
+                else:
+                    models.append(models_o[o])
+            
+            models=np.array(models)
 
             ################################################################################
             #Obtaining the ensamble
@@ -804,6 +812,8 @@ for i in range(len(list_calculation)):
             ################################################################################
             #PLOT
             models_metrics=pd.read_csv(path_entry+'taylorDiagram_metrics_tos.csv', index_col=[0])
+
+            models_metrics.drop(models_metrics[models_metrics['Model']=='MIROC6'].index)
 
             ref_std=pd.read_csv(path_entry+'reference_std_original.csv',index_col=[0])
 
@@ -903,14 +913,14 @@ for i in range(len(list_calculation)):
             ) 
             plt.close()
 
-
+            """
             #----------------------------------------------------------------------------------------------
             #----------------------------------------------------------------------------------------------
             #Applying the function to check the models individually
             individual_plots('sst',models,path_entry,path_save_ind,'tos_MMM_meanFields','tos_MMM_biasFields',
                              None,None,Lat_common_tos, Lon_common_tos, np.arange(0,32,2),np.arange(-6,7,1),
                              [0.92, 0.51,  0.017,0.34],[0.92, 0.12,  0.017,0.34])
-        
+            """
         except Exception as e:
             print('Error plot SST')
             print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
@@ -1065,7 +1075,17 @@ for i in range(len(list_calculation)):
         try:
 
             #input
-            models=np.load(path_entry+'wind850_fields_models_N.npz',allow_pickle=True)['arr_0']
+            models_o=np.load(path_entry+'wind850_fields_models_N.npz',allow_pickle=True)['arr_0']
+
+            models=[]
+
+            for o in range(len(models_o)):
+                if models_o[o]=='E3SM-1-1':
+                    pass 
+                else:
+                    models.append(models_o[o])
+            
+            models=np.array(models)
 
             ################################################################################
             #Obtaining the ensamble
@@ -1097,6 +1117,8 @@ for i in range(len(list_calculation)):
             #PLOT
             print ("  Leyendo '" + path_entry+"taylorDiagram_metrics_wind850.csv'")
             models_metrics=pd.read_csv(path_entry+'taylorDiagram_metrics_wind850.csv', index_col=[0])
+
+            models_metrics.drop(models_metrics[models_metrics['Model']=='E3SM-1-1'].index)
 
             print ("  Leyendo '" + path_entry+"reference_std_original.csv'")
             ref_std=pd.read_csv(path_entry+'reference_std_original.csv',index_col=[0])
@@ -1230,6 +1252,7 @@ for i in range(len(list_calculation)):
 
             plt.close()
 
+            """
             #-------------------------------------------------------------------------
             #-------------------------------------------------------------------------
             #Creating the individual plots to check the models individually 
@@ -1238,8 +1261,8 @@ for i in range(len(list_calculation)):
                              'mag850_MMM_biasFields','ua850_MMM_meanFields','va850_MMM_meanFields',
                              Lat_common, Lon_common, np.arange(1.5,13.5,1.5),np.arange(-5,6,1),
                              [0.92, 0.51,  0.017,0.34],[0.92, 0.12,  0.017,0.34])
+            """
 
-        
         except Exception as e:
             print('Error plot wind 850')
             # FROM: https://stackoverflow.com/questions/1483429/how-do-i-print-an-exception-in-python

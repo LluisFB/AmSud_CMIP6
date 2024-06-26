@@ -459,7 +459,7 @@ try:
     mean_field_models=np.nanmean(mmm_models,axis=0)
 
     #Obtaining the agreement of the sign of the slope
-    mmm_agreement_enso=agreement_sign_ENSO(models_calc,path_save,'ENSO_MMM_meanFields.npz',\
+    mmm_agreement_enso=agreement_sign_ENSO(models_calc,path_save,'ENSO_MMM_meanFields',\
                                             len(Lat_common_tos),len(Lon_common_tos))
 
     #---------------------------------------------------------------------------------
@@ -575,7 +575,8 @@ except Exception as e:
 
 #-------------------------------------------------------------------------------------------------------------
 
-list_calculation=['Regional_cells','qu_qv','tu_tv']
+#list_calculation=['Regional_cells','qu_qv','tu_tv']
+list_calculation=['']
 
 for i in range(len(list_calculation)):
 
