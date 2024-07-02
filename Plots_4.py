@@ -813,7 +813,7 @@ for i in range(len(list_calculation)):
             #PLOT
             models_metrics=pd.read_csv(path_entry+'taylorDiagram_metrics_tos.csv', index_col=[0])
 
-            models_metrics.drop(models_metrics[models_metrics['Model']=='MIROC6'].index,inplace=True)
+            models_metrics=models_metrics.drop(models_metrics[models_metrics['Model']=='MIROC6'].index).reset_index(drop=True)
 
             ref_std=pd.read_csv(path_entry+'reference_std_original.csv',index_col=[0])
 
@@ -1118,7 +1118,7 @@ for i in range(len(list_calculation)):
             print ("  Leyendo '" + path_entry+"taylorDiagram_metrics_wind850.csv'")
             models_metrics=pd.read_csv(path_entry+'taylorDiagram_metrics_wind850.csv', index_col=[0])
 
-            models_metrics.drop(models_metrics[models_metrics['Model']=='E3SM-1-1'].index,inplace=True)
+            models_metrics=models_metrics.drop(models_metrics[models_metrics['Model']=='E3SM-1-1'].index).reset_index(drop=True)
 
             print ("  Leyendo '" + path_entry+"reference_std_original.csv'")
             ref_std=pd.read_csv(path_entry+'reference_std_original.csv',index_col=[0])
