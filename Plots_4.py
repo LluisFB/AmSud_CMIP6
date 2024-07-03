@@ -189,7 +189,7 @@ vihf_upper=50
 #list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation','Regional_cells',\
 #                  'SST','Wind_indices','Bolivian_high','VIMF','qu_qv','MSE','tu_tv']
 
-list_calculation=['wind_850','SST']
+list_calculation=['wind_850','SST','VIMF','MSE']
 
 for i in range(len(list_calculation)):
     if list_calculation[i]=='Subtropical_highs':
@@ -1561,6 +1561,10 @@ for i in range(len(list_calculation)):
             print('VIMF: files read OK')
             print('-----------------------------------------------------------------------------------')
 
+            #Generating the individual plots for each model 
+            individual_plots_boundary('VIMF',models,path_entry,path_save_ind,dx_common,dy_common)
+
+
             # FROM: https://stackoverflow.com/questions/31368710/how-to-open-an-npz-file
             npz_east_cmip6 = np.load(path_entry+'VIMF_CMIP6_northern_Boundary.npz',\
               allow_pickle=True)
@@ -1781,6 +1785,10 @@ for i in range(len(list_calculation)):
             print('-----------------------------------------------------------------------------------')
             print('MSE: files read OK')
             print('-----------------------------------------------------------------------------------')
+
+            #Generating the individual plots for each model 
+            individual_plots_boundary('MSE',models,path_entry,path_save_ind,dx_common,dy_common)
+        
 
             east_era5 = np.ma.masked_invalid(east_era5)
             west_era5 = np.ma.masked_invalid(west_era5)

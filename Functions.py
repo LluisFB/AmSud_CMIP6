@@ -3040,5 +3040,182 @@ def individual_plots(type_plot,list_models,path_entry_npz,path_save_plots_ind,fi
 
             plt.close()
 
+def individual_plots_boundary(type_plot,list_models,path_entry_npz,path_save_plots_ind,dx_common_ind,dy_common_ind):
+    
 
+    def plot_boundary_ind(axs,title_str, ref_arr,models_list,models_arr,x_label_str,arange_x,labels_x,legend_status,ylabel_str,title_font2,label_font, ticks_font,lower_st,sep,y_l,list_q):
+        axs.set_title(title_str,fontsize=title_font2,loc='left')
+        axs.spines['top'].set_visible(False)
+        axs.spines['right'].set_visible(False)
+        #iterating in the models to obtain the serie
+        colors=iter(cm.rainbow(np.linspace(0,1,1)))
+        c=next(colors)
+        if legend_status=='yes':
+            label_serie=models_list
+            label_era='Reference [ERA5]'
+        else:
+            label_serie=None
+            label_era=None
+        axs.plot(models_arr ,color =c ,linewidth=1.5,label=label_serie)
+        axs.plot(ref_arr, color = 'k', linewidth=2.2,label=label_era)
+        axs.set_xticks(arange_x[::sep])
+        axs.set_xticklabels(labels_x[::sep],fontsize=ticks_font)
+        axs.set_yticks(y_l)
+        axs.set_yticklabels(y_l,fontsize=ticks_font)
+        axs.set_ylabel(ylabel_str,fontsize=label_font)
+        if lower_st=='Yes':
+            axs.set_xlabel(x_label_str,fontsize=label_font)
+
+    if type_plot=='MSE':
+
+        #Reading the reference dataset
+
+        east_era5_ind=np.load(path_entry_npz+'MSE_ERA5_eastern_Boundary.npz',\
+        allow_pickle=True)['arr_0']*(1e-10)
+        west_era5_ind=np.load(path_entry_npz+'MSE_ERA5_western_Boundary.npz',\
+        allow_pickle=True)['arr_0']*(1e-10)
+        north_era5_ind=np.load(path_entry_npz+'MSE_ERA5_northern_Boundary.npz',\
+        allow_pickle=True)['arr_0']*(1e-10)
+        south_era5_ind=np.load(path_entry_npz+'MSE_ERA5_southern_Boundary.npz',\
+        allow_pickle=True)['arr_0']*(1e-10)
+
+        #models
+        north_cmip6_ind=np.load(path_entry_npz+'MSE_CMIP6_northern_Boundary.npz',\
+        allow_pickle=True)['arr_0']*(1e-10)
+        south_cmip6_ind=np.load(path_entry_npz+'MSE_CMIP6_southern_Boundary.npz',\
+        allow_pickle=True)['arr_0']*(1e-10)
+        west_cmip6_ind=np.load(path_entry_npz+'MSE_CMIP6_western_Boundary.npz',\
+        allow_pickle=True)['arr_0']*(1e-10)
+        east_cmip6_ind=np.load(path_entry_npz+'MSE_CMIP6_eastern_Boundary.npz',\
+        allow_pickle=True)['arr_0']*(1e-10)
+
+        y_label_str_ind='VIHF [ x 10¹⁰ W]'
+
+        y_limits_pl_ind=np.arange(-15,25,5)
+
+
+    else:
+
+        #reference data
+        east_era5_ind=np.load(path_entry_npz+'VIMF_ERA5_eastern_Boundary.npz',\
+        allow_pickle=True)['arr_0']
+        west_era5_ind=np.load(path_entry_npz+'VIMF_ERA5_western_Boundary.npz',\
+        allow_pickle=True)['arr_0']
+        north_era5_ind=np.load(path_entry_npz+'VIMF_ERA5_northern_Boundary.npz',\
+        allow_pickle=True)['arr_0']
+        south_era5_ind=np.load(path_entry_npz+'VIMF_ERA5_southern_Boundary.npz',\
+        allow_pickle=True)['arr_0']
+
+        #models
+        north_cmip6_ind=np.load(path_entry_npz+'VIMF_CMIP6_northern_Boundary.npz',\
+        allow_pickle=True)['arr_0']
+        south_cmip6_ind=np.load(path_entry_npz+'VIMF_CMIP6_southern_Boundary.npz',\
+        allow_pickle=True)['arr_0']
+        west_cmip6_ind=np.load(path_entry_npz+'VIMF_CMIP6_western_Boundary.npz',\
+        allow_pickle=True)['arr_0']
+        east_cmip6_ind=np.load(path_entry_npz+'VIMF_CMIP6_eastern_Boundary.npz',\
+        allow_pickle=True)['arr_0']
+
+
+        y_label_str_ind='VIMF [Kg/ms]'
+
+        y_limits_pl_ind=np.arange(0,550,50)
+
+    #Defining the important features to create the plot 
+    
+    #Delimiting the longitude and latitudes bands
+    north_boundaries_lat_ind=[15,20]
+    north_boundaries_lon_ind=[-95,-25]
+
+    south_boundaries_lat_ind=[-60,-55]
+    south_boundaries_lon_ind=[-95,-25]
+
+    west_boundaries_lat_ind=[-60,20]
+    west_boundaries_lon_ind=[-100,-95]
+
+    east_boundaries_lat_ind=[-60,20]
+    east_boundaries_lon_ind=[-25,-20]
+
+    #-------------------------------------------------------------------------------
+
+    labels_x_n_ind=np.round(np.arange(north_boundaries_lon_ind[0],north_boundaries_lon_ind[1],dx_common_ind),0)
+    labels_plot_northern_ind=labels_str(labels_x_n_ind,'northern')
+    arange_x_n_ind=np.arange(0,labels_x_n_ind.shape[0],1)
+
+    labels_x_s_ind=np.round(np.arange(south_boundaries_lon_ind[0],south_boundaries_lon_ind[1],dx_common_ind),0)
+    labels_plot_southern_ind=labels_str(labels_x_s_ind,'southern')
+    arange_x_s_ind=np.arange(0,labels_x_s_ind.shape[0],1)
+
+    labels_x_w_ind=np.round(np.arange(west_boundaries_lat_ind[0],west_boundaries_lat_ind[1],dy_common_ind),0)
+    labels_plot_western_ind=labels_str(labels_x_w_ind,'western')
+    arange_x_w_ind=np.arange(0,labels_x_w_ind.shape[0],1)
+
+    labels_x_e_ind=np.round(np.arange(east_boundaries_lat_ind[0],east_boundaries_lat_ind[1],dy_common_ind),0)
+    labels_plot_eastern_ind=labels_str(labels_x_e_ind,'eastern')
+    arange_x_e_ind=np.arange(0,labels_x_e_ind.shape[0],1)
+
+
+    #---------------------------------------------------------------------------------
+    #Creating the plot for each model 
+
+    for r in range(len(list_models)):
+
+
+        fig = plt.figure(figsize=(15.5,22))
+        ax1 = fig.add_subplot(4, 2, 1)
+        plot_boundary_ind(ax1,'a. ', north_era5_ind[0],list_models[r],north_cmip6_ind[r,0,:],\
+        '[Longitude]',arange_x_n_ind,labels_plot_northern_ind,'yes',\
+            y_label_str_ind,10,10, 10,'No',8,y_limits_pl_ind,[''])
+
+        ax2 = fig.add_subplot(4, 2, 2)
+        plot_boundary_ind(ax2,'b. ', north_era5_ind[1],list_models[r],north_cmip6_ind[r,1,:],\
+        '[Longitude]',arange_x_n_ind,labels_plot_northern_ind,'no',\
+            y_label_str_ind,10,10, 10,'No',8,y_limits_pl_ind,[''])
+
+        ax3 = fig.add_subplot(4, 2, 3)
+        plot_boundary_ind(ax3,'c. ', south_era5_ind[0],list_models[r],south_cmip6_ind[r,0,:],\
+        '[Longitude]',arange_x_s_ind,labels_plot_southern_ind,'no',\
+            y_label_str_ind,10,10, 10,'Yes',8,y_limits_pl_ind,[''])
+
+        ax4 = fig.add_subplot(4, 2, 4)
+        plot_boundary_ind(ax4,'d. ', south_era5_ind[1],list_models[r],south_cmip6_ind[r,1,:],\
+        '[Longitude]',arange_x_s_ind,labels_plot_southern_ind,'no',\
+            y_label_str_ind,10,10, 10,'Yes',8,y_limits_pl_ind,[''])
+
+        ax5 = fig.add_subplot(4, 2, 5)
+        plot_boundary_ind(ax5,'e. ', west_era5_ind[0],list_models[r],west_cmip6_ind[r,0,:],\
+        '[Latitude]',arange_x_w_ind,labels_plot_western_ind,'no',\
+            y_label_str_ind,10,10, 10,'No',11,y_limits_pl_ind,[''])
+
+        ax6 = fig.add_subplot(4, 2, 6)
+        plot_boundary_ind(ax6,'f. ', west_era5_ind[1],list_models[r],west_cmip6_ind[r,1,:],\
+        '[Latitude]',arange_x_w_ind,labels_plot_western_ind,'no',\
+            y_label_str_ind,10,10, 10,'No',11,y_limits_pl_ind,[''])
+
+        ax7 = fig.add_subplot(4, 2, 7)
+        plot_boundary_ind(ax7,'g. ', east_era5_ind[0],list_models[r],east_cmip6_ind[r,0,:],\
+        '[Latitude]',arange_x_e_ind,labels_plot_eastern_ind,'no',\
+            y_label_str_ind,10,10, 10,'Yes',11,y_limits_pl_ind,[''])
+
+        ax8 = fig.add_subplot(4, 2, 8)
+        plot_boundary_ind(ax8,'h. ', east_era5_ind[1],list_models[r],east_cmip6_ind[r,1,:],\
+        '[Latitude]',arange_x_e_ind,labels_plot_eastern_ind,'no',\
+            y_label_str_ind,10,10, 10,'Yes',11,y_limits_pl_ind,[''])
+        
+
+        fig.legend(bbox_to_anchor=(0.95, 0.90), ncol=2,loc='upper left', fontsize=str(10))
+
+        plt.text(0.4,1.3,'DJF', fontsize=10,rotation='horizontal',transform=ax1.transAxes)
+        plt.text(0.4,1.3,'JJA', fontsize=10,rotation='horizontal',transform=ax2.transAxes)
+
+        plt.text(-0.3,0.3,'Northern', fontsize=10,rotation='vertical',transform=ax1.transAxes)
+        plt.text(-0.3,0.3,'Southern', fontsize=10,rotation='vertical',transform=ax3.transAxes)
+        plt.text(-0.3,0.3,'Western', fontsize=10,rotation='vertical',transform=ax5.transAxes)
+        plt.text(-0.3,0.3,'Eastern', fontsize=10,rotation='vertical',transform=ax7.transAxes)
+
+
+        plt.savefig(path_save_plots_ind+list_models[r]+'_'+type_plot+'_ind.png', \
+            format = 'png', bbox_inches='tight')
+
+        plt.close()
 
