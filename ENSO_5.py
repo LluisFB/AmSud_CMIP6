@@ -341,7 +341,7 @@ try:
     ninno3_era5, slope_matrix_era5, lat_list_era5, lon_list_era5, f_era5, p_era5, dx_era5, dy_era5=ENSO_calculations(path_save,\
                             None,'ERA5',lat_regre,lon_regre,ninno3_lat,ninno3_lon)
     
-    """    
+      
 
     #Obtaining the reference standar deviation 
     std_ref_enso=np.nanstd(slope_matrix_era5)
@@ -359,11 +359,11 @@ try:
     np.savez_compressed(path_save+'ERA5_ENSO_fields.npz',slope_matrix_era5)
     np.savez_compressed(path_save+'ERA5_ENSO_fields_Lon.npz',lon_list_era5)
     np.savez_compressed(path_save+'ERA5_ENSO_fields_Lat.npz',lat_list_era5)
-    """  
+     
 except Exception as e:
     print('Error ERA5 ENSO')
     print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
-"""  
+
 #Models
 models=list(dict_models['tos'])
 #---------------------------------------------------------------------------------------
@@ -435,7 +435,7 @@ for p in range(len(models)):
                 
 #----------------------------------------------------------------------------------------------------------
 print('Calculations - Finished')
-"""
+
 len_series=len(f_era5)
 
 try:
@@ -575,8 +575,7 @@ except Exception as e:
 
 #-------------------------------------------------------------------------------------------------------------
 
-#list_calculation=['Regional_cells','qu_qv','tu_tv']
-list_calculation=['']
+list_calculation=['Regional_cells','qu_qv','tu_tv']
 
 for i in range(len(list_calculation)):
 
