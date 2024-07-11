@@ -189,7 +189,7 @@ vihf_upper=50
 #list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation','Regional_cells',\
 #                  'SST','Wind_indices','Bolivian_high','VIMF','qu_qv','MSE','tu_tv']
 
-list_calculation=['wind_850','SST','VIMF','MSE']
+list_calculation=['VIMF','MSE']
 
 for i in range(len(list_calculation)):
     if list_calculation[i]=='Subtropical_highs':
@@ -1562,9 +1562,9 @@ for i in range(len(list_calculation)):
             print('-----------------------------------------------------------------------------------')
 
             #Generating the individual plots for each model 
-            individual_plots_boundary('VIMF',models,path_entry,path_save_ind,dx_common,dy_common)
+            #individual_plots_boundary('VIMF',models,path_entry,path_save_ind,dx_common,dy_common)
 
-
+            """
             # FROM: https://stackoverflow.com/questions/31368710/how-to-open-an-npz-file
             npz_east_cmip6 = np.load(path_entry+'VIMF_CMIP6_northern_Boundary.npz',\
               allow_pickle=True)
@@ -1622,7 +1622,7 @@ for i in range(len(list_calculation)):
             models, south_cmip6=filter_series_zeros_repeated(south_cmip6,models)
             models, east_cmip6=filter_series_zeros_repeated(east_cmip6,models)
             models, west_cmip6=filter_series_zeros_repeated(west_cmip6,models)
-
+            """
             print('-----------------------------------------------------------------------------------')
             print('VIMF: filter OK')
             print('-----------------------------------------------------------------------------------')
@@ -1673,42 +1673,42 @@ for i in range(len(list_calculation)):
             ax1 = fig.add_subplot(4, 2, 1)
             plot_boundary(ax1,'a. ', north_era5[0],models,north_cmip6[:,0,:],\
             '[Longitude]',arange_x_n,labels_plot_northern,'yes',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8','INM-CM5-0'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
 
             ax2 = fig.add_subplot(4, 2, 2)
             plot_boundary(ax2,'b. ', north_era5[1],models,north_cmip6[:,1,:],\
             '[Longitude]',arange_x_n,labels_plot_northern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8','INM-CM5-0'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
 
             ax3 = fig.add_subplot(4, 2, 3)
             plot_boundary(ax3,'c. ', south_era5[0],models,south_cmip6[:,0,:],\
             '[Longitude]',arange_x_s,labels_plot_southern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8','INM-CM5-0'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
 
             ax4 = fig.add_subplot(4, 2, 4)
             plot_boundary(ax4,'d. ', south_era5[1],models,south_cmip6[:,1,:],\
             '[Longitude]',arange_x_s,labels_plot_southern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8','INM-CM5-0'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
 
             ax5 = fig.add_subplot(4, 2, 5)
             plot_boundary(ax5,'e. ', west_era5[0],models,west_cmip6[:,0,:],\
             '[Latitude]',arange_x_w,labels_plot_western,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8','INM-CM5-0'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
 
             ax6 = fig.add_subplot(4, 2, 6)
             plot_boundary(ax6,'f. ', west_era5[1],models,west_cmip6[:,1,:],\
             '[Latitude]',arange_x_w,labels_plot_western,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8','INM-CM5-0'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
 
             ax7 = fig.add_subplot(4, 2, 7)
             plot_boundary(ax7,'g. ', east_era5[0],models,east_cmip6[:,0,:],\
             '[Latitude]',arange_x_e,labels_plot_eastern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8','INM-CM5-0'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
 
             ax8 = fig.add_subplot(4, 2, 8)
             plot_boundary(ax8,'h. ', east_era5[1],models,east_cmip6[:,1,:],\
             '[Latitude]',arange_x_e,labels_plot_eastern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8','INM-CM5-0'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','GISS-E2-1-H','INM-CM4-8'])
             
             nrows = 20
             ncols = int(np.ceil(len(models) / float(nrows)))
@@ -1787,9 +1787,9 @@ for i in range(len(list_calculation)):
             print('-----------------------------------------------------------------------------------')
 
             #Generating the individual plots for each model 
-            individual_plots_boundary('MSE',models,path_entry,path_save_ind,dx_common,dy_common)
+            #individual_plots_boundary('MSE',models,path_entry,path_save_ind,dx_common,dy_common)
         
-
+            """
             east_era5 = np.ma.masked_invalid(east_era5)
             west_era5 = np.ma.masked_invalid(west_era5)
             north_era5 = np.ma.masked_invalid(north_era5)
@@ -1835,7 +1835,7 @@ for i in range(len(list_calculation)):
             models, south_cmip6=filter_series_zeros_repeated(south_cmip6,models)
             models, east_cmip6=filter_series_zeros_repeated(east_cmip6,models)
             models, west_cmip6=filter_series_zeros_repeated(west_cmip6,models)
-
+            """
             print('-----------------------------------------------------------------------------------')
             print('MSE: filter OK')
             print('-----------------------------------------------------------------------------------')
@@ -1884,42 +1884,42 @@ for i in range(len(list_calculation)):
             ax1 = fig.add_subplot(4, 2, 1)
             plot_boundary(ax1,'a. ', north_era5[0],models,north_cmip6[:,0,:],\
             '[Longitude]',arange_x_n,labels_plot_northern,'yes',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','MIROC6'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','INM-CM4-8','GISS-E2-1-H'])
 
             ax2 = fig.add_subplot(4, 2, 2)
             plot_boundary(ax2,'b. ', north_era5[1],models,north_cmip6[:,1,:],\
             '[Longitude]',arange_x_n,labels_plot_northern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','MIROC6'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','INM-CM4-8','GISS-E2-1-H'])
 
             ax3 = fig.add_subplot(4, 2, 3)
             plot_boundary(ax3,'c. ', south_era5[0],models,south_cmip6[:,0,:],\
             '[Longitude]',arange_x_s,labels_plot_southern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','MIROC6'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','INM-CM4-8','GISS-E2-1-H'])
 
             ax4 = fig.add_subplot(4, 2, 4)
             plot_boundary(ax4,'d. ', south_era5[1],models,south_cmip6[:,1,:],\
             '[Longitude]',arange_x_s,labels_plot_southern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','MIROC6'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',8,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','INM-CM4-8','GISS-E2-1-H'])
 
             ax5 = fig.add_subplot(4, 2, 5)
             plot_boundary(ax5,'e. ', west_era5[0],models,west_cmip6[:,0,:],\
             '[Latitude]',arange_x_w,labels_plot_western,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','MIROC6'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','INM-CM4-8','GISS-E2-1-H'])
 
             ax6 = fig.add_subplot(4, 2, 6)
             plot_boundary(ax6,'f. ', west_era5[1],models,west_cmip6[:,1,:],\
             '[Latitude]',arange_x_w,labels_plot_western,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','MIROC6'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'No',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','INM-CM4-8','GISS-E2-1-H'])
 
             ax7 = fig.add_subplot(4, 2, 7)
             plot_boundary(ax7,'g. ', east_era5[0],models,east_cmip6[:,0,:],\
             '[Latitude]',arange_x_e,labels_plot_eastern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','MIROC6'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','INM-CM4-8','GISS-E2-1-H'])
 
             ax8 = fig.add_subplot(4, 2, 8)
             plot_boundary(ax8,'h. ', east_era5[1],models,east_cmip6[:,1,:],\
             '[Latitude]',arange_x_e,labels_plot_eastern,'no',\
-                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','MIROC6'])
+                y_label_str,title_str_size,xy_label_str, tick_labels_str,'Yes',11,y_limits_pl,['CESM2','IITM-ESM','E3SM-1-1-ECA','INM-CM4-8','GISS-E2-1-H'])
             
             nrows = 20
             ncols = int(np.ceil(len(models) / float(nrows)))
