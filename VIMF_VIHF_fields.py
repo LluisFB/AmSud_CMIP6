@@ -42,7 +42,7 @@ sns.set_context('notebook', font_scale=1.5)
 #Path_save is the path that contains all the created files
 path_entry='/scratchx/lfita/'
 path_save='/scratchx/lfita/'
-
+path_save_ind=path_save+'model_season_ind/'
 #-----------------------------------------------------------------------------------------------------------------------
 gridsize_df=pd.read_csv(path_save+'CMIP6_models_GridSize_lat_lon_Amon.csv', index_col=[0])
 gridsize_df_tos=pd.read_csv(path_save+'CMIP6_models_GridSize_lat_lon_Omon.csv', index_col=[0])
@@ -251,7 +251,7 @@ def VIMF_calc_field(path_entry, var_sp1, var_sp2, var_sp3, model_name,lat_d,lon_
 with open(path_save+'Models_var_availability.pkl', 'rb') as fp:
     dict_models = pickle.load(fp)
 
-
+"""
 list_calculation=['VIMF','MSE']
 
 #-------------------------------------------------------------------------------------------------------------------
@@ -516,7 +516,7 @@ for i in range(len(list_calculation)):
                 # FROM: https://stackoverflow.com/questions/1483429/how-do-i-print-an-exception-in-python
                 print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
 
-
+"""
 #--------------------------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------------------------------
@@ -589,8 +589,8 @@ for i in range(len(list_calculation)):
             print ('Ploteando ...')
 
             plot_label='VIMF [Kg/ms]'
-            limits_var=np.arange(0,425,25)
-            limits_bias=np.arange(-100,125,5)
+            limits_var=np.arange(0,400,25)
+            limits_bias=np.arange(-90,95,5)
 
             fig=plt.figure(figsize=(24,14))
             colorbar_attributes=[0.92, 0.37,  0.017,0.24]
@@ -713,6 +713,19 @@ for i in range(len(list_calculation)):
 
             plt.close()
 
+
+            #-------------------------------------------------------------------------
+            #-------------------------------------------------------------------------
+            #Creating the individual plots to check the models individually 
+
+            individual_plots('vector',models,path_entry,path_save_ind,'VIMF_MMM_meanFields',
+                             'VIMF_MMM_biasFields','uVIMF_MMM_meanFields','vVIMF_MMM_meanFields',
+                             Lat_common, Lon_common, np.arange(0,400,25),np.arange(-90,95,5),
+                             [0.92, 0.51,  0.017,0.34],[0.92, 0.12,  0.017,0.34])
+            
+            #----------------------------------------------------------------------------
+            #----------------------------------------------------------------------------
+
         except Exception as e:
             print('Error plot VIMF')
             # FROM: https://stackoverflow.com/questions/1483429/how-do-i-print-an-exception-in-python
@@ -767,7 +780,7 @@ for i in range(len(list_calculation)):
             
             plot_label='VIHF [ x 10¹⁰ W]'
             limits_var=np.arange(-10,11,1)
-            limits_bias=np.arange(-9,10,1)
+            limits_bias=np.arange(-6,6.5,0.5)
 
             cmap_plot=['gist_rainbow_r','terrain','terrain_r','rainbow','RdBu']
 
@@ -864,6 +877,13 @@ for i in range(len(list_calculation)):
             bbox_inches='tight',bbox_extra_artists=[legend_squared],
             ) 
             plt.close()
+
+            #----------------------------------------------------------------------------------------------
+            #----------------------------------------------------------------------------------------------
+            #Applying the function to check the models individually
+            individual_plots('mse',models,path_entry,path_save_ind,'MSE_MMM_meanFields','MSE_MMM_biasFields',
+                             None,None,Lat_common, Lon_common, np.arange(-10,11,1),np.arange(-6,6.5,0.5),
+                             [0.92, 0.51,  0.017,0.34],[0.92, 0.12,  0.017,0.34])
         
         except Exception as e:
             print('Error plot MSE')

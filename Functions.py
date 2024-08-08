@@ -2999,6 +2999,9 @@ def individual_plots(type_plot,list_models,path_entry_npz,path_save_plots_ind,fi
         
         else:
 
+            var_model_season=var_model_season*(1e-10)
+            var_model_season_bias=var_model_season_bias*(1e-10)
+
             lon2D_ind, lat2D_ind = np.meshgrid(len_lons, len_lats)
             projection_ind=ccrs.PlateCarree()
             extent_ind = [min(len_lons),max(len_lons),min(len_lats),max(len_lats)]
@@ -3006,28 +3009,28 @@ def individual_plots(type_plot,list_models,path_entry_npz,path_save_plots_ind,fi
             fig=plt.figure(figsize=(24,10))
             
             ax1_ind = fig.add_subplot(2, 4, 1, projection=projection_ind)
-            cs_ind=plotMap(ax1_ind,var_model_season[0],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'a. DJF',extent_ind, projection_ind,15,'no',None,'yes')
+            cs_ind=plotMap(ax1_ind,var_model_season[0],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'a. DJF',extent_ind, projection_ind,15,'no',None,'no')
 
             ax2_ind = fig.add_subplot(2, 4, 2, projection=projection_ind)
-            cs_ind=plotMap(ax2_ind,var_model_season[2],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'b. MAM',extent_ind, projection_ind,15,'no',None,'yes')
+            cs_ind=plotMap(ax2_ind,var_model_season[2],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'b. MAM',extent_ind, projection_ind,15,'no',None,'no')
 
             ax3_ind = fig.add_subplot(2, 4, 3, projection=projection_ind)
-            cs_ind=plotMap(ax3_ind,var_model_season[1],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'c. JJA',extent_ind, projection_ind,15,'no',None,'yes')
+            cs_ind=plotMap(ax3_ind,var_model_season[1],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'c. JJA',extent_ind, projection_ind,15,'no',None,'no')
 
             ax4_ind = fig.add_subplot(2, 4, 4, projection=projection_ind)
-            cs_ind=plotMap(ax4_ind,var_model_season[3],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'d. SON',extent_ind, projection_ind,15,'no',None,'yes')
+            cs_ind=plotMap(ax4_ind,var_model_season[3],lon2D_ind,lat2D_ind,'rainbow',limits_abs,'d. SON',extent_ind, projection_ind,15,'no',None,'no')
 
             ax5_ind = fig.add_subplot(2, 4, 5, projection=projection_ind)
-            cs_ind_b=plotMap(ax5_ind,var_model_season_bias[0],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'e. DJF',extent_ind, projection_ind,15,'no',None,'yes')
+            cs_ind_b=plotMap(ax5_ind,var_model_season_bias[0],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'e. DJF',extent_ind, projection_ind,15,'no',None,'no')
 
             ax6_ind = fig.add_subplot(2, 4, 6, projection=projection_ind)
-            cs_ind_b=plotMap(ax6_ind,var_model_season_bias[2],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'f. MAM',extent_ind, projection_ind,15,'no',None,'yes')
+            cs_ind_b=plotMap(ax6_ind,var_model_season_bias[2],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'f. MAM',extent_ind, projection_ind,15,'no',None,'no')
 
             ax7_ind = fig.add_subplot(2, 4, 7, projection=projection_ind)
-            cs_ind_b=plotMap(ax7_ind,var_model_season_bias[1],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'g. JJA',extent_ind, projection_ind,15,'no',None,'yes')
+            cs_ind_b=plotMap(ax7_ind,var_model_season_bias[1],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'g. JJA',extent_ind, projection_ind,15,'no',None,'no')
 
             ax8_ind = fig.add_subplot(2, 4, 8, projection=projection_ind)
-            cs_ind_b=plotMap(ax8_ind,var_model_season_bias[3],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'h. SON',extent_ind, projection_ind,15,'no',None,'yes')
+            cs_ind_b=plotMap(ax8_ind,var_model_season_bias[3],lon2D_ind,lat2D_ind,'RdBu',limits_bias_abs,'h. SON',extent_ind, projection_ind,15,'no',None,'no')
 
             cbar_ax_ind = fig.add_axes(loc_bar_mag)
             cb_ind = fig.colorbar(cs_ind,cax=cbar_ax_ind, orientation="vertical")
