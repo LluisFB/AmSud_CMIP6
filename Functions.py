@@ -2999,8 +2999,10 @@ def individual_plots(type_plot,list_models,path_entry_npz,path_save_plots_ind,fi
         
         else:
 
-            var_model_season=var_model_season*(1e-10)
-            var_model_season_bias=var_model_season_bias*(1e-10)
+            if type_plot=='mse':
+
+                var_model_season=var_model_season*(1e-10)
+                var_model_season_bias=var_model_season_bias*(1e-10)
 
             lon2D_ind, lat2D_ind = np.meshgrid(len_lons, len_lats)
             projection_ind=ccrs.PlateCarree()
