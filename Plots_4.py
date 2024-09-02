@@ -136,31 +136,31 @@ Lat_common_fl=np.arange(west_boundaries_lat[0],west_boundaries_lat[1],dy_common)
 
 #-------------------------------------------------------------------------------------------------------------
 #Stating the limits for the plots of the indices 
-nash_str_limit_lower=1000
-nash_str_limit_upper=1050
+nash_str_limit_lower=980
+nash_str_limit_upper=1100
 
-nash_lat_limit_lower=15
-nash_lat_limit_upper=45
+nash_lat_limit_lower=10
+nash_lat_limit_upper=55
 
-nash_lon_limit_lower=360-55
-nash_lon_limit_upper=360-5
+nash_lon_limit_lower=360-65
+nash_lon_limit_upper=360-1
 
-spsh_str_limit_lower=1000
-spsh_str_limit_upper=1050
+spsh_str_limit_lower=980
+spsh_str_limit_upper=1100
 
-spsh_lat_limit_lower=-45
-spsh_lat_limit_upper=-15
+spsh_lat_limit_lower=-55
+spsh_lat_limit_upper=-10
 
-spsh_lon_limit_lower=360-120
-spsh_lon_limit_upper=360-70
+spsh_lon_limit_lower=360-130
+spsh_lon_limit_upper=360-65
 
-sash_str_limit_lower=1000
-sash_str_limit_upper=1050
+sash_str_limit_lower=980
+sash_str_limit_upper=1100
 
-sash_lat_limit_lower=-45
-sash_lat_limit_upper=-15
+sash_lat_limit_lower=-55
+sash_lat_limit_upper=-10
 
-sash_lon_limit_lower=360-25
+sash_lon_limit_lower=360-35
 sash_lon_limit_upper=360-1
 
 westerlies_str_limit_lower=0
@@ -189,7 +189,7 @@ vihf_upper=50
 #list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation','Regional_cells',\
 #                  'SST','Wind_indices','Bolivian_high','VIMF','qu_qv','MSE','tu_tv']
 
-list_calculation=['VIMF','MSE']
+list_calculation=['Subtropical_highs']
 
 for i in range(len(list_calculation)):
     if list_calculation[i]=='Subtropical_highs':
@@ -317,7 +317,7 @@ for i in range(len(list_calculation)):
                                 xy_label_str, tick_labels_str, legends_str)
 
             
-
+            """
             #--------------------------------------------------------------------------------------------------------
             #4. Subtropical center 
             seasons_labels_i=['DJF','JJA','MAM','SON']
@@ -541,12 +541,12 @@ for i in range(len(list_calculation)):
             bbox_inches='tight',bbox_extra_artists=[legend_squared],
             ) 
             plt.close()
-        
+            """
         except Exception as e:
             print('Error plot subtropical highs')
             print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
 
-
+            
     elif list_calculation[i]=='Wind_indices':
 
         try:
