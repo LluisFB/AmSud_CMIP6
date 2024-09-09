@@ -139,29 +139,29 @@ Lat_common_fl=np.arange(west_boundaries_lat[0],west_boundaries_lat[1],dy_common)
 nash_str_limit_lower=980
 nash_str_limit_upper=1100
 
-nash_lat_limit_lower=10
-nash_lat_limit_upper=55
+nash_lat_limit_lower=20
+nash_lat_limit_upper=43
 
-nash_lon_limit_lower=360-65
-nash_lon_limit_upper=360-1
+nash_lon_limit_lower=360-70
+nash_lon_limit_upper=360-16
 
 spsh_str_limit_lower=980
 spsh_str_limit_upper=1100
 
-spsh_lat_limit_lower=-55
-spsh_lat_limit_upper=-10
+spsh_lat_limit_lower=-50
+spsh_lat_limit_upper=-15
 
-spsh_lon_limit_lower=360-130
-spsh_lon_limit_upper=360-65
+spsh_lon_limit_lower=360-150
+spsh_lon_limit_upper=360-79
 
 sash_str_limit_lower=980
 sash_str_limit_upper=1100
 
-sash_lat_limit_lower=-55
-sash_lat_limit_upper=-10
+sash_lat_limit_lower=-45
+sash_lat_limit_upper=0
 
 sash_lon_limit_lower=360-35
-sash_lon_limit_upper=360-1
+sash_lon_limit_upper=360-2
 
 westerlies_str_limit_lower=0
 westerlies_str_limit_upper=30
