@@ -224,6 +224,7 @@ for i in range(len(list_calculation)):
 
             #------------------------------------------------------------------------------------------------------
             #Performing the data quality of the series of the models 
+            """
             models, southAtlantic_strength_models=filter_series_plots(southAtlantic_strength_models,models,sash_str_limit_lower,sash_str_limit_upper)
             models, southPacific_strength_models=filter_series_plots(southPacific_strength_models,models,spsh_str_limit_lower,spsh_str_limit_upper)
             models, nash_strength_models=filter_series_plots(nash_strength_models,models,nash_str_limit_lower,nash_str_limit_upper)
@@ -235,22 +236,22 @@ for i in range(len(list_calculation)):
             models, southAtlantic_longitude_models=filter_series_plots(southAtlantic_longitude_models,models,sash_lon_limit_lower,sash_lon_limit_upper)
             models, southPacific_longitude_models=filter_series_plots(southPacific_longitude_models,models,spsh_lon_limit_lower,spsh_lon_limit_upper)
             models, nash_longitude_models=filter_series_plots(nash_longitude_models,models,nash_lon_limit_lower,nash_lon_limit_upper)
-
+            """
 
             #----------------------------------------------------------------------------------------------------
             #Obtaining the metrics of the series 
             
-            series_metrics(southAtlantic_strength_ref,southAtlantic_strength_models,models,'southAtlantic_high_strength',path_entry)
-            series_metrics(southPacific_strength_ref,southPacific_strength_models,models,'southPacific_high_strength',path_entry)
-            series_metrics(nash_strength_ref,nash_strength_models,models,'nash_high_strength',path_entry)
+            series_metrics(southAtlantic_strength_ref,southAtlantic_strength_models,models,'southAtlantic_high_strength_2',path_entry)
+            series_metrics(southPacific_strength_ref,southPacific_strength_models,models,'southPacific_high_strength_2',path_entry)
+            series_metrics(nash_strength_ref,nash_strength_models,models,'nash_high_strength_2',path_entry)
 
-            series_metrics(southAtlantic_lat_ref,southAtlantic_latitude_models,models,'southAtlantic_high_lat',path_entry)
-            series_metrics(southPacific_lat_ref,southPacific_latitude_models,models,'southPacific_high_lat',path_entry)
-            series_metrics(nash_lat_ref,nash_latitude_models,models,'nash_high_lat',path_entry)
+            series_metrics(southAtlantic_lat_ref,southAtlantic_latitude_models,models,'southAtlantic_high_lat_2',path_entry)
+            series_metrics(southPacific_lat_ref,southPacific_latitude_models,models,'southPacific_high_lat_2',path_entry)
+            series_metrics(nash_lat_ref,nash_latitude_models,models,'nash_high_lat_2',path_entry)
 
-            series_metrics(southAtlantic_lon_ref,southAtlantic_longitude_models,models,'southAtlantic_high_lon',path_entry)
-            series_metrics(southPacific_lon_ref,southPacific_longitude_models,models,'southPacific_high_lon',path_entry)
-            series_metrics(nash_lon_ref,nash_longitude_models,models,'nash_high_lon',path_entry)
+            series_metrics(southAtlantic_lon_ref,southAtlantic_longitude_models,models,'southAtlantic_high_lon_2',path_entry)
+            series_metrics(southPacific_lon_ref,southPacific_longitude_models,models,'southPacific_high_lon_2',path_entry)
+            series_metrics(nash_lon_ref,nash_longitude_models,models,'nash_high_lon_2',path_entry)
             
 
             #---------------------------------------------------------------------------------------------
