@@ -458,11 +458,11 @@ for i in range(len(list_calculation)):
         try:
 
             DSE_ref_u,Lat_ref,Lon_ref,dx_ref,\
-            dy_ref=DSE_calc(path_save, 'u', 't','geopt', 'ERA5',lat_limits,lon_limits,None, None,\
+            dy_ref=DSE_calc(path_save, 'u', 'ta','geopt', 'ERA5',lat_limits,lon_limits,None, None,\
             p_level_interest_lower,p_level_interest_upper,'ERA5')
 
             DSE_ref_v,Lat_ref,Lon_ref,dx_ref,\
-            dy_ref=DSE_calc(path_save, 'v', 't','geopt', 'ERA5',lat_limits,lon_limits,None, None,\
+            dy_ref=DSE_calc(path_save, 'v', 'ta','geopt', 'ERA5',lat_limits,lon_limits,None, None,\
             p_level_interest_lower,p_level_interest_upper,'ERA5')
 
             print('####################################')
