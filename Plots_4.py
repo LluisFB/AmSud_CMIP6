@@ -189,7 +189,7 @@ vihf_upper=50
 #list_calculation=['wind_850','wind_200','Subtropical_highs','Precipitation','Regional_cells',\
 #                  'SST','Wind_indices','Bolivian_high','VIMF','qu_qv','MSE','tu_tv']
 
-list_calculation=['Subtropical_highs']
+list_calculation=['Subtropical_highs','wind_850','wind_200','Precipitation','SST','Bolivian_high','Wind_indices']
 
 for i in range(len(list_calculation)):
     if list_calculation[i]=='Subtropical_highs':
@@ -198,7 +198,7 @@ for i in range(len(list_calculation)):
 
             #Inputs for the plot 
             models=np.load(path_entry+'subtropicalHighs_models_N.npz',allow_pickle=True)['arr_0']
-            
+            """
             southAtlantic_strength_ref=np.load(path_entry+'southAtlantic_high_strength_ERA5.npz',allow_pickle=True)['arr_0']
             southPacific_strength_ref=np.load(path_entry+'southPacific_high_strength_ERA5.npz',allow_pickle=True)['arr_0']
             nash_strength_ref=np.load(path_entry+'northAtlantic_high_strength_ERA5.npz',allow_pickle=True)['arr_0']
@@ -224,7 +224,7 @@ for i in range(len(list_calculation)):
 
             #------------------------------------------------------------------------------------------------------
             #Performing the data quality of the series of the models 
-            """
+            
             models, southAtlantic_strength_models=filter_series_plots(southAtlantic_strength_models,models,sash_str_limit_lower,sash_str_limit_upper)
             models, southPacific_strength_models=filter_series_plots(southPacific_strength_models,models,spsh_str_limit_lower,spsh_str_limit_upper)
             models, nash_strength_models=filter_series_plots(nash_strength_models,models,nash_str_limit_lower,nash_str_limit_upper)
@@ -236,7 +236,7 @@ for i in range(len(list_calculation)):
             models, southAtlantic_longitude_models=filter_series_plots(southAtlantic_longitude_models,models,sash_lon_limit_lower,sash_lon_limit_upper)
             models, southPacific_longitude_models=filter_series_plots(southPacific_longitude_models,models,spsh_lon_limit_lower,spsh_lon_limit_upper)
             models, nash_longitude_models=filter_series_plots(nash_longitude_models,models,nash_lon_limit_lower,nash_lon_limit_upper)
-            """
+            
 
             #----------------------------------------------------------------------------------------------------
             #Obtaining the metrics of the series 
@@ -318,7 +318,7 @@ for i in range(len(list_calculation)):
                                 xy_label_str, tick_labels_str, legends_str)
 
             
-            """
+            
             #--------------------------------------------------------------------------------------------------------
             #4. Subtropical center 
             seasons_labels_i=['DJF','JJA','MAM','SON']
@@ -425,6 +425,8 @@ for i in range(len(list_calculation)):
                 fig1.savefig(path_save+seasons_labels+'_SubtropicalHighs_Core.png', \
                 format = 'png', bbox_inches='tight')
                 plt.close()
+
+            """
             
             #--------------------------------------------------------------------------------------------------------------------------
             #4. Spatial fields of SLP 
@@ -509,8 +511,9 @@ for i in range(len(list_calculation)):
             plt.text(0.3,2.42,'JJA', fontsize=title_str_size,rotation='horizontal',transform=ax7.transAxes)
             plt.text(0.3,2.42,'SON', fontsize=title_str_size,rotation='horizontal',transform=ax8.transAxes)
             #fig.subplots_adjust(hspace=0.3)
-            plt.savefig(path_save+'slp_fields.png', \
-            format = 'png', bbox_inches='tight')
+
+            #plt.savefig(path_save+'slp_fields.png', \
+            #format = 'png', bbox_inches='tight')
             
             #To save the legend independently
             dia=taylor
@@ -518,9 +521,9 @@ for i in range(len(list_calculation)):
             legend= fig.legend(dia.samplePoints,
             [ p.get_label() for p in dia.samplePoints ],
             numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
-            ,ncol=2,loc='right')
+            ,ncol=4,loc='right')
 
-            ncols=2
+            ncols=4
 
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
@@ -542,7 +545,7 @@ for i in range(len(list_calculation)):
             bbox_inches='tight',bbox_extra_artists=[legend_squared],
             ) 
             plt.close()
-            """
+            
         except Exception as e:
             print('Error plot subtropical highs')
             print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
@@ -588,6 +591,7 @@ for i in range(len(list_calculation)):
             print('-----------------------------------------------------------------------------------')
             #-------------------------------------------------------------------------------------------------------
             #Obtaining the metrics 
+            """
             series_metrics(subtropical_strength_ref,subtropical_Str_models,models,'subtropicalJet_strength',path_entry)
             series_metrics(subtropical_latitude_ref,subtropical_Lat_models,models,'subtropicalJet_latitude',path_entry)
 
@@ -595,29 +599,29 @@ for i in range(len(list_calculation)):
             series_metrics(westerly_latitude_ref,westerlies_Lat_model,models,'westerlies_latitude',path_entry)
 
             series_metrics(trade_index_r,trade_index_m,models,'Trade_winds',path_entry)
-
+            """
             print('-----------------------------------------------------------------------------------')
             print('wind_indices: series OK')
             print('-----------------------------------------------------------------------------------')
-
+            """
             #Subtropical jet stream
             wind_indices('Southern Hemisphere Subtropical Jet Stream',subtropical_strength_ref,\
             subtropical_Str_models,subtropical_latitude_ref,subtropical_Lat_models,\
             'a. Subtropical jet stream mean strength','b. Subtropical jet stream mean location',\
             np.arange(20,50,2),np.arange(-40,-22,2),models,'Subtropical_Jet_200hPa',path_save,2,1,10,14,fig_title_font,\
                 title_str_size, xy_label_str, tick_labels_str, legends_str,['IPSL-CM5A2-INCA'])
-
+            """
             #Westerlies
-            wind_indices('Southern Hemisphere Westerlies',westerly_strength_ref,\
+            wind_indices('Southeastern Pacific Westerlies',westerly_strength_ref,\
             westerlies_Str_model,westerly_latitude_ref,westerlies_Lat_model,\
             'a. Westerlies mean strength','b. Westerlies mean location',\
             np.arange(5,21,1),np.arange(-65,-25,5),models,'Westerlies_850hPa',path_save,2,1,10,14,fig_title_font,\
                 title_str_size, xy_label_str, tick_labels_str, legends_str,['NESM3','EC-Earth3'])
-
+            """
             #Trade winds 
             plot_one_plot(models,'Trade_Wind_Index',path_save,trade_index_m,trade_index_r,None,'Wind [m/s]',-4,12,'[850 hPa] Trade Wind Index',\
                         fig_title_font, xy_label_str, tick_labels_str, legends_str,['NESM3','EC-Earth3'])
-            
+            """
             print('-----------------------------------------------------------------------------------')
             print('wind_indices: plots OK')
             print('-----------------------------------------------------------------------------------')
@@ -637,10 +641,10 @@ for i in range(len(list_calculation)):
             bolivian_index_r=np.load(path_entry+'Bolivian_High_index_monthly_ERA5.npz',allow_pickle=True)['arr_0']
 
             #Obtaining the metrics 
-            series_metrics(bolivian_index_r,bolivian_index_m,models,'Bolivian_High',path_entry)
+            #series_metrics(bolivian_index_r,bolivian_index_m,models,'Bolivian_High',path_entry)
 
 
-            plot_one_plot(models,'Bolivian_High',path_save,bolivian_index_m,bolivian_index_r, None,'200 hPa GPH [Km]',12,13,'Bolivian High Index',\
+            plot_one_plot(models,'Bolivian_High',path_save,bolivian_index_m,bolivian_index_r, None,'200 hPa GPH [Km]',12,12.7,'Bolivian High Index',\
                         fig_title_font, xy_label_str, tick_labels_str, legends_str,[])
             
         except Exception as e:
@@ -743,8 +747,8 @@ for i in range(len(list_calculation)):
             plt.text(0.3,2.42,'JJA', fontsize=title_str_size,rotation='horizontal',transform=ax7.transAxes)
             plt.text(0.3,2.42,'SON', fontsize=title_str_size,rotation='horizontal',transform=ax8.transAxes)
             #fig.subplots_adjust(hspace=0.3)
-            plt.savefig(path_save+'pr_mm_day.png', \
-            format = 'png', bbox_inches='tight')
+            #plt.savefig(path_save+'pr_mm_day.png', \
+            #format = 'png', bbox_inches='tight')
             
             #To save the legend independently
             dia=taylor
@@ -752,9 +756,9 @@ for i in range(len(list_calculation)):
             legend= fig.legend(dia.samplePoints,
             [ p.get_label() for p in dia.samplePoints ],
             numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
-            ,ncol=2,loc='right')
+            ,ncol=4,loc='right')
 
-            ncols=2
+            ncols=4
 
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
@@ -880,8 +884,8 @@ for i in range(len(list_calculation)):
             plt.text(0.3,2.42,'JJA', fontsize=title_str_size,rotation='horizontal',transform=ax7.transAxes)
             plt.text(0.3,2.42,'SON', fontsize=title_str_size,rotation='horizontal',transform=ax8.transAxes)
             #fig.subplots_adjust(hspace=0.3)
-            plt.savefig(path_save+'tos_fields_c.png', \
-            format = 'png', bbox_inches='tight')
+            #plt.savefig(path_save+'tos_fields_c.png', \
+            #format = 'png', bbox_inches='tight')
             
             #To save the legend independently
             dia=taylor
@@ -889,9 +893,9 @@ for i in range(len(list_calculation)):
             legend= fig.legend(dia.samplePoints,
             [ p.get_label() for p in dia.samplePoints ],
             numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
-            ,ncol=2,loc='right')
+            ,ncol=4,loc='right')
 
-            ncols=2
+            ncols=4
 
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
@@ -1034,8 +1038,8 @@ for i in range(len(list_calculation)):
             plt.text(0.3,2.42,'JJA', fontsize=title_str_size,rotation='horizontal',transform=ax7.transAxes)
             plt.text(0.3,2.42,'SON', fontsize=title_str_size,rotation='horizontal',transform=ax8.transAxes)
             #fig.subplots_adjust(hspace=0.3)
-            plt.savefig(path_save+'wind200_fields.png', \
-            format = 'png', bbox_inches='tight')
+            #plt.savefig(path_save+'wind200_fields.png', \
+            #format = 'png', bbox_inches='tight')
             
             #To save the legend independently
             dia=taylor
@@ -1043,9 +1047,9 @@ for i in range(len(list_calculation)):
             legend= fig.legend(dia.samplePoints,
             [ p.get_label() for p in dia.samplePoints ],
             numpoints=1, prop=dict(size='small') \
-            ,ncol=2,loc='right')
+            ,ncol=4,loc='right')
 
-            ncols=2
+            ncols=4
 
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
@@ -1218,8 +1222,8 @@ for i in range(len(list_calculation)):
             plt.text(0.3,2.42,'JJA', fontsize=title_str_size,rotation='horizontal',transform=ax7.transAxes)
             plt.text(0.3,2.42,'SON', fontsize=title_str_size,rotation='horizontal',transform=ax8.transAxes)
             #fig.subplots_adjust(hspace=0.3)
-            plt.savefig(path_save+'wind850_fields.png', \
-            format = 'png', bbox_inches='tight')
+            #plt.savefig(path_save+'wind850_fields.png', \
+            #format = 'png', bbox_inches='tight')
             
             #To save the legend independently
             dia=taylor
@@ -1227,9 +1231,9 @@ for i in range(len(list_calculation)):
             legend= fig.legend(dia.samplePoints,
             [ p.get_label() for p in dia.samplePoints ],
             numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
-            ,ncol=2,loc='right')
+            ,ncol=4,loc='right')
 
-            ncols=2
+            ncols=4
 
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())

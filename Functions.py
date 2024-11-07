@@ -2397,7 +2397,7 @@ def MSE_calc(path_entry, var_sp1, var_sp2, var_sp3, var_sp4, model_name,lat_d,lo
                     MSE_column[p,i,j,k]=mse_level_grid
 
     # adding up in the pressure levels
-    MSE_integral=np.nansum(MSE_column,axis=1)
+    MSE_integral=np.nansum(MSE_column,axis=1)/9.8*(-1)
 
     print('#########################')
     print('MSE_calc: MSE_integral OK')

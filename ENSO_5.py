@@ -332,7 +332,7 @@ east_boundaries_lon=[-25,-20]
 Lon_common_fl=np.arange(south_boundaries_lon[0],south_boundaries_lon[1],dx_common)
 Lat_common_fl=np.arange(west_boundaries_lat[0],west_boundaries_lat[1],dy_common)
 
-
+"""
 #-------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------
 #ENSO CALCULATIONS 
@@ -567,7 +567,7 @@ try:
 except Exception as e:
     print('ENSO plot error ')
     print(f"{type(e).__name__} at line {e.__traceback__.tb_lineno} of {__file__}: {e}")
-
+"""
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------------------------------------------------------------------------
 #SECOND PART OF THE CODE 
@@ -703,8 +703,8 @@ for i in range(len(list_calculation)):
             plt.text(0.3,2.42,'JJA', fontsize=title_str_size,rotation='horizontal',transform=ax7.transAxes)
             plt.text(0.3,2.42,'SON', fontsize=title_str_size,rotation='horizontal',transform=ax8.transAxes)
             #fig.subplots_adjust(hspace=0.3)
-            plt.savefig(path_save_plots+'HadleyCell_fields_ENSO.png', \
-            format = 'png', bbox_inches='tight')
+            #plt.savefig(path_save_plots+'HadleyCell_fields_ENSO.png', \
+            #format = 'png', bbox_inches='tight')
             
             #To save the legend independently
             dia=taylor
@@ -712,9 +712,9 @@ for i in range(len(list_calculation)):
             legend= fig.legend(dia.samplePoints,
             [ p.get_label() for p in dia.samplePoints ],
             numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
-            ,ncol=2,loc='right')
+            ,ncol=4,loc='right')
 
-            ncols=2
+            ncols=4
 
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
@@ -801,8 +801,8 @@ for i in range(len(list_calculation)):
             plt.text(0.3,2.42,'JJA', fontsize=title_str_size,rotation='horizontal',transform=ax7.transAxes)
             plt.text(0.3,2.42,'SON', fontsize=title_str_size,rotation='horizontal',transform=ax8.transAxes)
             #fig.subplots_adjust(hspace=0.3)
-            plt.savefig(path_save_plots+'WalkerCell_fields_ENSO.png', \
-            format = 'png', bbox_inches='tight')
+            #plt.savefig(path_save_plots+'WalkerCell_fields_ENSO.png', \
+            #format = 'png', bbox_inches='tight')
             
             #To save the legend independently
 
@@ -811,9 +811,9 @@ for i in range(len(list_calculation)):
             legend= fig.legend(dia.samplePoints,
             [ p.get_label() for p in dia.samplePoints ],
             numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
-            ,ncol=2,loc='right')
+            ,ncol=4,loc='right')
 
-            ncols=2
+            ncols=4
 
             fig.canvas.draw()
             legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
@@ -990,8 +990,8 @@ for i in range(len(list_calculation)):
                 plt.text(0.3,2.42,'Eastern', fontsize=title_str_size,rotation='horizontal',transform=ax7.transAxes)
                 plt.text(0.3,2.42,'Western', fontsize=title_str_size,rotation='horizontal',transform=ax8.transAxes)
                 #fig.subplots_adjust(hspace=0.3)
-                plt.savefig(path_save_plots+'qu_qv_'+seasons_labels+'_ENSO.png', \
-                format = 'png', bbox_inches='tight')
+                #plt.savefig(path_save_plots+'qu_qv_'+seasons_labels+'_ENSO.png', \
+                #format = 'png', bbox_inches='tight')
                 
                 #To save the legend independently
                 dia=taylor
@@ -999,9 +999,9 @@ for i in range(len(list_calculation)):
                 legend= fig.legend(dia.samplePoints,
                 [ p.get_label() for p in dia.samplePoints ],
                 numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
-                ,ncol=2,loc='right')
+                ,ncol=4,loc='right')
 
-                ncols=2
+                ncols=4
 
                 fig.canvas.draw()
                 legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
@@ -1178,8 +1178,8 @@ for i in range(len(list_calculation)):
                 plt.text(0.3,2.42,'Eastern', fontsize=title_str_size,rotation='horizontal',transform=ax7.transAxes)
                 plt.text(0.3,2.42,'Western', fontsize=title_str_size,rotation='horizontal',transform=ax8.transAxes)
                 #fig.subplots_adjust(hspace=0.3)
-                plt.savefig(path_save_plots+'tu_tv_'+seasons_labels+'_ENSO.png', \
-                format = 'png', bbox_inches='tight')
+                #plt.savefig(path_save_plots+'tu_tv_'+seasons_labels+'_ENSO.png', \
+                #format = 'png', bbox_inches='tight')
                 
                 #To save the legend independently
                 dia=taylor
@@ -1187,9 +1187,9 @@ for i in range(len(list_calculation)):
                 legend= fig.legend(dia.samplePoints,
                 [ p.get_label() for p in dia.samplePoints ],
                 numpoints=1, prop=dict(size='small'),bbox_to_anchor=(1.11, 0.85) \
-                ,ncol=2,loc='right')
+                ,ncol=4,loc='right')
 
-                ncols=2
+                ncols=4
 
                 fig.canvas.draw()
                 legend_bbox = legend.get_tightbbox(fig.canvas.get_renderer())
